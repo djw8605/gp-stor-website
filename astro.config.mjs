@@ -12,7 +12,6 @@ const isCI = process.env.GITHUB_ACTIONS === 'true';
 export default defineConfig({
     // If running in GitHub Actions and repo is available, prefix paths with /<repo>/
     // Otherwise default to root when developing locally.
-    base: isCI && repo ? `/${repo}/` : '/',
   integrations: [
       starlight({
           title: 'GP-STOR',
