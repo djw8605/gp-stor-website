@@ -1,0 +1,83 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+
+export interface Props {
+  links: Array<any>;
+  secondaryLinks: Array<any>;
+  socialLinks: Array<any>;
+  footNote?: string;
+  theme?: string;
+  pagination?: {
+    prev?: { href: string; title: string };
+    next?: { href: string; title: string };
+  };
+  editUrl?: string;
+}
+
+const { links, secondaryLinks, socialLinks, footNote, theme, pagination, editUrl } = Astro.props;
+---
+<style>
+/* NSF footer styles (converted from Tailwind utilities) */
+.nsf-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* left-align items on the page */
+  margin-top: 2rem; /* mt-8 */
+  gap: 0.75rem; /* reduced gap so items are closer together */
+}
+
+.nsf-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.nsf-logo-img {
+  height: 5rem; /* h-20 */
+  width: auto;
+  object-fit: contain;
+}
+
+.nsf-footer-text {
+  font-size: 0.875rem; /* text-sm */
+  color: #4b5563; /* text-gray-600 */
+}
+
+/* Respect dark mode similar to Tailwind's dark: utility */
+@media (prefers-color-scheme: dark) {
+  .nsf-footer-text {
+    color: #9ca3af; /* text-gray-400 */
+  }
+}
+</style>
+
+<div>
+  <!-- Reuse the Default Footer and pass all required props -->
+  <Default 
+    links={links} 
+    secondaryLinks={secondaryLinks} 
+    socialLinks={socialLinks} 
+    footNote={footNote} 
+    theme={theme}
+    pagination={pagination}
+    editUrl={editUrl}
+  >
+    <slot />
+  </Default>
+
+  <!-- NSF Acknowledgment Section -->
+  <div class="nsf-footer">
+    <!-- NSF Logo -->
+    <div class="nsf-logo-container">
+      <img
+        src="/src/assets/nsf-logo.png" 
+        alt="NSF Logo"
+        class="nsf-logo-img"
+      />
+    </div>
+  
+    <!-- Footer Text -->
+    <div class="nsf-footer-text">
+        This work was supported in part by National Science Foundation (NSF) awards <a href="https://www.nsf.gov/awardsearch/show-award?AWD_ID=2502799">OAC-2502799</a>.
+    </div>
+  </div>
+</div>

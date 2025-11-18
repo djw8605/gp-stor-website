@@ -1,0 +1,192 @@
+---
+// File: src/components/TimelineCard.astro
+export interface Entry {
+  period: string;           // e.g., "2014 - Present"
+  subtitle?: string;        // e.g., "Title, Company"
+  body?: string;            // first paragraph
+  bullets?: string[];       // list items
+  status?: "todo" | "in-progress" | "done"; // status indicator
+}
+
+interface Props {
+  entries: Entry[];
+}
+
+const { entries } = Astro.props as Props;
+---
+
+<section class="timeline">
+  {entries.map((e) => (
+    <article class="entry" data-status={e.status || "done"}>
+      <div class="title">
+        <h3 class="text-gray-800 dark:text-gray-100">{e.period}</h3>
+        {e.subtitle && <p class="text-gray-500 dark:text-gray-400">{e.subtitle}</p>}
+      </div>
+      <div class="body">
+        {e.body && <p class="text-gray-700 dark:text-gray-300">{e.body}</p>}
+        {e.bullets && e.bullets.length > 0 && (
+          <ul class="text-gray-500 dark:text-gray-400">
+            {e.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        )}
+      </div>
+    </article>
+  ))}
+</section>
+
+<style>
+/* Move essential custom properties and font settings onto .timeline (viewport removed) */
+.timeline {
+  --container-shadow: 0.5rem 0.5rem 2rem 0 rgba(0, 0, 0, 0.2);
+  --gutter: 30px;
+  --border-width: 4px;
+  --dot-diameter: 16px;
+  --status-todo: #CED4DA;
+  --status-in-progress: #6C63FF;
+  --status-done: #00C49A;
+  --surface-bg: #ffffff; /* light mode surface fill for dot */
+
+  width: 100%;
+  /* max-width: 800px; */
+  /* background removed for dark mode compatibility */
+  padding: 20px 50px;
+  position: relative;
+  /*box-shadow: var(--container-shadow); */
+
+  /* font and layout previously on the removed viewport wrapper */
+  font-family: "Source Sans Pro", arial, sans-serif;
+  font-weight: 300;
+  /* color removed to allow Tailwind text utilities */
+  box-sizing: border-box;
+}
+.timeline * { box-sizing: border-box; }
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(33% + 15px); /* gutter/2 */
+  bottom: 0;
+  width: var(--border-width);
+  background: #ddd;
+}
+
+.timeline::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.entry {
+  clear: both;
+  text-align: left;
+  position: relative;
+}
+
+.entry .title {
+  margin-bottom: 0.5em;
+  float: left;
+  width: 33%;
+  padding-right: var(--gutter);
+  text-align: right;
+  position: relative;
+}
+.entry .title::before {
+  content: "";
+  position: absolute;
+  width: var(--dot-diameter);
+  height: var(--dot-diameter);
+  border: var(--border-width) solid var(--status-done);
+  background-color: var(--surface-bg); /* use surface color, not hardcoded white */
+  border-radius: 100%;
+  top: 10%;
+  right: calc(-1 * var(--dot-diameter)/2);
+  z-index: 99;
+}
+
+.entry[data-status="todo"] .title::before {
+  border-color: var(--status-todo);
+}
+
+.entry[data-status="in-progress"] .title::before {
+  border-color: var(--status-in-progress);
+  animation: ip-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes ip-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.0); }
+  50%      { box-shadow: 0 0 0 6px rgba(108, 99, 255, 0.25); }
+}
+
+.entry[data-status="done"] .title::before {
+  border-color: var(--status-done);
+}
+
+.entry .title h3 {
+  margin: 0;
+  font-size: 120%;
+}
+.entry .title p {
+  margin: 0;
+  font-size: 100%;
+  /* color removed to allow Tailwind text utilities */
+}
+
+.entry .body {
+  margin: 0 0 3em;
+  float: right;
+  width: 66%;
+  padding-left: var(--gutter);
+}
+.entry .body p {
+  line-height: 1.4em;
+  font-weight: bold;
+}
+.entry .body p:first-child {
+  margin-top: 0;
+  font-weight: 400;
+}
+.entry .body ul {
+  /* color removed to allow Tailwind text utilities */
+  padding-left: 0;
+  list-style-type: none;
+}
+.entry .body ul li::before {
+  content: "-";
+  margin-right: 0.5em;
+}
+
+/* Dark mode: set surface background used by the dot fill */
+:global(.dark) .timeline {
+  --surface-bg: #111827; /* Tailwind gray-900 */
+}
+
+/* Small screens: stack columns */
+@media (max-width: 680px) {
+  .timeline {
+    padding: 64px 24px;
+  }
+  .timeline::before {
+    left: 12px;
+  }
+  .entry .title,
+  .entry .body {
+    float: none;
+    width: 100%;
+    text-align: left;
+    padding: 0;
+  }
+  .entry .title {
+    padding-left: 28px;
+    margin-bottom: 0.75rem;
+  }
+  .entry .title::before {
+    left: 0;
+    right: auto;
+    top: 0.4rem;
+  }
+  .entry .body {
+    padding-left: 0;
+  }
+}
+</style>

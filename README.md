@@ -1,16 +1,10 @@
-# Starlight Starter Kit: Basics
+# GP-STOR Website
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+## Summary
+The GP-STOR website is built using Astro and Starlight, providing a scalable tiered object repository. It includes documentation and resources for users to get started with GP-STOR.
 
-```
-npm create astro@latest -- --template starlight
-```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
+## Project Structure
+Inside the project, you'll find the following folders and files:
 
 ```
 .
@@ -19,20 +13,12 @@ Inside of your Astro + Starlight project, you'll see the following folders and f
 │   ├── assets/
 │   ├── content/
 │   │   └── docs/
-│   └── content.config.ts
 ├── astro.config.mjs
 ├── package.json
-└── tsconfig.json
+└── README.md
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
-
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
-
-Static assets, like favicons, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
+## Commands
 All commands are run from the root of the project, from a terminal:
 
 | Command                   | Action                                           |
@@ -42,8 +28,24 @@ All commands are run from the root of the project, from a terminal:
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## Building and Running Locally
+To build the repository and run it locally, follow these steps:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/djw8605/gp-stor-website.git
+   cd gp-stor-website
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open your browser and navigate to `http://localhost:4321` to view the site.
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+---
+
+> **Note:** For more information, refer to the documentation in the `src/content/docs/` directory.
