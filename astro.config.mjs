@@ -14,7 +14,6 @@ export default defineConfig({
     // Otherwise default to root when developing locally.
   integrations: [
       starlight({
-		  base: "https://gp-stor.org",
           title: 'GP-STOR',
           description: 'Great Plains Scalable Tiered Object Repository',
           logo: { src: './src/assets/logo.png', alt: 'GP-STOR', replacesTitle: true },
