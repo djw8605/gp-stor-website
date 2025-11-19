@@ -3,8 +3,6 @@ title: Contact
 description: Get in touch with the GP-STOR team
 ---
 
-# Contact
-
 Contact channels for GP‑STOR will be announced as the service enters production. In the meantime:
 
 - Talk to your campus CI lead or research computing support to coordinate early pilots
