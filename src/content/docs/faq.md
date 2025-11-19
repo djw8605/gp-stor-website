@@ -3,8 +3,6 @@ title: FAQ
 description: Frequently asked questions about GP-STOR
 ---
 
-# FAQ
-
 ## Who can use GP‑STOR?
 
 Projects affiliated with institutions in the Great Plains Network and communities such as NRP, OSG, and ACCESS programs. Broader access policies will be published with the production launch.
