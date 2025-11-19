@@ -20,6 +20,29 @@ export default defineConfig({
           social: [
               { icon: 'github', label: 'Github', href: repo}
           ],
+          head: [
+              {
+                  tag: 'meta',
+                  attrs: {
+                      name: 'theme-color',
+                      content: '#15422a',
+                  },
+              },
+              {
+                  tag: 'meta',
+                  attrs: {
+                      name: 'apple-mobile-web-app-status-bar-style',
+                      content: 'black-translucent',
+                  },
+              },
+              {
+                  tag: 'meta',
+                  attrs: {
+                      name: 'apple-mobile-web-app-title',
+                      content: 'GP-STOR',
+                  },
+              },
+          ],
           customCss: ['./src/styles/global.css', './src/assets/landing.css'],
           components: {
               Footer: './src/components/DocsFooter.astro',
