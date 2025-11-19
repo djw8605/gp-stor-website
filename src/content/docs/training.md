@@ -1,6 +1,9 @@
 ---
 title: Training & Resources
 description: Training materials and support for GP-STOR users
+banner:
+  content: |
+    GP-STOR is currently in the acquisition and deployment phase. Access methods, policies, and allocation processes are being finalized and will be published with the production service launch.
 ---
 
 GP‑STOR emphasizes workforce training to broaden participation and build sustainable campus expertise.

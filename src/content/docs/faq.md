@@ -1,6 +1,9 @@
 ---
 title: FAQ
 description: Frequently asked questions about GP-STOR
+banner:
+  content: |
+    GP-STOR is currently in the acquisition and deployment phase. Access methods, policies, and allocation processes are being finalized and will be published with the production service launch.
 ---
 
 ## Who can use GP‑STOR?

@@ -1,6 +1,9 @@
 ---
 title: Overview
 description: Learn about GP-STOR capabilities and mission
+banner:
+  content: |
+    GP-STOR is currently in the acquisition and deployment phase. Access methods, policies, and allocation processes are being finalized and will be published with the production service launch.
 ---
 
 The Great Plains – Scalable Tiered Object Repository (GP‑STOR) expands flexible storage resources across the Great Plains Network (GPN) to accelerate cross‑institutional computational and data‑intensive research and STEM education.
