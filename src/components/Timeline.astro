@@ -35,7 +35,6 @@ const { entries } = Astro.props as Props;
 </section>
 
 <style>
-/* Move essential custom properties and font settings onto .timeline (viewport removed) */
 .timeline {
   --container-shadow: 0.5rem 0.5rem 2rem 0 rgba(0, 0, 0, 0.2);
   --gutter: 30px;
@@ -46,17 +45,14 @@ const { entries } = Astro.props as Props;
   --status-done: #00C49A;
   --surface-bg: #ffffff; /* light mode surface fill for dot */
 
+  /* NEW: unify line position via a variable */
+  --line-x: calc(33% + 15px);
+
   width: 100%;
-  /* max-width: 800px; */
-  /* background removed for dark mode compatibility */
   padding: 20px 50px;
   position: relative;
-  /*box-shadow: var(--container-shadow); */
-
-  /* font and layout previously on the removed viewport wrapper */
   font-family: "Source Sans Pro", arial, sans-serif;
   font-weight: 300;
-  /* color removed to allow Tailwind text utilities */
   box-sizing: border-box;
 }
 .timeline * { box-sizing: border-box; }
@@ -65,7 +61,7 @@ const { entries } = Astro.props as Props;
   content: "";
   position: absolute;
   top: 0;
-  left: calc(33% + 15px); /* gutter/2 */
+  left: var(--line-x); /* CHANGED: use variable */
   bottom: 0;
   width: var(--border-width);
   background: #ddd;
@@ -80,7 +76,7 @@ const { entries } = Astro.props as Props;
 .entry {
   clear: both;
   text-align: left;
-  position: relative;
+  position: relative; /* ensure ::before (mobile dot) anchors correctly */
 }
 
 .entry .title {
@@ -97,16 +93,14 @@ const { entries } = Astro.props as Props;
   width: var(--dot-diameter);
   height: var(--dot-diameter);
   border: var(--border-width) solid var(--status-done);
-  background-color: var(--surface-bg); /* use surface color, not hardcoded white */
+  background-color: var(--surface-bg);
   border-radius: 100%;
   top: 10%;
-  right: calc(-1 * var(--dot-diameter)/2);
+  right: calc(-1 * var(--dot-diameter) / 2);
   z-index: 99;
 }
 
-.entry[data-status="todo"] .title::before {
-  border-color: var(--status-todo);
-}
+.entry[data-status="todo"] .title::before { border-color: var(--status-todo); }
 
 .entry[data-status="in-progress"] .title::before {
   border-color: var(--status-in-progress);
@@ -118,9 +112,7 @@ const { entries } = Astro.props as Props;
   50%      { box-shadow: 0 0 0 6px rgba(108, 99, 255, 0.25); }
 }
 
-.entry[data-status="done"] .title::before {
-  border-color: var(--status-done);
-}
+.entry[data-status="done"] .title::before { border-color: var(--status-done); }
 
 .entry .title h3 {
   margin: 0;
@@ -129,7 +121,6 @@ const { entries } = Astro.props as Props;
 .entry .title p {
   margin: 0;
   font-size: 100%;
-  /* color removed to allow Tailwind text utilities */
 }
 
 .entry .body {
@@ -138,37 +129,31 @@ const { entries } = Astro.props as Props;
   width: 66%;
   padding-left: var(--gutter);
 }
-.entry .body p {
-  line-height: 1.4em;
-  font-weight: bold;
-}
-.entry .body p:first-child {
-  margin-top: 0;
-  font-weight: 400;
-}
-.entry .body ul {
-  /* color removed to allow Tailwind text utilities */
-  padding-left: 0;
-  list-style-type: none;
-}
-.entry .body ul li::before {
-  content: "-";
-  margin-right: 0.5em;
-}
+.entry .body p { line-height: 1.4em; font-weight: bold; }
+.entry .body p:first-child { margin-top: 0; font-weight: 400; }
+.entry .body ul { padding-left: 0; list-style-type: none; }
+.entry .body ul li::before { content: "-"; margin-right: 0.5em; }
 
 /* Dark mode: set surface background used by the dot fill */
-:global(.dark) .timeline {
-  --surface-bg: #111827; /* Tailwind gray-900 */
-}
+:global(.dark) .timeline { --surface-bg: #111827; }
 
-/* Small screens: stack columns */
+/* Small screens: stack columns and re-anchor the dot to the global line */
 @media (max-width: 680px) {
+  /* No central line on mobile */
   .timeline {
-    padding: 64px 24px;
+    padding: 24px;
   }
   .timeline::before {
-    left: 12px;
+    content: none;
   }
+
+  /* Stack content and create a left gutter for the dot */
+  .entry {
+    position: relative;
+    clear: both;
+    padding-left: calc(var(--dot-diameter) + 12px);
+  }
+
   .entry .title,
   .entry .body {
     float: none;
@@ -176,17 +161,39 @@ const { entries } = Astro.props as Props;
     text-align: left;
     padding: 0;
   }
+
   .entry .title {
-    padding-left: 28px;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
   }
+
+  /* Hide the desktop dot */
   .entry .title::before {
-    left: 0;
-    right: auto;
-    top: 0.4rem;
+    content: none;
   }
+
+  /* New mobile dot aligned left */
+  .entry::before {
+    content: "";
+    position: absolute;
+    top: 0.4rem; /* aligns roughly to the title’s first line */
+    left: 0;
+    width: var(--dot-diameter);
+    height: var(--dot-diameter);
+    border: var(--border-width) solid var(--status-done);
+    background-color: var(--surface-bg);
+    border-radius: 9999px;
+    z-index: 1;
+  }
+  .entry[data-status="todo"]::before { border-color: var(--status-todo); }
+  .entry[data-status="in-progress"]::before {
+    border-color: var(--status-in-progress);
+    animation: ip-pulse 1.2s ease-in-out infinite;
+  }
+  .entry[data-status="done"]::before { border-color: var(--status-done); }
+
+  /* Body spacing tweaks */
   .entry .body {
-    padding-left: 0;
+    margin: 0 0 1.75rem;
   }
 }
 </style>
