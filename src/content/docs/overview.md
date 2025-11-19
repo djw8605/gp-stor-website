@@ -3,8 +3,6 @@ title: Overview
 description: Learn about GP-STOR capabilities and mission
 ---
 
-# Overview
-
 The Great Plains – Scalable Tiered Object Repository (GP‑STOR) expands flexible storage resources across the Great Plains Network (GPN) to accelerate cross‑institutional computational and data‑intensive research and STEM education.
 
 GP‑STOR enhances prior NSF investments and successful regional collaborations, building on:

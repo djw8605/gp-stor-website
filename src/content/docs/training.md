@@ -3,8 +3,6 @@ title: Training & Resources
 description: Training materials and support for GP-STOR users
 ---
 
-# Training & Resources
-
 GP‑STOR emphasizes workforce training to broaden participation and build sustainable campus expertise.
 
 ## How we’ll support you
