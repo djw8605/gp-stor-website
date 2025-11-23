@@ -5,7 +5,7 @@
 	/* Enhanced Color Palette */
 	/* Background Colors */
 	--color-bg-primary: #D7F0E1;
-	--color-bg-secondary: #BFE2CE;
+	--color-bg-secondary: white;
 	
 	/* Text Colors (WCAG AA compliant) */
 	--color-text-heading: #111111;
@@ -25,12 +25,7 @@
 }
 
 [data-has-hero] .page {
-	background:
-		linear-gradient(215deg, var(--overlay-blurple), transparent 40%),
-		radial-gradient(var(--overlay-blurple), transparent 40%) no-repeat -60vw -40vh / 105vw 200vh,
-		radial-gradient(var(--overlay-blurple), transparent 65%) no-repeat 50% calc(100% + 20rem) /
-			60rem 30rem,
-		linear-gradient(180deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+	background: white; /* var(--color-bg-primary);*/
 }
 
 [data-has-hero] header {
@@ -42,6 +37,19 @@
 
 [data-has-hero] .hero > img {
 	filter: drop-shadow(0 0 3rem var(--overlay-blurple));
+}
+
+[data-has-hero] .hero:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	right: 50%;
+	bottom: 0;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	background-color: var(--color-bg-primary);
+	z-index: -1;
 }
 
 /* Alternating Section Backgrounds - Full Width */
@@ -59,7 +67,7 @@ section:nth-of-type(odd)::before {
 	bottom: 0;
 	margin-left: -50vw;
 	margin-right: -50vw;
-	background-color: rgba(215, 240, 225, 0.5);
+	background-color: var(--color-bg-secondary);
 	z-index: -1;
 }
 
@@ -77,7 +85,7 @@ section:nth-of-type(even)::before {
 	bottom: 0;
 	margin-left: -50vw;
 	margin-right: -50vw;
-	background-color: rgba(191, 226, 206, 0.6);
+	background-color: var(--color-bg-primary);
 	z-index: -1;
 }
 
@@ -105,9 +113,11 @@ h1, h2, h3, h4, h5, h6 {
 	color: var(--color-text-heading);
 }
 
+/*
 p, li, span {
 	color: var(--color-text-body);
 }
+*/
 
 /* Button Styling */
 .sl-link-button[data-variant="primary"],
@@ -137,7 +147,7 @@ a.button-secondary:hover {
 	background-color: var(--color-accent-blue-hover);
 }
 
-/* Link Styling */
+/* Link Styling 
 a:not(.sl-link-button) {
 	color: var(--color-accent-purple);
 	transition: color 0.3s ease;
@@ -146,3 +156,4 @@ a:not(.sl-link-button) {
 a:not(.sl-link-button):hover {
 	color: var(--color-accent-purple-hover);
 }
+	*/
