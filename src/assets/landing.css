@@ -44,21 +44,60 @@
 	filter: drop-shadow(0 0 3rem var(--overlay-blurple));
 }
 
-/* Alternating Section Backgrounds */
+/* Alternating Section Backgrounds - Full Width */
 section:nth-of-type(odd) {
-	background-color: rgba(215, 240, 225, 0.5);
+	position: relative;
 	padding: 4rem 0;
 }
 
+section:nth-of-type(odd)::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	right: 50%;
+	bottom: 0;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	background-color: rgba(215, 240, 225, 0.5);
+	z-index: -1;
+}
+
 section:nth-of-type(even) {
-	background-color: rgba(191, 226, 206, 0.6);
+	position: relative;
 	padding: 4rem 0;
+}
+
+section:nth-of-type(even)::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	right: 50%;
+	bottom: 0;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	background-color: rgba(191, 226, 206, 0.6);
+	z-index: -1;
 }
 
 /* Every third section gets a subtle blue tint overlay */
 section:nth-of-type(3n) {
-	background-color: rgba(0, 51, 102, 0.05);
+	position: relative;
 	padding: 4rem 0;
+}
+
+section:nth-of-type(3n)::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	right: 50%;
+	bottom: 0;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	background-color: rgba(0, 51, 102, 0.05);
+	z-index: -1;
 }
 
 /* Improved Text Hierarchy */
