@@ -1,6 +1,22 @@
 :root {
 	--green-hsl: 140, 55%, 15%; /* deeper, more vivid dark green */
 	--overlay-blurple: hsla(var(--green-hsl), 0.32); /* stronger overlay for more contrast */
+	
+	/* Enhanced Color Palette */
+	/* Background Colors */
+	--color-bg-primary: #D7F0E1;
+	--color-bg-secondary: #BFE2CE;
+	
+	/* Text Colors (WCAG AA compliant) */
+	--color-text-heading: #111111;
+	--color-text-body: #2B2B2B;
+	--color-text-muted: #555555;
+	
+	/* Accent Colors */
+	--color-accent-purple: #5147F8;
+	--color-accent-purple-hover: #635BFF;
+	--color-accent-blue: #003366;
+	--color-accent-gold: #D4A017;
 }
 
 :root[data-theme='light'] {
@@ -12,7 +28,8 @@
 		linear-gradient(215deg, var(--overlay-blurple), transparent 40%),
 		radial-gradient(var(--overlay-blurple), transparent 40%) no-repeat -60vw -40vh / 105vw 200vh,
 		radial-gradient(var(--overlay-blurple), transparent 65%) no-repeat 50% calc(100% + 20rem) /
-			60rem 30rem;
+			60rem 30rem,
+		linear-gradient(180deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
 }
 
 [data-has-hero] header {
@@ -24,4 +41,66 @@
 
 [data-has-hero] .hero > img {
 	filter: drop-shadow(0 0 3rem var(--overlay-blurple));
+}
+
+/* Alternating Section Backgrounds */
+section:nth-of-type(odd) {
+	background-color: rgba(215, 240, 225, 0.5);
+	padding: 4rem 0;
+}
+
+section:nth-of-type(even) {
+	background-color: rgba(191, 226, 206, 0.6);
+	padding: 4rem 0;
+}
+
+section:nth-of-type(3n) {
+	background-color: rgba(0, 51, 102, 0.05);
+}
+
+/* Improved Text Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+	color: var(--color-text-heading);
+}
+
+p, li, span {
+	color: var(--color-text-body);
+}
+
+/* Button Styling */
+.sl-link-button[data-variant="primary"],
+button.primary,
+a.button-primary {
+	background-color: var(--color-accent-purple);
+	transition: background-color 0.3s ease;
+}
+
+.sl-link-button[data-variant="primary"]:hover,
+button.primary:hover,
+a.button-primary:hover {
+	background-color: var(--color-accent-purple-hover);
+}
+
+.sl-link-button[data-variant="secondary"],
+button.secondary,
+a.button-secondary {
+	background-color: var(--color-accent-blue);
+	color: white;
+	transition: background-color 0.3s ease;
+}
+
+.sl-link-button[data-variant="secondary"]:hover,
+button.secondary:hover,
+a.button-secondary:hover {
+	background-color: #004080;
+}
+
+/* Link Styling */
+a:not(.sl-link-button) {
+	color: var(--color-accent-purple);
+	transition: color 0.3s ease;
+}
+
+a:not(.sl-link-button):hover {
+	color: var(--color-accent-purple-hover);
 }
