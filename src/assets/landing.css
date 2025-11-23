@@ -16,6 +16,7 @@
 	--color-accent-purple: #5147F8;
 	--color-accent-purple-hover: #635BFF;
 	--color-accent-blue: #003366;
+	--color-accent-blue-hover: #004080;
 	--color-accent-gold: #D4A017;
 }
 
@@ -54,8 +55,10 @@ section:nth-of-type(even) {
 	padding: 4rem 0;
 }
 
+/* Every third section gets a subtle blue tint overlay */
 section:nth-of-type(3n) {
 	background-color: rgba(0, 51, 102, 0.05);
+	padding: 4rem 0;
 }
 
 /* Improved Text Hierarchy */
@@ -92,7 +95,7 @@ a.button-secondary {
 .sl-link-button[data-variant="secondary"]:hover,
 button.secondary:hover,
 a.button-secondary:hover {
-	background-color: #004080;
+	background-color: var(--color-accent-blue-hover);
 }
 
 /* Link Styling */
