@@ -10,11 +10,31 @@ export interface Entry {
 
 interface Props {
   entries: Entry[];
+  /** Optional title displayed above timeline */
+  timelineTitle?: string;
+  /** Optional summary text displayed below title */
+  timelineSummary?: string;
+  /** Optional container classes to adjust spacing or width. */
+  containerClass?: string;
 }
 
-const { entries } = Astro.props as Props;
+const { entries, timelineTitle, timelineSummary, containerClass = "container py-10 mx-auto" } = Astro.props as Props;
 ---
 
+<section class="">
+  <div class={containerClass}>
+    {(timelineTitle || timelineSummary) && (
+      <div class="mb-8">
+        {timelineTitle && (
+          <h1 class="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white" set:html={timelineTitle} />
+        )}
+        {timelineSummary && (
+          <p class="mt-4 text-gray-500 xl:mt-6 dark:text-gray-300">
+            {timelineSummary}
+          </p>
+        )}
+      </div>
+    )}
 <section class="timeline">
   {entries.map((e) => (
     <article class="entry" data-status={e.status || "done"}>
@@ -197,3 +217,6 @@ const { entries } = Astro.props as Props;
   }
 }
 </style>
+</section>
+</div>
+</section>
