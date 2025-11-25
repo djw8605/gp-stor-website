@@ -1,18 +1,36 @@
 :root {
 	--green-hsl: 140, 55%, 15%; /* deeper, more vivid dark green */
 	--overlay-blurple: hsla(var(--green-hsl), 0.32); /* stronger overlay for more contrast */
+	
+	/* Enhanced Color Palette */
+	/* Background Colors */
+	--color-bg-primary: #D7F0E1;
+	--color-bg-secondary: white;
+	
+	/* Text Colors (WCAG AA compliant) */
+	--color-text-heading: #111111;
+	--color-text-body: #2B2B2B;
+	--color-text-muted: #555555;
+	
+	/* Accent Colors */
+	--color-accent-purple: #5147F8;
+	--color-accent-purple-hover: #635BFF;
+	--color-accent-blue: #003366;
+	--color-accent-blue-hover: #004080;
+	--color-accent-gold: #D4A017;
 }
 
 :root[data-theme='light'] {
 	--green-hsl: 140, 65%, 28%; /* lighter than dark theme but still saturated */
 }
 
-[data-has-hero] .page {
-	background:
-		linear-gradient(215deg, var(--overlay-blurple), transparent 40%),
-		radial-gradient(var(--overlay-blurple), transparent 40%) no-repeat -60vw -40vh / 105vw 200vh,
-		radial-gradient(var(--overlay-blurple), transparent 65%) no-repeat 50% calc(100% + 20rem) /
-			60rem 30rem;
+:root[data-theme='dark'] {
+	/* Dark mode colors */
+	--color-bg-primary: #0f1419;
+	--color-bg-secondary: #1a1f26;
+	--color-text-heading: #ffffff;
+	--color-text-body: #d1d5db;
+	--color-text-muted: #9ca3af;
 }
 
 [data-has-hero] header {
@@ -24,4 +42,141 @@
 
 [data-has-hero] .hero > img {
 	filter: drop-shadow(0 0 3rem var(--overlay-blurple));
+}
+
+[data-has-hero] .hero:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	right: 50%;
+	bottom: 0;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	background-color: var(--color-bg-primary);
+	z-index: -1;
+}
+
+/* Hero title and tagline dark mode support */
+[data-has-hero] .hero h1,
+[data-has-hero] .hero h1 span {
+	color: var(--color-text-heading) !important;
+}
+
+[data-has-hero] .hero .tagline {
+	color: var(--color-text-body) !important;
+}
+
+/* Alternating Section Backgrounds - Full Width */
+section:nth-of-type(odd) {
+	position: relative;
+	padding: 4rem 0;
+}
+
+section:nth-of-type(odd)::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	right: 50%;
+	bottom: 0;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	background-color: var(--color-bg-secondary);
+	z-index: -1;
+}
+
+section:nth-of-type(even) {
+	position: relative;
+	padding: 4rem 0;
+}
+
+section:nth-of-type(even)::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	right: 50%;
+	bottom: 0;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	background-color: var(--color-bg-primary);
+	z-index: -1;
+}
+
+/* Disable third section overlay in dark mode */
+:root[data-theme='light'] section:nth-of-type(3n)::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	right: 50%;
+	bottom: 0;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	background-color: rgba(0, 51, 102, 0.05);
+	z-index: -1;
+}
+
+/* Improved Text Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+	color: var(--color-text-heading);
+}
+
+/*
+p, li, span {
+	color: var(--color-text-body);
+}
+*/
+
+/* Button Styling */
+.sl-link-button[data-variant="primary"],
+button.primary,
+a.button-primary {
+	background-color: var(--color-accent-purple);
+	transition: background-color 0.3s ease;
+}
+
+.sl-link-button[data-variant="primary"]:hover,
+button.primary:hover,
+a.button-primary:hover {
+	background-color: var(--color-accent-purple-hover);
+}
+
+.sl-link-button[data-variant="secondary"],
+button.secondary,
+a.button-secondary {
+	background-color: var(--color-accent-blue);
+	color: white;
+	transition: background-color 0.3s ease;
+}
+
+.sl-link-button[data-variant="secondary"]:hover,
+button.secondary:hover,
+a.button-secondary:hover {
+	background-color: var(--color-accent-blue-hover);
+}
+
+/* Link Styling 
+a:not(.sl-link-button) {
+	color: var(--color-accent-purple);
+	transition: color 0.3s ease;
+}
+
+a:not(.sl-link-button):hover {
+	color: var(--color-accent-purple-hover);
+}
+	*/
+
+/* Footer dark mode support */
+.nsf-footer-text {
+	color: var(--color-text-muted) !important;
+}
+
+.nsf-footer-text a {
+	color: var(--color-accent-purple) !important;
+}
+
+.nsf-footer-text a:hover {
+	color: var(--color-accent-purple-hover) !important;
 }
