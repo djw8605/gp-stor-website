@@ -16,7 +16,7 @@ export default defineConfig({
       starlight({
           title: 'GP-STOR',
           description: 'Great Plains Scalable Tiered Object Repository',
-          logo: { src: './src/assets/logo.png', alt: 'GP-STOR', replacesTitle: true },
+          logo: { light: './src/assets/logo.png', dark: './src/assets/logo-dark.png', alt: 'GP-STOR', replacesTitle: true },
           social: [
               { icon: 'github', label: 'Github', href: repo}
           ],
