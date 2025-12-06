@@ -20,4 +20,4 @@ GP-STOR provides 14 PB of redundant Ceph object storage plus 384 TB of high-spee
 
 ## Get Involved
 
-We're currently onboarding beta users. Visit our [Access & Getting Started](/access/) page to learn more about how you can participate in the beta program.
+We're currently onboarding beta users. Visit our [Access & Getting Started](/docs/access/) page to learn more about how you can participate in the beta program.
