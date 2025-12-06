@@ -2,8 +2,7 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
-
-import tailwindcss from '@tailwindcss/vite';
+import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 // Dynamically set the base path for GitHub Pages project sites when running in CI.
@@ -18,6 +17,10 @@ export default defineConfig({
     // If running in GitHub Actions and repo is available, prefix paths with /<repo>/
     // Otherwise default to root when developing locally.
   integrations: [
+      tailwind({
+          // Disable default base styles to avoid conflicts with Starlight
+          applyBaseStyles: false,
+      }),
       starlight({
           title: 'GP-STOR',
           description: 'Great Plains Scalable Tiered Object Repository',
@@ -61,33 +64,34 @@ export default defineConfig({
               {
                   label: 'Getting Started',
                   items: [
-                      { label: 'Overview', link: '/docs/overview/' },
-                      { label: 'Quickstart', link: '/docs/quickstart/' },
-                      { label: 'Access & Getting Started', link: '/docs/access/' },
+                      { label: 'Overview', slug: 'docs/overview' },
+                      { label: 'Quickstart', slug: 'docs/quickstart' },
+                      { label: 'Access & Getting Started', slug: 'docs/access' },
                   ],
               },
               {
                   label: 'Using GP-STOR',
                   items: [
-                      { label: 'Mounting GP-STOR to Your Cluster', link: '/docs/connecting/' },
+                      { label: 'Mounting GP-STOR to Your Cluster', slug: 'docs/connecting' },
                   ],
               },
               {
                   label: 'About',
                   items: [
-                      { label: 'Team & Partners', link: '/docs/team/' },
-                      { label: 'Training & Resources', link: '/docs/training/' },
-                      { label: 'FAQ', link: '/docs/faq/' },
-                      { label: 'Contact', link: '/docs/contact/' },
+                      { label: 'Team & Partners', slug: 'docs/team' },
+                      { label: 'Training & Resources', slug: 'docs/training' },
+                      { label: 'FAQ', slug: 'docs/faq' },
+                      { label: 'Contact', slug: 'docs/contact' },
                   ],
               },
           ],
       }),
       sitemap(),
-      icon(),
+      icon({
+          include: {
+              tabler: ['*'],
+              mdi: ['*'],
+          },
+      }),
 	],
-
-  vite: {
-    plugins: [tailwindcss()],
-  },
 });
