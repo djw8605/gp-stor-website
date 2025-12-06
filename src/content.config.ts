@@ -70,7 +70,7 @@ const eventsCollection = defineCollection({
 });
 
 export const collections = {
-  docs: defineCollection({ type: 'content', schema: docsSchema() }),
+  docs: defineCollection({ schema: docsSchema() }),
   post: blogCollection,
   events: eventsCollection,
 };
