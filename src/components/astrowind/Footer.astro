@@ -1,0 +1,52 @@
+---
+// Footer for Astrowind pages
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- About -->
+      <div class="col-span-1 md:col-span-2">
+        <h3 class="text-lg font-semibold mb-4">GP-STOR</h3>
+        <p class="text-gray-600 dark:text-gray-400 text-sm">
+          Great Plains Scalable Tiered Object Repository - Providing distributed, resilient storage infrastructure to accelerate research across the Great Plains region.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="/docs/overview/" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">Overview</a></li>
+          <li><a href="/docs/quickstart/" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">Quickstart</a></li>
+          <li><a href="/docs/access/" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">Access</a></li>
+          <li><a href="/blog/" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">Blog</a></li>
+          <li><a href="/events/" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">Events</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Resources</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="/docs/team/" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">Team</a></li>
+          <li><a href="/docs/training/" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">Training</a></li>
+          <li><a href="/docs/faq/" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">FAQ</a></li>
+          <li><a href="/docs/contact/" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">Contact</a></li>
+          <li><a href="https://github.com/djw8605/gp-stor-website" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
+      <div class="text-center text-sm text-gray-600 dark:text-gray-400">
+        <p>© {currentYear} GP-STOR. All rights reserved.</p>
+        <p class="mt-2">
+          This material is based upon work supported by the National Science Foundation under Grant No. <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2346702" class="text-purple-600 dark:text-purple-400 hover:underline" target="_blank" rel="noopener noreferrer">2346702</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

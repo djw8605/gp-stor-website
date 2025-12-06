@@ -1,0 +1,87 @@
+---
+// Base Layout for Astrowind-style pages
+import '@fontsource-variable/inter';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'GP-STOR - Great Plains Scalable Tiered Object Repository',
+  description = 'Providing distributed, resilient storage infrastructure to accelerate research across the Great Plains region.',
+  image = '/animated-logo.png',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+    
+    <!-- Theme -->
+    <meta name="theme-color" content="#15422a" />
+  </head>
+  <body class="antialiased text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900">
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* Import Tailwind v3 */
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+
+  :root {
+    --green-hsl: 140, 55%, 15%;
+    --color-bg-primary: #D7F0E1;
+    --color-bg-secondary: white;
+    --color-text-heading: #111111;
+    --color-text-body: #2B2B2B;
+    --color-text-muted: #555555;
+    --color-accent-purple: #5147F8;
+    --color-accent-purple-hover: #635BFF;
+    --color-accent-blue: #003366;
+    --color-accent-blue-hover: #004080;
+    --color-accent-gold: #D4A017;
+  }
+
+  :root.dark {
+    --color-bg-primary: #0f1419;
+    --color-bg-secondary: #1a1f26;
+    --color-text-heading: #ffffff;
+    --color-text-body: #d1d5db;
+    --color-text-muted: #9ca3af;
+  }
+
+  * {
+    font-family: 'Inter Variable', system-ui, -apple-system, sans-serif;
+  }
+</style>

@@ -1,0 +1,90 @@
+---
+// Blog post template
+import { getCollection, type CollectionEntry } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+};
+---
+
+<PageLayout
+  title={`${post.data.title} - GP-STOR Blog`}
+  description={post.data.description || post.data.summary || post.data.title}
+>
+  <article class="py-16 md:py-24">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto">
+        <!-- Header -->
+        <header class="mb-8">
+          <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            {post.data.title}
+          </h1>
+          
+          <div class="flex flex-wrap items-center gap-4 text-gray-600 dark:text-gray-400">
+            <time datetime={post.data.pubDate.toISOString()}>
+              {formatDate(post.data.pubDate)}
+            </time>
+            
+            {post.data.tags.length > 0 && (
+              <div class="flex gap-2">
+                {post.data.tags.map((tag) => (
+                  <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full text-sm font-medium">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </header>
+
+        <!-- Content -->
+        <div class="prose prose-lg dark:prose-invert max-w-none
+          prose-headings:font-bold
+          prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4
+          prose-h3:text-2xl prose-h3:mt-6 prose-h3:mb-3
+          prose-p:mb-4 prose-p:leading-relaxed
+          prose-a:text-purple-600 dark:prose-a:text-purple-400 prose-a:no-underline hover:prose-a:underline
+          prose-strong:text-gray-900 dark:prose-strong:text-gray-100
+          prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+          prose-ul:my-6 prose-ol:my-6
+          prose-li:my-2
+        ">
+          <Content />
+        </div>
+
+        <!-- Navigation -->
+        <footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <a
+            href="/blog/"
+            class="inline-flex items-center text-purple-600 dark:text-purple-400 hover:underline font-medium"
+          >
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+            </svg>
+            Back to Blog
+          </a>
+        </footer>
+      </div>
+    </div>
+  </article>
+</PageLayout>
