@@ -62,24 +62,24 @@ export default defineConfig({
         {
           label: 'Getting Started',
           items: [
-            { label: 'Overview', link: 'documentation/overview/' },
-            { label: 'Quickstart', link: 'documentation/quickstart/' },
-            { label: 'Access & Getting Started', link: 'documentation/access/' },
+            { label: 'Overview', link: '/overview' },
+            { label: 'Quickstart', link: '/quickstart' },
+            { label: 'Access & Getting Started', link: '/access' },
           ],
         },
         {
           label: 'Using GP-STOR',
           items: [
-            { label: 'Mounting GP-STOR to Your Cluster', link: 'documentation/connecting/' },
+            { label: 'Mounting GP-STOR to Your Cluster', link: '/connecting' },
           ],
         },
         {
           label: 'About',
           items: [
-            { label: 'Team & Partners', link: 'documentation/team/' },
-            { label: 'Training & Resources', link: 'documentation/training/' },
-            { label: 'FAQ', link: 'documentation/faq/' },
-            { label: 'Contact', link: 'documentation/contact/' },
+            { label: 'Team & Partners', link: '/team' },
+            { label: 'Training & Resources', link: '/training' },
+            { label: 'FAQ', link: '/faq' },
+            { label: 'Contact', link: '/contact' },
           ],
         },
       ],
