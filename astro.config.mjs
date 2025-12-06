@@ -1,5 +1,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import sitemap from '@astrojs/sitemap';
+import icon from 'astro-icon';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -10,6 +12,9 @@ const repo = "https://github.com/djw8605/gp-stor-website";
 const isCI = process.env.GITHUB_ACTIONS === 'true';
 
 export default defineConfig({
+    // Set site URL for sitemap generation
+    site: 'https://djw8605.github.io/gp-stor-website/',
+    
     // If running in GitHub Actions and repo is available, prefix paths with /<repo>/
     // Otherwise default to root when developing locally.
   integrations: [
@@ -17,6 +22,8 @@ export default defineConfig({
           title: 'GP-STOR',
           description: 'Great Plains Scalable Tiered Object Repository',
           logo: { light: './src/assets/logo.png', dark: './src/assets/logo-dark.png', alt: 'GP-STOR', replacesTitle: true },
+          // Disable root index to avoid conflict with custom landing page
+          disable404Route: false,
           social: [
               { icon: 'github', label: 'Github', href: repo}
           ],
@@ -76,6 +83,8 @@ export default defineConfig({
               },
           ],
       }),
+      sitemap(),
+      icon(),
 	],
 
   vite: {

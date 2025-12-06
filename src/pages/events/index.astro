@@ -1,0 +1,145 @@
+---
+// Events index page
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+
+// Get all events and sort by date (upcoming first)
+const allEvents = await getCollection('events');
+const now = new Date();
+const upcomingEvents = allEvents
+  .filter((event) => event.data.date >= now)
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+const pastEvents = allEvents
+  .filter((event) => event.data.date < now)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(date);
+};
+---
+
+<PageLayout
+  title="Events - GP-STOR"
+  description="Upcoming training sessions, workshops, and community events for GP-STOR"
+>
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Events</h1>
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          Training sessions, workshops, and community events for the GP-STOR platform
+        </p>
+      </div>
+
+      <div class="max-w-4xl mx-auto">
+        <!-- Upcoming Events -->
+        {upcomingEvents.length > 0 && (
+          <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">Upcoming Events</h2>
+            <div class="space-y-6">
+              {upcomingEvents.map((event) => (
+                <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-6 hover:shadow-lg transition-shadow">
+                  <div class="flex flex-col md:flex-row md:items-start gap-4">
+                    <div class="flex-shrink-0 text-center md:text-left">
+                      <div class="inline-block px-4 py-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                        <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">
+                          {event.data.date.getDate()}
+                        </div>
+                        <div class="text-sm text-purple-600 dark:text-purple-400">
+                          {event.data.date.toLocaleDateString('en-US', { month: 'short' })}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="flex-1">
+                      <a href={`/events/${event.id}/`} class="group">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                          {event.data.title}
+                        </h3>
+                      </a>
+                      
+                      <div class="flex flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400 mb-3">
+                        <div class="flex items-center">
+                          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          {formatDate(event.data.date)}
+                        </div>
+                        <div class="flex items-center">
+                          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          {event.data.location}
+                        </div>
+                      </div>
+
+                      {event.data.tags.length > 0 && (
+                        <div class="flex gap-2 mb-3">
+                          {event.data.tags.map((tag) => (
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded text-xs font-medium">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <p class="text-gray-600 dark:text-gray-400 mb-3">
+                        {event.data.description}
+                      </p>
+
+                      <a
+                        href={`/events/${event.id}/`}
+                        class="inline-flex items-center text-purple-600 dark:text-purple-400 hover:underline font-medium"
+                      >
+                        Learn more
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {upcomingEvents.length === 0 && (
+          <div class="text-center py-8 mb-12">
+            <p class="text-gray-600 dark:text-gray-400">No upcoming events scheduled. Check back soon!</p>
+          </div>
+        )}
+
+        <!-- Past Events -->
+        {pastEvents.length > 0 && (
+          <div>
+            <h2 class="text-2xl font-bold mb-6">Past Events</h2>
+            <div class="space-y-6 opacity-75">
+              {pastEvents.map((event) => (
+                <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-6">
+                  <a href={`/events/${event.id}/`} class="group">
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                      {event.data.title}
+                    </h3>
+                  </a>
+                  <div class="flex flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400">
+                    <div>{formatDate(event.data.date)}</div>
+                    <div>•</div>
+                    <div>{event.data.location}</div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</PageLayout>

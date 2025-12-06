@@ -1,0 +1,57 @@
+---
+// Features component - Astrowind style
+import { Icon } from 'astro-icon/components';
+
+export interface Feature {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  features: Feature[];
+}
+
+const { title, subtitle, features } = Astro.props;
+---
+
+<section class="py-16 md:py-24">
+  <div class="container mx-auto px-4">
+    {(title || subtitle) && (
+      <div class="text-center mb-12 md:mb-16">
+        {title && (
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            {title}
+          </h2>
+        )}
+        {subtitle && (
+          <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            {subtitle}
+          </p>
+        )}
+      </div>
+    )}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+      {features.map((feature) => (
+        <div class="flex gap-4 items-start">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400">
+              <Icon name={feature.icon} class="w-6 h-6" />
+            </div>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold mb-2">
+              {feature.title}
+            </h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              {feature.description}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

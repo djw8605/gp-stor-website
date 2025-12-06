@@ -1,0 +1,102 @@
+---
+// Root landing page - Astrowind style
+import PageLayout from '../layouts/PageLayout.astro';
+import Hero from '../components/astrowind/Hero.astro';
+import Features from '../components/astrowind/Features.astro';
+import Timeline from '../components/astrowind/Timeline.astro';
+
+const features = [
+  {
+    icon: 'mdi:database',
+    title: 'Tiered, Distributed Storage',
+    description: '14 PB of redundant Ceph object storage plus 384 TB of high-speed solid-state storage designed for AI/ML streaming, simulation output, and instrument data.',
+  },
+  {
+    icon: 'mdi:check-circle',
+    title: 'Three-Site Resilience',
+    description: 'Storage resources distributed across the University of Missouri, University of Nebraska, and University of South Dakota for availability and redundancy.',
+  },
+  {
+    icon: 'mdi:book-open-variant',
+    title: 'Researcher-Friendly Access',
+    description: 'Mounts for OSG and the National Research Platform, OSDF Origin nodes, Globus endpoints, and a web-based UI via Nextcloud.',
+  },
+  {
+    icon: 'mdi:laptop',
+    title: 'Training and Workforce Development',
+    description: 'Virtual office hours, video walkthroughs, and step-by-step guides cultivate an engineering and facilitation workforce across the region.',
+  },
+];
+
+const timelineEntries = [
+  {
+    period: 'Q4 2025',
+    subtitle: 'Infrastructure acquisition',
+    body: 'Finalize specifications and procure infrastructure for GP‑STOR.',
+    status: 'in-progress' as const,
+  },
+  {
+    period: 'Q1 2026',
+    subtitle: 'Receive hardware',
+    body: 'Delivery and rack/cabinet intake at sites; begin inventory and staging.',
+    status: 'todo' as const,
+  },
+  {
+    period: 'Q1-Q2 2026',
+    subtitle: 'Deploy and configure',
+    body: 'Install CEPH clusters across sites, configure replication, pools, and monitoring.',
+    status: 'todo' as const,
+  },
+  {
+    period: 'Q2 2026',
+    subtitle: 'Deploy storage interfaces',
+    body: 'Enable access methods such as a web interface and mounting on National Research Platform.',
+    status: 'todo' as const,
+  },
+  {
+    period: 'Q3 2026',
+    subtitle: 'Beta users',
+    body: 'Onboard early adopters for real-world testing and performance tuning.',
+    status: 'todo' as const,
+  },
+  {
+    period: 'Q4 2026',
+    subtitle: 'Open access & trainings',
+    body: 'Public access opens, training sessions held, and operational support transitions to steady‑state.',
+    status: 'todo' as const,
+  },
+  {
+    period: 'Q2 2027',
+    subtitle: 'Convene user group',
+    body: 'Bring together early stakeholders and beta participants to solicit feedback on service design and policies.',
+    status: 'todo' as const,
+  },
+];
+---
+
+<PageLayout
+  title="GP-STOR - Great Plains Scalable Tiered Object Repository"
+  description="Providing distributed, resilient storage infrastructure to accelerate research across the Great Plains region."
+>
+  <Hero
+    title="Great Plains Scalable Tiered Object Repository"
+    tagline="Providing distributed, resilient storage infrastructure to accelerate research across the Great Plains region."
+    actions={[
+      { text: 'Overview', href: '/overview/', variant: 'primary' },
+      { text: 'Beta Users', href: '/access/', variant: 'secondary' },
+    ]}
+    image="/src/assets/animated-logo.png"
+  />
+
+  <Features
+    title="Explore the features of the GP-STOR platform"
+    subtitle="GP-STOR provides distributed, resilient storage infrastructure designed to accelerate research across the Great Plains region."
+    features={features}
+  />
+
+  <Timeline
+    title="GP-STOR Roadmap"
+    subtitle="Our development and deployment schedule from infrastructure acquisition through public access and community engagement."
+    entries={timelineEntries}
+  />
+</PageLayout>
