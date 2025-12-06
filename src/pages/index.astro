@@ -1,0 +1,154 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Content from '~/components/widgets/Content.astro';
+
+const metadata = {
+  title: 'Great Plains Scalable Tiered Object Repository',
+  ignoreTitleTemplate: true,
+};
+
+// Features from the original landing page
+const features = [
+  {
+    title: 'Tiered, Distributed Storage',
+    description: '14 PB of redundant Ceph object storage plus 384 TB of high-speed solid-state storage designed for AI/ML streaming, simulation output, and instrument data.',
+    icon: 'tabler:database',
+  },
+  {
+    title: 'Three-Site Resilience',
+    description: 'Storage resources distributed across the University of Missouri, University of Nebraska, and University of South Dakota for availability and redundancy.',
+    icon: 'tabler:shield-check',
+  },
+  {
+    title: 'Researcher-Friendly Access',
+    description: 'Mounts for OSG and the National Research Platform, OSDF Origin nodes, Globus endpoints, and a web-based UI via Nextcloud.',
+    icon: 'tabler:plug-connected',
+  },
+  {
+    title: 'Training and Workforce Development',
+    description: 'Virtual office hours, video walkthroughs, and step-by-step guides cultivate an engineering and facilitation workforce across the region.',
+    icon: 'tabler:school',
+  },
+];
+
+// Timeline entries from the original landing page
+const timelineEntries = [
+  {
+    period: 'Q4 2025',
+    title: 'Infrastructure acquisition',
+    description: 'Finalize specifications and procure infrastructure for GP‑STOR.',
+    status: 'current',
+  },
+  {
+    period: 'Q1 2026',
+    title: 'Receive hardware',
+    description: 'Delivery and rack/cabinet intake at sites; begin inventory and staging.',
+  },
+  {
+    period: 'Q1-Q2 2026',
+    title: 'Deploy and configure',
+    description: 'Install CEPH clusters across sites, configure replication, pools, and monitoring.',
+  },
+  {
+    period: 'Q2 2026',
+    title: 'Deploy storage interfaces',
+    description: 'Enable access methods such as a web interface and mounting on National Research Platform.',
+  },
+  {
+    period: 'Q3 2026',
+    title: 'Beta users',
+    description: 'Onboard early adopters for real-world testing and performance tuning.',
+  },
+  {
+    period: 'Q4 2026',
+    title: 'Open access & trainings',
+    description: 'Public access opens, training sessions held, and operational support transitions to steady‑state.',
+  },
+  {
+    period: 'Q2 2027',
+    title: 'Convene user group',
+    description: 'Bring together early stakeholders and beta participants to solicit feedback on service design and policies.',
+  },
+];
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget -->
+  <Hero
+    actions={[
+      { text: 'Documentation', href: '/documentation/', variant: 'primary' },
+      { text: 'Beta Users', href: '/documentation/access/', variant: 'secondary' },
+    ]}
+  >
+    <Fragment slot="title">
+      Great Plains Scalable<br />
+      <span class="text-accent dark:text-white highlight">Tiered Object Repository</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Providing distributed, resilient storage infrastructure to accelerate research across the Great Plains region.
+    </Fragment>
+  </Hero>
+
+  <!-- Features Widget -->
+  <Features
+    id="features"
+    tagline="Features"
+    title="Explore the features of the GP-STOR platform"
+    subtitle="GP-STOR provides distributed, resilient storage infrastructure designed to accelerate research across the Great Plains region."
+    items={features}
+  />
+
+  <!-- Timeline / Roadmap Section -->
+  <Content
+    id="roadmap"
+    title="GP-STOR Roadmap"
+    subtitle="Our development and deployment schedule from infrastructure acquisition through public access and community engagement."
+    isReversed
+  >
+    <Fragment slot="content">
+      <div class="space-y-4">
+        {timelineEntries.map((entry) => (
+          <div class="border-l-4 border-primary pl-4 py-2">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="font-bold text-lg">{entry.period}</span>
+              {entry.status === 'current' && (
+                <span class="px-2 py-1 text-xs bg-primary text-white rounded-full">In Progress</span>
+              )}
+            </div>
+            <h4 class="font-semibold text-base">{entry.title}</h4>
+            <p class="text-muted text-sm">{entry.description}</p>
+          </div>
+        ))}
+      </div>
+    </Fragment>
+  </Content>
+
+  <!-- Call to Action Widget -->
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Get Started',
+        href: '/documentation/quickstart/',
+        icon: 'tabler:arrow-right',
+      },
+      {
+        variant: 'secondary',
+        text: 'Learn More',
+        href: '/documentation/overview/',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Ready to get started?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Join the GP-STOR platform and accelerate your research with distributed, resilient storage.
+    </Fragment>
+  </CallToAction>
+</Layout>

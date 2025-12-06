@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-page {
+    font-size: var(--aw-text-page-font-size, 1rem);
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full border-primary transition-colors;
+    @apply bg-primary text-white shadow-md;
+    @apply hover:bg-opacity-90;
+  }
+}
