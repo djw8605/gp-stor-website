@@ -1,5 +1,4 @@
 import { z, defineCollection } from 'astro:content';
-import { docsLoader } from '@astrojs/starlight/loaders';
 import { docsSchema } from '@astrojs/starlight/schema';
 
 const metadataDefinition = () =>
@@ -71,7 +70,7 @@ const eventsCollection = defineCollection({
 });
 
 export const collections = {
-  docs: defineCollection({ loader: docsLoader(), schema: docsSchema() }),
+  docs: defineCollection({ type: 'content', schema: docsSchema() }),
   post: blogCollection,
   events: eventsCollection,
 };
