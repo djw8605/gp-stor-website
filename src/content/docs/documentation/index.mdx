@@ -1,0 +1,108 @@
+---
+title: Great Plains Scalable Tiered Object Repository
+head:   
+  - tag: title
+    content: Great Plains Scalable Tiered Object Repository
+description: Great Plains Scalable Tiered Object Repository
+template: splash
+hero:
+  tagline: Providing distributed, resilient storage infrastructure to accelerate research across the Great Plains region.
+  image:
+    file: ../../../assets/animated-logo.png
+    alt: Researchers using a laptop connected to storage
+  actions:
+    - text: Overview
+      link: documentation/overview
+      icon: right-arrow
+      variant: primary
+    - text: Beta Users
+      link: documentation/access
+      icon: external
+      variant: secondary
+---
+
+import FeaturesList from '../../../components_original/FeaturesList.astro';
+
+export const features = [
+  {
+    icon: 'seti:config',
+    title: 'Tiered, Distributed Storage',
+    summary: '14 PB of redundant Ceph object storage plus 384 TB of high-speed solid-state storage designed for AI/ML streaming, simulation output, and instrument data.',
+  },
+  {
+    icon: 'approve-check',
+    title: 'Three-Site Resilience',
+    summary: 'Storage resources distributed across the University of Missouri, University of Nebraska, and University of South Dakota for availability and redundancy.',
+  },
+  {
+    icon: 'open-book',
+    title: 'Researcher-Friendly Access',
+    summary: 'Mounts for OSG and the National Research Platform, OSDF Origin nodes, Globus endpoints, and a web-based UI via Nextcloud.',
+  },
+  {
+    icon: 'laptop',
+    title: 'Training and Workforce Development',
+    summary: 'Virtual office hours, video walkthroughs, and step-by-step guides cultivate an engineering and facilitation workforce across the region.',
+  },
+]
+
+<FeaturesList 
+  features={features} 
+  featureTitle="Explore the features <br/>of the GP-STOR platform"
+  featureSummary="GP-STOR provides distributed, resilient storage infrastructure designed to accelerate research across the Great Plains region."
+/>
+
+import Timeline from '../../../components_original/Timeline.astro'
+
+export const entries = [
+  {
+    period: 'Q4 2025',
+    subtitle: 'Infrastructure acquisition',
+    body: 'Finalize specifications and procure infrastructure for GP‑STOR.',
+	status: 'in-progress',
+  },
+  {
+    period: 'Q1 2026',
+    subtitle: 'Receive hardware',
+    body: 'Delivery and rack/cabinet intake at sites; begin inventory and staging.',
+	status: 'todo',
+  },
+  {
+    period: 'Q1-Q2 2026',
+    subtitle: 'Deploy and configure',
+    body: 'Install CEPH clusters across sites, configure replication, pools, and monitoring.',
+	status: 'todo',
+  },
+  {
+    period: 'Q2 2026',
+    subtitle: 'Deploy storage interfaces',
+    body: 'Enable access methods such as a web interface and mounting on National Research Platform.',
+	status: 'todo',
+  },
+  {
+    period: 'Q3 2026',
+    subtitle: 'Beta users',
+    body: 'Onboard early adopters for real-world testing and performance tuning.',
+	status: 'todo',
+  },
+    {
+    period: 'Q4 2026',
+    subtitle: 'Open access & trainings',
+    body: 'Public access opens, training sessions held, and operational support transitions to steady‑state.',
+	status: 'todo',
+  },
+  {
+    period: 'Q2 2027',
+    subtitle: 'Convene user group',
+    body: 'Bring together early stakeholders and beta participants to solicit feedback on service design and policies.',
+	status: 'todo',
+  },
+
+]
+
+<Timeline 
+  entries={entries}
+  timelineTitle="GP-STOR Roadmap"
+  timelineSummary="Our development and deployment schedule from infrastructure acquisition through public access and community engagement."
+/>
+

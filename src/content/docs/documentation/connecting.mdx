@@ -1,0 +1,275 @@
+---
+title: Mounting GP-STOR on Your Cluster
+description: Mount GP-STOR storage on your cluster
+tableOfContents:
+  minHeadingLevel: 2
+  maxHeadingLevel: 2
+banner:
+  content: |
+    GP-STOR is currently in the acquisition and deployment phase. Access methods, policies, and allocation processes are being finalized and will be published with the production service launch.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+This guide walks you through mounting GP-STOR storage on your cluster using rclone with the WebDAV interface provided by GP-STOR.
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- Access to a GP-STOR account with Nextcloud credentials
+- `rclone` installed on your cluster (see [Installation](#installing-rclone))
+- SSH access to your cluster with appropriate permissions
+
+## Installing rclone
+
+If rclone is not already installed on your cluster, you can install it:
+
+```bash
+curl https://rclone.org/install.sh | sudo bash
+```
+
+For clusters where you don't have sudo access, use the user installation:
+
+```bash
+cd ~
+curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
+unzip rclone-current-linux-amd64.zip
+cd rclone-*-linux-amd64
+mkdir -p ~/.local/bin
+cp rclone ~/.local/bin/
+chmod +x ~/.local/bin/rclone
+```
+
+Then add `~/.local/bin` to your PATH in `~/.bashrc`:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+## Create an Application Password in Nextcloud
+
+<Steps>
+1. Log in to your GP-STOR Nextcloud web interface.
+2. Click on your user avatar in the top right corner and select "Settings".
+3. In the left sidebar, click on "Security".
+4. Scroll down to the "App passwords" section.
+5. Enter a name for the app password (e.g., "rclone on cluster")
+6. Click "Create new app password".
+7. Copy the generated password and store it securely; you will need it for rclone configuration
+</Steps>
+
+## Configuring rclone for GP-STOR
+
+<Steps>
+
+1. Start rclone configuration:
+
+   ```bash
+   rclone config
+   ```
+
+2. Create a new remote by choosing "n" when prompted:
+
+   ```
+   n) New remote
+   s) Set configuration password
+   q) Quit config
+   n/s/q> n
+   ```
+
+3. Name your remote (example: gpstor):
+
+   ```
+   name> gpstor
+   ```
+
+4. Choose the WebDAV storage type (enter webdav):
+
+   ```
+   Storage> webdav
+   ```
+
+5. Enter the WebDAV URL (replace USERNAME):
+
+   ```
+   url> https://nextcloud.gp-stor.org/remote.php/dav/files/USERNAME/
+   ```
+
+6. Select Nextcloud as the vendor:
+
+   ```
+   vendor> nextcloud
+   ```
+
+7. Enter credentials (consider an app password):
+
+   ```
+   user> your_username
+   password> your_password
+   ```
+
+   Tip: Use an app-specific password from Nextcloud for improved security.
+
+8. Skip bearer token (press Enter), confirm with y, then quit with q.
+
+</Steps>
+
+## Mounting GP-STOR Storage
+
+### Create a mount point
+
+```bash
+mkdir -p ~/gpstor-mount
+```
+
+### Mount the remote
+
+```bash
+rclone mount gpstor: ~/gpstor-mount --daemon --vfs-cache-mode writes
+```
+
+This mounts your GP-STOR storage at `~/gpstor-mount` in the background with write caching enabled.
+
+### Verify the mount
+
+```bash
+ls ~/gpstor-mount
+```
+
+You should see your files and directories from GP-STOR.
+
+## Advanced Mount Options
+
+For better performance on HPC clusters, consider these additional options:
+
+```bash
+rclone mount gpstor: ~/gpstor-mount \
+  --daemon \
+  --vfs-cache-mode writes \
+  --buffer-size 256M \
+  --vfs-read-chunk-size 128M \
+  --vfs-read-chunk-size-limit 2G \
+  --transfers 16
+```
+
+Options explained:
+- `--vfs-cache-mode writes`: Cache file writes locally before uploading
+- `--buffer-size 256M`: Use 256MB buffer for transfers
+- `--vfs-read-chunk-size 128M`: Read files in 128MB chunks
+- `--vfs-read-chunk-size-limit 2G`: Maximum chunk size
+- `--transfers 16`: Number of parallel transfers
+
+## Using GP-STOR in Job Scripts
+
+### Example SLURM script
+
+```bash
+#!/bin/bash
+#SBATCH --job-name=gpstor-job
+#SBATCH --time=01:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+
+# Ensure rclone mount exists
+if ! mountpoint -q ~/gpstor-mount; then
+    mkdir -p ~/gpstor-mount
+    rclone mount gpstor: ~/gpstor-mount --daemon --vfs-cache-mode writes
+    sleep 5  # Give mount time to stabilize
+fi
+
+# Copy data from GP-STOR to local scratch
+cp ~/gpstor-mount/input-data/* $TMPDIR/
+
+# Run your computation
+cd $TMPDIR
+./your_program
+
+# Copy results back to GP-STOR
+cp output-files/* ~/gpstor-mount/results/
+
+# Optionally unmount when done
+# fusermount -u ~/gpstor-mount
+```
+
+## Transferring Data
+
+### Copy files to GP-STOR
+
+```bash
+rclone copy /local/path gpstor:remote/path --progress
+```
+
+### Sync directories
+
+```bash
+rclone sync /local/directory gpstor:remote/directory --progress
+```
+
+### List files
+
+```bash
+rclone ls gpstor:
+```
+
+## Unmounting
+
+To unmount GP-STOR storage:
+
+```bash
+fusermount -u ~/gpstor-mount
+```
+
+Or on macOS:
+
+```bash
+umount ~/gpstor-mount
+```
+
+## Troubleshooting
+
+### Mount hangs or is unresponsive
+
+Try unmounting and remounting with verbose output:
+
+```bash
+fusermount -u ~/gpstor-mount
+rclone mount gpstor: ~/gpstor-mount -v
+```
+
+### Permission denied errors
+
+Verify your credentials are correct:
+
+```bash
+rclone config show gpstor
+```
+
+Update if needed:
+
+```bash
+rclone config update gpstor
+```
+
+### Slow performance
+
+1. Increase buffer sizes and parallel transfers (see Advanced Mount Options)
+2. Use local scratch space for intensive I/O operations
+3. Consider using `rclone copy` or `rclone sync` instead of mounting for large batch transfers
+
+## Getting Help
+
+If you encounter issues:
+
+- Check the [rclone documentation](https://rclone.org/docs/)
+- Review rclone logs: `rclone mount gpstor: ~/gpstor-mount --log-file=~/rclone.log`
+- Contact the GP-STOR team via our [contact page](/contact)
+- Join our virtual office hours for live assistance
+
+## Best Practices
+
+1. **Use local scratch for intensive I/O**: Copy data from GP-STOR to local scratch (`$TMPDIR`) for computation-heavy jobs
+2. **Batch transfers**: Use `rclone copy` or `rclone sync` for large data transfers rather than mounting
+3. **Clean up mounts**: Unmount when done to free resources
+4. **Monitor usage**: Keep track of your storage quota through the Nextcloud web interface
+5. **Use app passwords**: Generate app-specific passwords in Nextcloud for better security

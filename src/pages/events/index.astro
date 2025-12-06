@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '~/layouts/PageLayout.astro';
+import Headline from '~/components/ui/Headline.astro';
+
+const metadata = {
+  title: 'Events',
+};
+
+// Get all events, sorted by date (upcoming first)
+const allEvents = await getCollection('events', ({ data }) => {
+  return data.draft !== true;
+});
+
+const sortedEvents = allEvents.sort((a, b) => {
+  return b.data.date.valueOf() - a.data.date.valueOf();
+});
+
+// Separate upcoming and past events
+const now = new Date();
+const upcomingEvents = sortedEvents.filter(event => event.data.date > now);
+const pastEvents = sortedEvents.filter(event => event.data.date <= now);
+---
+
+<Layout metadata={metadata}>
+  <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-4xl">
+    <Headline
+      title="Events"
+      subtitle="Join us for workshops, training sessions, and community gatherings around GP-STOR."
+    />
+
+    {upcomingEvents.length > 0 && (
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold mb-6">Upcoming Events</h2>
+        <div class="space-y-6">
+          {upcomingEvents.map((event) => (
+            <article class="border-l-4 border-primary pl-6 py-4">
+              <div class="flex flex-wrap items-center gap-2 mb-2">
+                <time datetime={event.data.date.toISOString()} class="text-sm text-muted">
+                  {event.data.date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+                <span class="text-muted">•</span>
+                <span class="text-sm text-muted">{event.data.location}</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">
+                <a href={`/events/${event.slug}/`} class="hover:text-primary transition-colors">
+                  {event.data.title}
+                </a>
+              </h3>
+              {event.data.description && (
+                <p class="text-muted mb-2">{event.data.description}</p>
+              )}
+              {event.data.tags && event.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-2">
+                  {event.data.tags.map((tag) => (
+                    <span class="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 rounded">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {pastEvents.length > 0 && (
+      <div>
+        <h2 class="text-2xl font-bold mb-6">Past Events</h2>
+        <div class="space-y-6 opacity-75">
+          {pastEvents.map((event) => (
+            <article class="border-l-4 border-gray-300 dark:border-gray-600 pl-6 py-4">
+              <div class="flex flex-wrap items-center gap-2 mb-2">
+                <time datetime={event.data.date.toISOString()} class="text-sm text-muted">
+                  {event.data.date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+                <span class="text-muted">•</span>
+                <span class="text-sm text-muted">{event.data.location}</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">
+                <a href={`/events/${event.slug}/`} class="hover:text-primary transition-colors">
+                  {event.data.title}
+                </a>
+              </h3>
+              {event.data.description && (
+                <p class="text-muted mb-2">{event.data.description}</p>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {allEvents.length === 0 && (
+      <p class="text-center text-muted py-12">
+        No events scheduled at this time. Check back soon!
+      </p>
+    )}
+  </section>
+</Layout>

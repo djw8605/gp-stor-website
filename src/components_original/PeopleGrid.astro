@@ -1,0 +1,70 @@
+---
+// src/components/PeopleCardsAlt.astro
+import {Icon} from '@astrojs/starlight/components';
+
+export interface SocialLink {
+  label: string;
+  href: string;
+  icon?: string; // e.g. "starlight:github"
+}
+
+export interface Person {
+  image: string;
+  name: string;
+  title: string;
+  institution: string;
+  social?: SocialLink[];
+}
+
+export interface Props {
+  people: Person[];
+  class?: string;
+}
+
+const { people = [], class: className = '' } = Astro.props;
+---
+
+<section class={`bg-white dark:bg-gray-900 ${className}`}>
+  <div class="container px-6 py-10 mx-auto">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+      {people.map((p) => (
+        <div class="flex mt-0 flex-col items-center p-8 transition-colors duration-300 rounded-xl">
+          <img
+            class="object-cover w-32 h-32 rounded-full ring-4 ring-gray-300"
+            src={p.image}
+            alt={p.name}
+            width="128"
+            height="128"
+            loading="lazy"
+          />
+
+          <h2 class="mt-4 text-2xl font-semibold text-gray-700 dark:text-white text-center">
+            {p.name}
+          </h2>
+
+          <p class="mt-1 text-gray-500 dark:text-gray-300 text-center">
+            {p.title}
+          </p>
+
+          <p class="mt-1 text-sm text-gray-400 dark:text-gray-400 text-center">
+            {p.institution}
+          </p>
+
+          <div class="flex mt-3 -mx-2">
+            {p.social?.map((link) => (
+              <a
+                href={link.href}
+                class="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white"
+                aria-label={link.label}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon name={link.icon ?? 'starlight:link'} class="w-6 h-6" />
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
