@@ -1,0 +1,129 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Steps from '~/components/widgets/Steps.astro';
+
+const metadata = {
+  title: 'Great Plains Scalable Tiered Object Repository',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+  <Hero
+    actions={[
+      { text: 'Overview', href: '/docs/overview/', variant: 'primary' },
+      { text: 'Beta Users', href: '/docs/access/', variant: 'secondary' },
+    ]}
+  >
+    <Fragment slot="title">
+      Great Plains Scalable Tiered Object Repository
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Providing distributed, resilient storage infrastructure to accelerate research across the Great Plains region.
+    </Fragment>
+  </Hero>
+
+  <!-- Features Widget *************** -->
+  <Features
+    id="features"
+    tagline="Features"
+    title="Explore the features of the GP-STOR platform"
+    subtitle="GP-STOR provides distributed, resilient storage infrastructure designed to accelerate research across the Great Plains region."
+    items={[
+      {
+        title: 'Tiered, Distributed Storage',
+        description: '14 PB of redundant Ceph object storage plus 384 TB of high-speed solid-state storage designed for AI/ML streaming, simulation output, and instrument data.',
+        icon: 'tabler:server',
+      },
+      {
+        title: 'Three-Site Resilience',
+        description: 'Storage resources distributed across the University of Missouri, University of Nebraska, and University of South Dakota for availability and redundancy.',
+        icon: 'tabler:shield-check',
+      },
+      {
+        title: 'Researcher-Friendly Access',
+        description: 'Mounts for OSG and the National Research Platform, OSDF Origin nodes, Globus endpoints, and a web-based UI via Nextcloud.',
+        icon: 'tabler:cloud',
+      },
+      {
+        title: 'Training and Workforce Development',
+        description: 'Virtual office hours, video walkthroughs, and step-by-step guides cultivate an engineering and facilitation workforce across the region.',
+        icon: 'tabler:school',
+      },
+    ]}
+  />
+
+  <!-- Timeline / Steps Widget ******* -->
+  <Steps
+    title="GP-STOR Roadmap"
+    subtitle="Our development and deployment schedule from infrastructure acquisition through public access and community engagement."
+    items={[
+      {
+        title: 'Q4 2025: Infrastructure acquisition',
+        description: 'Finalize specifications and procure infrastructure for GP‑STOR.',
+        icon: 'tabler:shopping-cart',
+      },
+      {
+        title: 'Q1 2026: Receive hardware',
+        description: 'Delivery and rack/cabinet intake at sites; begin inventory and staging.',
+        icon: 'tabler:truck-delivery',
+      },
+      {
+        title: 'Q1-Q2 2026: Deploy and configure',
+        description: 'Install CEPH clusters across sites, configure replication, pools, and monitoring.',
+        icon: 'tabler:settings',
+      },
+      {
+        title: 'Q2 2026: Deploy storage interfaces',
+        description: 'Enable access methods such as a web interface and mounting on National Research Platform.',
+        icon: 'tabler:plug-connected',
+      },
+      {
+        title: 'Q3 2026: Beta users',
+        description: 'Onboard early adopters for real-world testing and performance tuning.',
+        icon: 'tabler:users',
+      },
+      {
+        title: 'Q4 2026: Open access & trainings',
+        description: 'Public access opens, training sessions held, and operational support transitions to steady‑state.',
+        icon: 'tabler:door-enter',
+      },
+      {
+        title: 'Q2 2027: Convene user group',
+        description: 'Bring together early stakeholders and beta participants to solicit feedback on service design and policies.',
+        icon: 'tabler:users-group',
+      },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Get Started',
+        href: '/docs/overview/',
+        icon: 'tabler:rocket',
+      },
+      {
+        variant: 'secondary',
+        text: 'Contact Us',
+        href: '/docs/contact/',
+        icon: 'tabler:mail',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Ready to accelerate your research?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Join GP-STOR today and leverage distributed, resilient storage infrastructure across the Great Plains region.
+    </Fragment>
+  </CallToAction>
+</Layout>
