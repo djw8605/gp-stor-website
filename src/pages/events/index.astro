@@ -6,12 +6,19 @@ import PageLayout from '../../layouts/PageLayout.astro';
 // Get all events and sort by date (upcoming first)
 const allEvents = await getCollection('events');
 const now = new Date();
-const upcomingEvents = allEvents
-  .filter((event) => event.data.date >= now)
-  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
-const pastEvents = allEvents
-  .filter((event) => event.data.date < now)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const upcomingEvents: typeof allEvents = [];
+const pastEvents: typeof allEvents = [];
+
+for (const event of allEvents) {
+  if (event.data.date >= now) {
+    upcomingEvents.push(event);
+  } else {
+    pastEvents.push(event);
+  }
+}
+
+upcomingEvents.sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+pastEvents.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const formatDate = (date: Date) => {
   return new Intl.DateTimeFormat('en-US', {
