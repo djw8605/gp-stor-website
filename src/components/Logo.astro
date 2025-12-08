@@ -1,10 +1,10 @@
 ---
 import { SITE } from 'astrowind:config';
-import Image from '~/components/common/Image.astro';
+import lightLogo from '~/assets/logo.png';
+import darkLogo from '~/assets/logo-dark.png';
 ---
 
-<span
-  class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white"
->
-  <Image src="~/assets/images/NRP_Horizontal_Logo.png.webp" alt="NRP Logo." width="150px"/>
+<span class="self-center ml-2 rtl:ml-0 rtl:mr-2">
+  <img src={lightLogo.src} alt="GP-STOR Logo" class="h-12 w-auto dark:hidden" />
+  <img src={darkLogo.src} alt="GP-STOR Logo" class="h-12 w-auto hidden dark:block" />
 </span>

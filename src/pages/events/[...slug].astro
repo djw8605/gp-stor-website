@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   const events = await getCollection('events');
 
   return events.map((event) => ({
-    params: { slug: event.id },
+    params: { slug: (event.slug ?? event.id).replace(/\.md$/, '') },
     props: { event },
   }));
 }
@@ -69,7 +69,7 @@ const metadata = {
 
     <footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
       <a 
-        href="/events/" 
+        href="/events" 
         class="inline-flex items-center text-primary hover:underline"
       >
         ← Back to Events

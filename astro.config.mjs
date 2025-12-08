@@ -54,7 +54,7 @@ export default defineConfig({
           },
         },
       ],
-      customCss: ['./src/styles/global.css', './src/assets/landing.css'],
+      
       components: {
         Footer: './src/components/DocsFooter.astro',
       },
@@ -65,24 +65,24 @@ export default defineConfig({
         {
           label: 'Getting Started',
           items: [
-            { label: 'Overview', link: '/docs/overview/' },
-            { label: 'Quickstart', link: '/docs/quickstart/' },
-            { label: 'Access & Getting Started', link: '/docs/access/' },
+            { label: 'Overview', link: '/docs/overview' },
+            { label: 'Quickstart', link: '/docs/quickstart' },
+            { label: 'Access & Getting Started', link: '/docs/access' },
           ],
         },
         {
           label: 'Using GP-STOR',
           items: [
-            { label: 'Mounting GP-STOR to Your Cluster', link: '/docs/connecting/' },
+            { label: 'Mounting GP-STOR to Your Cluster', link: '/docs/connecting' },
           ],
         },
         {
           label: 'About',
           items: [
-            { label: 'Team & Partners', link: '/docs/team/' },
-            { label: 'Training & Resources', link: '/docs/training/' },
-            { label: 'FAQ', link: '/docs/faq/' },
-            { label: 'Contact', link: '/docs/contact/' },
+            { label: 'Team & Partners', link: '/docs/team' },
+            { label: 'Training & Resources', link: '/docs/training' },
+            { label: 'FAQ', link: '/docs/faq' },
+            { label: 'Contact', link: '/docs/contact' },
           ],
         },
       ],

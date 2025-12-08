@@ -32,7 +32,10 @@ const metadata = {
         {events.map((event) => (
           <article class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
             <h2 class="text-2xl font-bold mb-2">
-              <a href={`/events/${event.id}/`} class="hover:text-primary">
+              <a
+                href={`/events/${(event.slug ?? event.id).replace(/\.md$/, '')}`}
+                class="hover:text-primary"
+              >
                 {event.data.title}
               </a>
             </h2>
