@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '~/layouts/PageLayout.astro';
+
+const blogPosts = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
+
+// Sort by date, newest first
+blogPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const metadata = {
+  title: 'Blog',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-4xl">
+    <header class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-4 font-heading">
+        Blog
+      </h1>
+      <p class="text-xl text-muted">
+        Latest updates and insights about GP-STOR
+      </p>
+    </header>
+
+    {blogPosts.length === 0 ? (
+      <div class="text-center py-12">
+        <p class="text-xl text-muted">No blog posts yet. Check back soon!</p>
+      </div>
+    ) : (
+      <div class="grid gap-6 md:gap-8">
+        {blogPosts.map((post) => (
+          <article class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
+            <h2 class="text-2xl font-bold mb-2">
+              <a
+                href={`/blog/${(post.slug ?? post.id).replace(/\.md$/, '')}`}
+                class="hover:text-primary"
+              >
+                {post.data.title}
+              </a>
+            </h2>
+            <div class="text-sm text-muted mb-3">
+              <time datetime={post.data.pubDate.toISOString()}>
+                {post.data.pubDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+            </div>
+            {post.data.description && (
+              <p class="text-muted mb-4">{post.data.description}</p>
+            )}
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div class="flex flex-wrap gap-2">
+                {post.data.tags.map((tag) => (
+                  <span class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 rounded">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    )}
+  </section>
+</Layout>

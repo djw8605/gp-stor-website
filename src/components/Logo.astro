@@ -1,0 +1,10 @@
+---
+import { SITE } from 'astrowind:config';
+import lightLogo from '~/assets/logo.png';
+import darkLogo from '~/assets/logo-dark.png';
+---
+
+<span class="self-center ml-2 rtl:ml-0 rtl:mr-2">
+  <img src={lightLogo.src} alt="GP-STOR Logo" class="h-12 w-auto dark:hidden" />
+  <img src={darkLogo.src} alt="GP-STOR Logo" class="h-12 w-auto hidden dark:block" />
+</span>

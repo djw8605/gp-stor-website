@@ -1,0 +1,151 @@
+---
+import { Icon } from 'astro-icon/components';
+import { twMerge } from 'tailwind-merge';
+
+export interface StatusItem {
+  title?: string;
+  description?: string;
+  icon?: string;
+  classes?: Record<string, string>;
+  status?: 'todo' | 'active' | 'completed';
+}
+
+export interface Props {
+  items?: Array<StatusItem>;
+  defaultIcon?: string;
+  classes?: Record<string, string>;
+}
+
+const { items = [], classes = {}, defaultIcon } = Astro.props as Props;
+
+const {
+  container: containerClass = '',
+  panel: panelClass = '',
+  title: titleClass = '',
+  description: descriptionClass = '',
+  icon: defaultIconClass = 'text-primary dark:text-slate-200 border-primary dark:border-blue-700',
+} = classes;
+
+const getStatusClasses = (status: string | undefined) => {
+  switch (status) {
+    case 'completed':
+      return {
+        icon: 'opacity-50 text-slate-400 dark:text-slate-600 border-slate-300 dark:border-slate-600',
+        title: 'opacity-60',
+        description: 'opacity-60',
+      };
+    case 'active':
+      return {
+        icon: 'animate-pulse text-primary dark:text-blue-400 border-primary dark:border-blue-400',
+        title: 'font-bold text-primary dark:text-blue-400',
+        description: 'text-primary/80 dark:text-blue-300',
+      };
+    case 'todo':
+    default:
+      return {
+        icon: '',
+        title: '',
+        description: '',
+      };
+  }
+};
+---
+
+{
+  items && items.length && (
+    <div class={containerClass}>
+      {items.map(({ title, description, icon, status = 'todo', classes: itemClasses = {} }, index = 0) => {
+        const statusClasses = getStatusClasses(status);
+        
+        return (
+          <div
+            class={twMerge(
+              'flex intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+              panelClass,
+              itemClasses?.panel
+            )}
+          >
+            <div class="flex flex-col items-center mr-4 rtl:mr-0 rtl:ml-4">
+              <div>
+                <div class="flex items-center justify-center relative">
+                  {(icon || defaultIcon) && (
+                    <span class={twMerge(
+                      'relative flex items-center justify-center',
+                      status === 'active' ? 'ripple-border' : ''
+                    )}>
+                      <Icon
+                        name={icon || defaultIcon}
+                        class={twMerge(
+                          'w-10 h-10 p-2 rounded-full border-2',
+                          defaultIconClass,
+                          statusClasses.icon,
+                          itemClasses?.icon
+                        )}
+                      />
+                    </span>
+                  )}
+                </div>
+              </div>
+              {index !== items.length - 1 && (
+                <div class={twMerge(
+                  'w-px h-full bg-black/10 dark:bg-slate-400/50',
+                  status === 'completed' && 'opacity-30'
+                )} />
+              )}
+            </div>
+            <div class={`pt-1 ${index !== items.length - 1 ? 'pb-8' : ''}`}>
+              {title && (
+                <p
+                  class={twMerge(
+                    'text-xl font-bold',
+                    titleClass,
+                    statusClasses.title,
+                    itemClasses?.title
+                  )}
+                  set:html={title}
+                />
+              )}
+              {description && (
+                <p
+                  class={twMerge(
+                    'text-muted mt-2',
+                    descriptionClass,
+                    statusClasses.description,
+                    itemClasses?.description
+                  )}
+                  set:html={description}
+                />
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  )
+}
+
+<style>
+  @keyframes ripple {
+    0% {
+      box-shadow: 0 0 0 0 currentColor;
+    }
+    50% {
+      box-shadow: 0 0 0 8px transparent;
+    }
+    100% {
+      box-shadow: 0 0 0 12px transparent;
+    }
+  }
+
+  .ripple-border {
+    animation: ripple 1.5s infinite;
+    border-radius: 9999px;
+    display: inline-flex;
+    color: inherit;
+  }
+
+  .ripple-border :global(svg) {
+    position: relative;
+    z-index: 1;
+  }
+</style>
