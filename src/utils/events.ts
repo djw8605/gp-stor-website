@@ -45,15 +45,10 @@ const load = async function (): Promise<CollectionEntry<'events'>[]> {
   return Promise.all(normalizedEvents);
 };
 
-let _events: Post[];
-
 /** */
 export const fetchEvents = async (): Promise<Post[]> => {
-  if (!_events) {
-    _events = await load();
-  }
-
-  return _events;
+  // Always reload events to reflect latest content changes
+  return await load();
 };
 
 /** */
@@ -61,5 +56,14 @@ export const findLatestEvents = async ({ count }: { count?: number }): Promise<P
   const _count = count || 4;
   const events = await fetchEvents();
 
-  return events ? events.sort((a, b) => b.publishDate.valueOf() - a.publishDate.valueOf()).slice(0, _count) : [];
+  if (!events) return [];
+
+  const now = new Date();
+  // Only upcoming events (today or future), sorted soonest first
+  const upcoming = events
+    .filter((e) => e.publishDate.valueOf() >= new Date(now.getFullYear(), now.getMonth(), now.getDate()).valueOf())
+    .sort((a, b) => a.publishDate.valueOf() - b.publishDate.valueOf())
+    .slice(0, _count);
+
+  return upcoming;
 };

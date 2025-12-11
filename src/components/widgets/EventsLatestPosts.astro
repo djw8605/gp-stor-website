@@ -1,5 +1,5 @@
 ---
-import Grid from '~/components/blog/Grid.astro';
+import EventGrid from '~/components/blog/EventGrid.astro';
 import { findLatestEvents } from '~/utils/events';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import type { Widget } from '~/types';
@@ -51,7 +51,7 @@ const posts = await findLatestEvents({ count });
         {information && <p class="text-muted dark:text-slate-400 lg:text-sm lg:max-w-md" set:html={information} />}
       </div>
 
-      <Grid posts={posts} />
+      <EventGrid posts={posts} />
     </WidgetWrapper>
   ) : (
     <Fragment />
