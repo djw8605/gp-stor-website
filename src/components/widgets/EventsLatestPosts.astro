@@ -1,6 +1,5 @@
 ---
-import EventGrid from '~/components/blog/EventGrid.astro';
-import { findLatestEvents } from '~/utils/events';
+import { getCollection } from 'astro:content';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import type { Widget } from '~/types';
 import Button from '../ui/Button.astro';
@@ -26,11 +25,12 @@ const {
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
 
-const posts = await findLatestEvents({ count });
+// Load all events from collection
+const allEvents = await getCollection('events');
 ---
 
 {
-  posts && posts.length > 0 ? (
+  allEvents && allEvents.length > 0 ? (
     <WidgetWrapper id={id} isDark={isDark} containerClass={classes?.container as string} bg={bg}>
       <div class="flex flex-col lg:justify-between lg:flex-row mb-8">
         {title && (
@@ -51,9 +51,102 @@ const posts = await findLatestEvents({ count });
         {information && <p class="text-muted dark:text-slate-400 lg:text-sm lg:max-w-md" set:html={information} />}
       </div>
 
-      <EventGrid posts={posts} />
+      <div id="home-events-grid" class="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+        {allEvents.map((event) => {
+          const eventDate = event.data.date;
+          // Extract date components in UTC to avoid timezone shifts
+          const year = eventDate.getUTCFullYear();
+          const month = String(eventDate.getUTCMonth() + 1).padStart(2, '0');
+          const day = String(eventDate.getUTCDate()).padStart(2, '0');
+          const dateOnly = `${year}-${month}-${day}`;
+          
+          const monthName = eventDate.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' }).toUpperCase();
+          const dayNum = eventDate.getUTCDate();
+          const yearNum = eventDate.getUTCFullYear();
+          const slug = event.slug ?? event.id;
+          const permalink = `/events/${slug.replace(/\.md$/, '')}`;
+
+          return (
+            <a 
+              href={permalink} 
+              class="event-card block no-underline"
+              data-date={dateOnly}
+              data-slug={slug}
+            >
+              <article class="mb-6 transition border border-gray-200 dark:border-slate-700 rounded-lg p-4 hover:shadow-lg">
+                <div class="flex gap-4">
+                  <div class="flex-shrink-0 flex flex-col items-center justify-center bg-primary text-white rounded-lg w-16 h-16 text-center">
+                    <div class="text-xs font-bold">{monthName}</div>
+                    <div class="text-2xl font-bold leading-none">{dayNum}</div>
+                    <div class="text-xs">{yearNum}</div>
+                  </div>
+                  
+                  <div class="flex-1 min-w-0">
+                    <h3 class="mb-1 text-lg font-bold leading-tight font-heading">
+                      <span class="hover:text-primary dark:hover:text-blue-700 transition ease-in duration-200">{event.data.title}</span>
+                    </h3>
+                    <p class="text-muted dark:text-slate-400 text-sm line-clamp-2">{event.data.description}</p>
+                    {event.data.tags && event.data.tags.length > 0 && (
+                      <div class="mt-2 flex flex-wrap gap-1">
+                        {event.data.tags.slice(0, 3).map((tag: string) => (
+                          <span class="inline-block bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 text-xs px-2 py-1 rounded">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </article>
+            </a>
+          );
+        })}
+      </div>
+
+      <div id="no-upcoming-home" class="hidden text-center py-8">
+        <p class="text-lg text-muted">No upcoming events at this time.</p>
+      </div>
+
+      <script define:vars={{ count }}>
+        const now = new Date();
+        const todayStr = now.toISOString().split('T')[0];
+
+        const grid = document.getElementById('home-events-grid');
+        const noEventsMsg = document.getElementById('no-upcoming-home');
+
+        if (grid) {
+          const cards = Array.from(grid.querySelectorAll('.event-card'));
+
+          // Filter for future events (today and later)
+          const future = cards.filter((card) => {
+            const dateStr = card.dataset.date;
+            if (!dateStr) return false;
+            return dateStr >= todayStr;
+          });
+
+          // Sort ascending by date (soonest first)
+          future.sort((a, b) => {
+            const da = a.dataset.date;
+            const db = b.dataset.date;
+            return da < db ? -1 : da > db ? 1 : 0;
+          });
+
+          // Keep only the count requested
+          const limited = future.slice(0, count);
+
+          // Clear and repopulate
+          grid.innerHTML = '';
+          if (limited.length > 0) {
+            limited.forEach((card) => grid.appendChild(card));
+            if (noEventsMsg) noEventsMsg.classList.add('hidden');
+          } else {
+            if (noEventsMsg) noEventsMsg.classList.remove('hidden');
+          }
+        }
+      </script>
     </WidgetWrapper>
   ) : (
     <Fragment />
   )
 }
+

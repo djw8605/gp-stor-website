@@ -4,9 +4,6 @@ import Layout from '~/layouts/PageLayout.astro';
 
 const events = await getCollection('events');
 
-// Sort by date, newest first
-events.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
 const metadata = {
   title: 'Events',
 };
@@ -28,51 +25,144 @@ const metadata = {
         <p class="text-xl text-muted">No events scheduled. Check back soon!</p>
       </div>
     ) : (
-      <div class="grid gap-6 md:gap-8">
-        {events.map((event) => (
-          <article class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
-            <h2 class="text-2xl font-bold mb-2">
-              <a
-                href={`/events/${(event.slug ?? event.id).replace(/\.md$/, '')}`}
-                class="hover:text-primary"
+      <>
+        <!-- Upcoming Events Section -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold mb-6">Upcoming Events</h2>
+          <div id="upcoming-events-list" class="grid gap-6 md:gap-8">
+            {events.map((event) => {
+              // Extract date components in UTC to avoid timezone shifts
+              const eventDate = event.data.date;
+              const year = eventDate.getUTCFullYear();
+              const month = String(eventDate.getUTCMonth() + 1).padStart(2, '0');
+              const day = String(eventDate.getUTCDate()).padStart(2, '0');
+              const dateOnly = `${year}-${month}-${day}`;
+              
+              return (
+              <article 
+                class="event-item border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                data-date={dateOnly}
+                data-slug={event.slug ?? event.id}
               >
-                {event.data.title}
-              </a>
-            </h2>
-            <div class="flex items-center gap-4 text-sm text-muted mb-3">
-              <div class="flex items-center gap-1">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <time datetime={event.data.date.toISOString()}>
-                  {event.data.date.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </time>
-              </div>
-              <div class="flex items-center gap-1">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span>{event.data.location}</span>
-              </div>
-            </div>
-            <p class="text-muted mb-4">{event.data.description}</p>
-            {event.data.tags && event.data.tags.length > 0 && (
-              <div class="flex flex-wrap gap-2">
-                {event.data.tags.map((tag) => (
-                  <span class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 rounded">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-          </article>
-        ))}
-      </div>
+                <h3 class="text-2xl font-bold mb-2">
+                  <a
+                    href={`/events/${(event.slug ?? event.id).replace(/\.md$/, '')}`}
+                    class="hover:text-primary"
+                  >
+                    {event.data.title}
+                  </a>
+                </h3>
+                <div class="flex items-center gap-4 text-sm text-muted mb-3">
+                  <div class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <time datetime={event.data.date.toISOString()}>
+                      {event.data.date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </time>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>{event.data.location}</span>
+                  </div>
+                </div>
+                <p class="text-muted mb-4">{event.data.description}</p>
+                {event.data.tags && event.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-2">
+                    {event.data.tags.map((tag) => (
+                      <span class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 rounded">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </article>
+            )})}
+          </div>
+          <div id="no-upcoming-events" class="hidden text-center py-8">
+            <p class="text-lg text-muted">No upcoming events at this time.</p>
+          </div>
+        </div>
+
+        <!-- Past Events Section -->
+        <div>
+          <h2 class="text-3xl font-bold mb-6">Past Events</h2>
+          <div id="past-events-list" class="grid gap-6 md:gap-8">
+            <!-- Past events will be populated by client-side script -->
+          </div>
+          <div id="no-past-events" class="hidden text-center py-8">
+            <p class="text-lg text-muted">No past events to display.</p>
+          </div>
+        </div>
+      </>
     )}
   </section>
+
+  <script>
+    const now = new Date();
+    const todayStr = now.toISOString().split('T')[0];
+
+    const upcomingList = document.getElementById('upcoming-events-list');
+    const pastList = document.getElementById('past-events-list');
+    const noUpcomingMsg = document.getElementById('no-upcoming-events');
+    const noPastMsg = document.getElementById('no-past-events');
+
+    if (upcomingList && pastList) {
+      const allItems = Array.from(document.querySelectorAll('.event-item'));
+
+      const upcoming = [];
+      const past = [];
+
+      allItems.forEach((item) => {
+        const dateStr = item.dataset.date;
+        if (!dateStr) return;
+        
+        // Upcoming events include today and future
+        if (dateStr >= todayStr) {
+          upcoming.push(item);
+        } else {
+          past.push(item);
+        }
+      });
+
+      // Sort upcoming: soonest first (ascending)
+      upcoming.sort((a, b) => {
+        const da = a.dataset.date;
+        const db = b.dataset.date;
+        return da < db ? -1 : da > db ? 1 : 0;
+      });
+
+      // Sort past: most recent first (descending)
+      past.sort((a, b) => {
+        const da = a.dataset.date;
+        const db = b.dataset.date;
+        return da > db ? -1 : da < db ? 1 : 0;
+      });
+
+      // Populate upcoming events
+      upcomingList.innerHTML = '';
+      if (upcoming.length > 0) {
+        upcoming.forEach((item) => upcomingList.appendChild(item));
+        if (noUpcomingMsg) noUpcomingMsg.classList.add('hidden');
+      } else {
+        if (noUpcomingMsg) noUpcomingMsg.classList.remove('hidden');
+      }
+
+      // Populate past events
+      pastList.innerHTML = '';
+      if (past.length > 0) {
+        past.forEach((item) => pastList.appendChild(item));
+        if (noPastMsg) noPastMsg.classList.add('hidden');
+      } else {
+        if (noPastMsg) noPastMsg.classList.remove('hidden');
+      }
+    }
+  </script>
 </Layout>

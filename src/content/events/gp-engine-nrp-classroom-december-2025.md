@@ -1,6 +1,6 @@
 ---
 title: "GP-ENGINE: Using the National Research Platform in the Classroom"
-date: 2025-12-11T18:00:00Z
+date: 2025-12-11
 location: "Virtual"
 tags: ["training", "GP-ENGINE"]
 description: "This webinar will give instructors an introduction to leveraging the large distributed computing resources available through the National Research Platform (NRP)"
