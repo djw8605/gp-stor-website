@@ -1,0 +1,130 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import PeopleGrid from '~/components/PeopleGrid.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+
+const metadata = {
+  title: 'Team & Partners',
+  description: 'Meet the GP-STOR team and collaborating institutions',
+};
+
+const people = [
+  {
+    name: 'Derek Weitzel',
+    title: 'Research Associate Professor',
+    institution: 'University of Nebraska-Lincoln',
+    image: '/images/derek-weitzel.jpg',
+    social: [
+      { label: 'GitHub', href: 'https://github.com/djw8605', icon: 'github' },
+      { label: 'Website', href: 'https://derekweitzel.com', icon: 'information' },
+    ],
+  },
+  {
+    name: 'Ryan Johnson',
+    title: 'Director of Research Computing',
+    image: '/images/ryan-johnson.jpg',
+    institution: 'University of South Dakota',
+    social: [
+      { href: 'https://rcg.usd.edu/', label: 'Website', icon: 'information' },
+    ]
+  },
+  {
+    name: 'Matthew Keeler',
+    title: 'Director - Research Support Solutions',
+    institution: 'University of Missouri-Columbia',
+    image: '/images/matthew-keeler.jpg',
+    social: [
+      { href: 'https://doit.missouri.edu/services/it-research-support-solutions/', label: 'Website', icon: 'information' },
+    ]
+  },
+];
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+  <Hero>
+    <Fragment slot="title">
+      Team & Partners
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      The GP-STOR project is led by a collaborative team of cyberinfrastructure experts from institutions across the Great Plains region.
+    </Fragment>
+  </Hero>
+
+  <!-- Principal Investigators Section -->
+  <section class="px-4 py-4 mx-auto max-w-7xl sm:px-6 lg:px-8 lg:py-4">
+    <div class="mb-10 md:mx-auto text-center md:mb-12 max-w-3xl">
+      <h2 class="text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-4 font-heading">
+        Principal Investigators
+      </h2>
+    </div>
+    
+    <PeopleGrid people={people} />
+  </section>
+
+  <!-- Collaborating Institutions -->
+  <section class="px-4 py-20 mx-auto sm:px-6 lg:px-8 lg:py-20 bg-[#D7F0E1] dark:bg-slate-800">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-10 md:mx-auto text-center md:mb-12 max-w-3xl">
+        <h2 class="text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-4 font-heading">
+          Collaborating Institutions
+        </h2>
+        <p class="text-xl text-muted dark:text-slate-400">
+          The GP-STOR project builds on successful regional collaborations and partnerships across the Great Plains Network
+        </p>
+      </div>
+      
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
+        <div class="text-center p-6 bg-white dark:bg-slate-700 rounded-lg shadow-md">
+          <h3 class="text-lg font-semibold">University of Nebraska-Lincoln</h3>
+        </div>
+        <div class="text-center p-6 bg-white dark:bg-slate-700 rounded-lg shadow-md">
+          <h3 class="text-lg font-semibold">University of South Dakota</h3>
+        </div>
+        <div class="text-center p-6 bg-white dark:bg-slate-700 rounded-lg shadow-md">
+          <h3 class="text-lg font-semibold">University of Missouri</h3>
+        </div>
+        <div class="text-center p-6 bg-white dark:bg-slate-700 rounded-lg shadow-md">
+          <h3 class="text-lg font-semibold">Great Plains Network (GPN)</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Projects -->
+  <Features2
+    title="Related Projects"
+    subtitle="GP-STOR extends and enhances prior NSF investments"
+    items={[
+      {
+        title: 'GP-CT',
+        description: 'Great Plains CyberTeam - NSF #1925681',
+        icon: 'tabler:users',
+      },
+      {
+        title: 'GP-ARGO',
+        description: 'Great Plains Augmented Regional Gateway to the Open Science Grid - NSF #2018766',
+        icon: 'tabler:network',
+        callToAction: {
+          text: 'Visit GP-ARGO',
+          href: 'https://gp-argo.greatplains.net',
+        },
+      },
+      {
+        title: 'GP-ENGINE',
+        description: 'Great Plains Extended Network of GPUs for Interactive Experimenters - NSF #2322218',
+        icon: 'tabler:cpu',
+        callToAction: {
+          text: 'Visit GP-ENGINE',
+          href: 'https://gp-engine.org',
+        },
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 dark:bg-transparent"></div>
+    </Fragment>
+  </Features2>
+</Layout>

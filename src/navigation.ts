@@ -2,14 +2,8 @@ import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
 
 export const headerData = {
   links: [
-    {
-      text: 'Community',
-      links: [
-        {
-          text: 'People',
-          href: getPermalink('/people'),
-        },
-      ],
+    { text: 'People',
+      href: getPermalink('/people') 
     },
     {
       text: 'Blog',

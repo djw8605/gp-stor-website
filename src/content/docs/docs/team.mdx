@@ -2,70 +2,15 @@
 title: Team & Partners
 description: Meet the GP-STOR team
 tableOfContents: false
-banner:
-  content: |
-    GP-STOR is currently in the acquisition and deployment phase. Access methods, policies, and allocation processes are being finalized and will be published with the production service launch.
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
-import PeopleGrid from '../../../components/PeopleGrid.astro'
+The team and partners page has moved to [/people](/people).
 
-The GP-STOR project is led by a collaborative team of cyberinfrastructure experts from institutions across the Great Plains region.
+You will be redirected automatically in 3 seconds.
 
-## Principal Investigators
+<script>
+  setTimeout(() => {
+    window.location.href = '/people';
+  }, 3000);
+</script>
 
-export const people = [
-  {
-    name: 'Derek Weitzel',
-    title: 'Research Associate Professor',
-    institution: 'University of Nebraska-Lincoln',
-    image: '/images/derek-weitzel.jpg',
-    social: [
-      { label: 'GitHub', href: 'https://github.com/djw8605', icon: 'github' },
-      { label: 'Website', href: 'https://derekweitzel.com', icon: 'information' },
-    ],
-    website: 'https://derekweitzel.com',
-    summary: 'Derek Weitzel is an Associate Professor in the School of Computing at the University of Nebraska-Lincoln. His research focuses on distributed systems, cloud computing, and high-performance computing.',
-  },
-  {
-    name: 'Ryan Johnson',
-    title: 'Director of Research Computing',
-    image: '/images/ryan-johnson.jpg',
-    role: 'Co-PI',
-    institution: 'University of South Dakota',
-    social: [
-      { href: 'https://rcg.usd.edu/', label: 'Website', icon: 'information' },
-    ]
-  },
-  {
-    name: 'Matthew Keeler',
-    title: 'Director - Research Support Solutions',
-    role: 'Co-PI',
-    institution: 'University of Missouri-Columbia',
-    image: '/images/matthew-keeler.jpg',
-    social: [
-      { href: 'https://doit.missouri.edu/services/it-research-support-solutions/', label: 'Website', icon: 'information' },
-    ]
-
-  },
-];
-
-
-<PeopleGrid people={people} />
-
-## Collaborating Institutions
-
-The GP-STOR project builds on successful regional collaborations and partnerships across the Great Plains Network, including:
-
-- University of Nebraska-Lincoln
-- University of South Dakota
-- University of Missouri
-- Great Plains Network (GPN) member institutions
-
-## Related Projects
-
-GP-STOR extends and enhances prior NSF investments:
-
-- **GP-CT** (Great Plains CyberTeam) - NSF #1925681
-- **GP-ARGO** (Great Plains Augmented Regional Gateway to the Open Science Grid) - NSF #2018766
-- **GP-ENGINE** (Great Plains Extended Network of GPUs for Interactive Experimenters) - NSF #2322218
