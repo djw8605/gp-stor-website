@@ -30,6 +30,7 @@ const getNormalizedEvent = async (event: CollectionEntry<'events'>): Promise<Pos
     publishDate: publishDate,
     title: title,
     excerpt: description,
+    location: location,
     tags: tags,
     Content: Content,
     metadata: {

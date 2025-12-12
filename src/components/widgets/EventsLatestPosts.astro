@@ -85,6 +85,15 @@ const allEvents = await getCollection('events');
                     <h3 class="mb-1 text-lg font-bold leading-tight font-heading">
                       <span class="hover:text-primary dark:hover:text-blue-700 transition ease-in duration-200">{event.data.title}</span>
                     </h3>
+                    {event.data.location && (
+                      <p class="text-sm text-gray-600 dark:text-slate-400 mb-1">
+                        <svg class="inline-block w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        {event.data.location}
+                      </p>
+                    )}
                     <p class="text-muted dark:text-slate-400 text-sm line-clamp-2">{event.data.description}</p>
                     {event.data.tags && event.data.tags.length > 0 && (
                       <div class="mt-2 flex flex-wrap gap-1">
@@ -108,41 +117,49 @@ const allEvents = await getCollection('events');
       </div>
 
       <script define:vars={{ count }}>
-        const now = new Date();
-        const todayStr = now.toISOString().split('T')[0];
+        function filterAndDisplayEvents() {
+          const now = new Date();
+          const todayStr = now.toISOString().split('T')[0];
 
-        const grid = document.getElementById('home-events-grid');
-        const noEventsMsg = document.getElementById('no-upcoming-home');
+          const grid = document.getElementById('home-events-grid');
+          const noEventsMsg = document.getElementById('no-upcoming-home');
 
-        if (grid) {
-          const cards = Array.from(grid.querySelectorAll('.event-card'));
+          if (grid) {
+            const cards = Array.from(grid.querySelectorAll('.event-card'));
 
-          // Filter for future events (today and later)
-          const future = cards.filter((card) => {
-            const dateStr = card.dataset.date;
-            if (!dateStr) return false;
-            return dateStr >= todayStr;
-          });
+            // Filter for future events (today and later)
+            const future = cards.filter((card) => {
+              const dateStr = card.dataset.date;
+              if (!dateStr) return false;
+              return dateStr >= todayStr;
+            });
 
-          // Sort ascending by date (soonest first)
-          future.sort((a, b) => {
-            const da = a.dataset.date;
-            const db = b.dataset.date;
-            return da < db ? -1 : da > db ? 1 : 0;
-          });
+            // Sort ascending by date (soonest first)
+            future.sort((a, b) => {
+              const da = a.dataset.date;
+              const db = b.dataset.date;
+              return da < db ? -1 : da > db ? 1 : 0;
+            });
 
-          // Keep only the count requested
-          const limited = future.slice(0, count);
+            // Keep only the count requested
+            const limited = future.slice(0, count);
 
-          // Clear and repopulate
-          grid.innerHTML = '';
-          if (limited.length > 0) {
-            limited.forEach((card) => grid.appendChild(card));
-            if (noEventsMsg) noEventsMsg.classList.add('hidden');
-          } else {
-            if (noEventsMsg) noEventsMsg.classList.remove('hidden');
+            // Clear and repopulate
+            grid.innerHTML = '';
+            if (limited.length > 0) {
+              limited.forEach((card) => grid.appendChild(card));
+              if (noEventsMsg) noEventsMsg.classList.add('hidden');
+            } else {
+              if (noEventsMsg) noEventsMsg.classList.remove('hidden');
+            }
           }
         }
+
+        // Run on initial page load
+        filterAndDisplayEvents();
+
+        // Re-run when navigating back to the page
+        document.addEventListener('astro:page-load', filterAndDisplayEvents);
       </script>
     </WidgetWrapper>
   ) : (
