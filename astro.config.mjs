@@ -79,7 +79,6 @@ export default defineConfig({
         {
           label: 'About',
           items: [
-            { label: 'Team & Partners', link: '/docs/team' },
             { label: 'Training & Resources', link: '/docs/training' },
             { label: 'FAQ', link: '/docs/faq' },
             { label: 'Contact', link: '/docs/contact' },
