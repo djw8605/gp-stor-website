@@ -1,6 +1,6 @@
 ---
 title: "GP-ENGINE: Migrating AI/ML workflows to Nautilus"
-date: 2026-03-17
+date: 2026-03-25
 location: "Iowa State University"
 tags: ["training", "GP-ENGINE"]
 description: "Learn how to migrate AI/ML workflows to the Nautilus platform, part of the National Research Platform"

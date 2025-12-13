@@ -10,7 +10,7 @@ description: "Learn how to migrate AI/ML workflows to the Nautilus platform, par
 
 This hands-on workshop will teach participants how to migrate AI/ML workflows to the Nautilus platform, part of the [National Research Platform (NRP)](https://nationalresearchplatform.org/). Attendees will learn about containerization, Kubernetes basics, and practical strategies for running AI/ML workloads on distributed computing infrastructure.
 
-**When:** March 9th, 2026, 12:00 pm to 3:00 pm (Tentative)  
+**When:** March 9th, 2026, 12:00 pm to 3:30 pm (Tentative)  
 **Location:** Kansas State University (In-person)  
 **Cost:** FREE!!!  
 **Host:** This event is hosted by the [GP-Engine](https://gp-engine.org/) project.
