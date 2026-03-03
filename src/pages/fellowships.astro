@@ -1,0 +1,173 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Button from '~/components/ui/Button.astro';
+import usdTraining from '~/assets/images/training/university-of-south-dakota-training.jpeg';
+import dakotaTraining from '~/assets/images/training/dakota-state-training.jpg';
+
+const metadata = {
+  title: 'GP-STOR Fellowships',
+  description: 'Supporting researchers attending the GPN Annual Meeting',
+};
+---
+
+<Layout metadata={metadata}>
+  <div class="pt-12">
+    <Hero2
+      actions={[
+        { text: 'Apply for the Fellowship', href: '#', variant: 'primary' },
+        { text: 'View Meeting Details', href: '#gpn-annual-meeting', variant: 'secondary' },
+      ]}
+      image={{
+        src: usdTraining,
+        alt: 'Researchers participating in a GP-STOR training session',
+        class: 'h-64 md:h-80 lg:h-[26rem] object-cover object-[center_30%]',
+        caption: 'Training session at the University of South Dakota.',
+      }}
+    >
+      <Fragment slot="title">GP-STOR Fellowships</Fragment>
+      <Fragment slot="subtitle">
+        Supporting researchers attending the GPN Annual Meeting, June 22-24, 2026. GP-STOR fellowships sponsor
+        students and faculty to travel to the meeting, where fellows attend trainings and learn how researchers across
+        the region are using research computing.
+      </Fragment>
+    </Hero2>
+  </div>
+
+  <Features2
+    title="What the Fellowship Covers"
+    subtitle="GP-STOR attendees have core travel and participation costs covered for the annual meeting."
+    columns={2}
+    items={[
+      {
+        title: 'Per-diem',
+        description: 'Daily meal and incidental expenses are supported for approved travel dates.',
+        icon: 'tabler:receipt-2',
+      },
+      {
+        title: 'Hotel',
+        description: 'Lodging expenses are covered for the duration of the conference stay.',
+        icon: 'tabler:building-skyscraper',
+      },
+      {
+        title: 'Travel (primarily mileage)',
+        description: 'Travel reimbursement is provided, with support primarily focused on mileage-based travel.',
+        icon: 'tabler:car',
+      },
+      {
+        title: 'Conference registration',
+        description: 'Registration costs for the GPN Annual Meeting are included.',
+        icon: 'tabler:ticket',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-[#D7F0E1] dark:bg-slate-800"></div>
+    </Fragment>
+  </Features2>
+
+  <Content
+    id="gpn-annual-meeting"
+    title="About the GPN Annual Meeting"
+    subtitle="A regional conference focused on practical training, collaboration, and research cyberinfrastructure."
+    items={[
+      {
+        title: 'Joint 2026 conference',
+        description:
+          'The 2026 GPN Annual Meeting is being held jointly with ARE-ON in Rogers, Arkansas on June 22-24, 2026.',
+      },
+      {
+        title: 'Program format',
+        description:
+          'Published details describe an opening reception on June 22, followed by two full days of programming with keynotes, breakout sessions, and panel discussions.',
+      },
+      {
+        title: 'Who attends',
+        description:
+          'The conference brings together research cyberinfrastructure professionals, higher education IT leaders, and research and education networking specialists from across the region.',
+      },
+      {
+        title: 'Why fellows benefit',
+        description:
+          'Fellows learn directly from peer institutions, compare applied research computing workflows, and build collaborations they can bring back to their campuses.',
+      },
+    ]}
+    image={{
+      src: dakotaTraining,
+      alt: 'Participants collaborating during a research computing session',
+      caption: 'Training session at Dakota State University.',
+    }}
+  >
+    <Fragment slot="content">
+      <p class="mb-6">
+        Current event information highlights a multi-day program with technical sessions, sponsor showcases, and
+        networking opportunities designed for the regional research computing community.
+      </p>
+      <div>
+        <Button
+          variant="primary"
+          text="View GPN Annual Meeting Registration"
+          href="https://www.eventbrite.com/e/gpn-are-on-joint-conference-2026-registration-1982010385417?aff=oddtdtcreator"
+          target="_blank"
+        />
+      </div>
+    </Fragment>
+  </Content>
+
+  <Content
+    title="About the National Research Platform (NRP)"
+    subtitle="Preparing researchers to use advanced national cyberinfrastructure resources."
+    isReversed={true}
+    items={[
+      {
+        title: 'Built on Kubernetes',
+        description:
+          'The National Research Platform (NRP) is a stretched, multi-tenant scientific Kubernetes cluster for allocatable and composable cyberinfrastructure.',
+      },
+      {
+        title: 'Extensive GPU resources',
+        description:
+          'NRP provides large-scale GPU capacity designed to support compute-intensive projects across the United States.',
+      },
+      {
+        title: 'Designed for AI and machine learning',
+        description:
+          'Its architecture is optimized for AI and machine learning workloads, including distributed training and data-intensive pipelines.',
+      },
+      {
+        title: 'Fellowship outcomes',
+        description:
+          'The fellowship prepares researchers to use the NRP and other research computing systems effectively in their own research programs.',
+      },
+    ]}
+    image={{
+      src: usdTraining,
+      alt: 'Researcher presenting to fellowship attendees',
+      caption: 'Training session at the University of South Dakota.',
+    }}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-[#D7F0E1] dark:bg-slate-800"></div>
+    </Fragment>
+  </Content>
+
+  <CallToAction
+    title="Ready to Join the Fellowship?"
+    subtitle="Applications will open soon for upcoming GP-STOR fellowship cohorts."
+    actions={[
+      {
+        text: 'Apply for the Fellowship',
+        // TODO: Replace with the final Google Form URL.
+        href: '#',
+        variant: 'primary',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 dark:bg-transparent"></div>
+    </Fragment>
+  </CallToAction>
+</Layout>
