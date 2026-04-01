@@ -10,7 +10,7 @@ import dakotaTraining from '~/assets/images/training/dakota-state-training.jpg';
 
 const metadata = {
   title: 'GP-STOR Fellowships',
-  description: 'Supporting researchers attending the GPN Annual Meeting',
+  description: 'Travel fellowships for students and researchers attending the GPN Annual Meeting in June 2026.',
 };
 ---
 
@@ -18,7 +18,7 @@ const metadata = {
   <div class="pt-12">
     <Hero2
       actions={[
-        { text: 'Apply for the Fellowship', href: '#', variant: 'primary' },
+        { text: 'Apply for the Fellowship', href: 'https://forms.gle/yTbLi5CuPxEd7imy5', variant: 'primary' },
         { text: 'View Meeting Details', href: '#gpn-annual-meeting', variant: 'secondary' },
       ]}
       image={{
@@ -30,8 +30,8 @@ const metadata = {
     >
       <Fragment slot="title">GP-STOR Fellowships</Fragment>
       <Fragment slot="subtitle">
-        Supporting researchers attending the GPN Annual Meeting, June 22-24, 2026. GP-STOR fellowships sponsor
-        students and faculty to travel to the meeting, where fellows attend trainings and learn how researchers across
+        Supporting researchers attending the GPN Annual Meeting, June 22-24, 2026. GP-STOR fellowships support
+        students and faculty in traveling to the meeting, where fellows attend training sessions and learn how researchers across
         the region are using research computing.
       </Fragment>
     </Hero2>
@@ -39,7 +39,7 @@ const metadata = {
 
   <Features2
     title="What the Fellowship Covers"
-    subtitle="GP-STOR attendees have core travel and participation costs covered for the annual meeting, with reimbursement provided as a stipend before the conference."
+    subtitle="GP-STOR fellows have core travel and participation costs covered for the annual meeting, with expenses reimbursed after the conference."
     columns={2}
     items={[
       {
@@ -53,8 +53,8 @@ const metadata = {
         icon: 'tabler:building-skyscraper',
       },
       {
-        title: 'Travel (primarily mileage)',
-        description: 'Travel reimbursement is provided, with support primarily focused on mileage-based travel.',
+        title: 'Travel',
+        description: 'Travel reimbursement is provided, primarily for mileage-based travel to and from the conference.',
         icon: 'tabler:car',
       },
       {
@@ -82,7 +82,7 @@ const metadata = {
       {
         title: 'Program format',
         description:
-          'Published details describe an opening reception on June 22, followed by two full days of programming with keynotes, breakout sessions, and panel discussions.',
+          'The program opens with a reception on June 22, followed by two full days of programming with keynotes, breakout sessions, and panel discussions.',
       },
       {
         title: 'Who attends',
@@ -103,7 +103,7 @@ const metadata = {
   >
     <Fragment slot="content">
       <p class="mb-6">
-        Current event information highlights a multi-day program with technical sessions, sponsor showcases, and
+        The conference features a multi-day program with technical sessions, sponsor showcases, and
         networking opportunities designed for the regional research computing community.
       </p>
       <div>
@@ -156,12 +156,11 @@ const metadata = {
 
   <CallToAction
     title="Ready to Join the Fellowship?"
-    subtitle="Applications will open soon for upcoming GP-STOR fellowship cohorts."
+    subtitle="Applications are open for the 2026 GP-STOR fellowship cohort. Apply now to attend the GPN Annual Meeting in Rogers, Arkansas."
     actions={[
       {
         text: 'Apply for the Fellowship',
-        // TODO: Replace with the final Google Form URL.
-        href: '#',
+        href: 'https://forms.gle/yTbLi5CuPxEd7imy5',
         variant: 'primary',
       },
     ]}
