@@ -4,6 +4,7 @@ import Hero2 from '~/components/widgets/Hero2.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Content from '~/components/widgets/Content.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import Stats from '~/components/widgets/Stats.astro';
 import Button from '~/components/ui/Button.astro';
 import usdTraining from '~/assets/images/training/university-of-south-dakota-training.jpeg';
 import dakotaTraining from '~/assets/images/training/dakota-state-training.jpg';
@@ -17,6 +18,7 @@ const metadata = {
 <Layout metadata={metadata}>
   <div class="pt-12">
     <Hero2
+      tagline="2026 Cohort — Applications Open"
       actions={[
         { text: 'Apply for the Fellowship', href: 'https://forms.gle/yTbLi5CuPxEd7imy5', variant: 'primary' },
         { text: 'View Meeting Details', href: '#gpn-annual-meeting', variant: 'secondary' },
@@ -30,44 +32,70 @@ const metadata = {
     >
       <Fragment slot="title">GP-STOR Fellowships</Fragment>
       <Fragment slot="subtitle">
-        Supporting researchers attending the GPN Annual Meeting, June 22-24, 2026. GP-STOR fellowships support
-        students and faculty in traveling to the meeting, where fellows attend training sessions and learn how researchers across
-        the region are using research computing.
+        Supporting students and faculty to attend the GPN Annual Meeting, June 22–24, 2026 in Rogers, Arkansas.
+        Fellows participate in training sessions and connect with research computing professionals from across the region.
       </Fragment>
     </Hero2>
   </div>
 
-  <Features2
-    title="What the Fellowship Covers"
-    subtitle="GP-STOR fellows have core travel and participation costs covered for the annual meeting, with expenses reimbursed after the conference."
-    columns={2}
-    items={[
+  <!-- Key numbers at a glance -->
+  <Stats
+    title="What Fellows Receive"
+    subtitle="Accepted fellows receive direct financial support and complimentary conference access."
+    stats={[
       {
-        title: 'Per-diem',
-        description: 'Daily meal and incidental expenses are supported for approved travel dates.',
-        icon: 'tabler:receipt-2',
+        amount: '$1,125',
+        title: 'One-Time Travel Payment',
+        icon: 'tabler:cash',
       },
       {
-        title: 'Hotel',
-        description: 'Lodging expenses are covered for the duration of the conference stay.',
-        icon: 'tabler:building-skyscraper',
-      },
-      {
-        title: 'Travel',
-        description: 'Travel reimbursement is provided, primarily for mileage-based travel to and from the conference.',
-        icon: 'tabler:car',
-      },
-      {
-        title: 'Conference registration',
-        description: 'Registration costs for the GPN Annual Meeting are included.',
+        amount: 'Free',
+        title: 'Conference Registration',
         icon: 'tabler:ticket',
+      },
+      {
+        amount: 'June 22–24',
+        title: '2026 Annual Meeting',
+        icon: 'tabler:calendar-event',
       },
     ]}
   >
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-[#D7F0E1] dark:bg-slate-800"></div>
     </Fragment>
-  </Features2>
+  </Stats>
+
+  <Features2
+    title="Fellowship Benefits in Detail"
+    subtitle="The fellowship is designed to remove cost barriers so researchers can focus on learning and networking."
+    columns={2}
+    items={[
+      {
+        title: '$1,125 Travel Payment',
+        description:
+          'Accepted fellows receive a single, one-time payment of $1,125 to cover hotel and mileage costs for travel to and from the conference. No itemized receipts required — just attend.',
+        icon: 'tabler:cash',
+      },
+      {
+        title: 'Free Conference Registration',
+        description:
+          'All fellows are already members of the Great Plains Network, so GPN Annual Meeting registration is included at no cost. You do not need to pay a registration fee.',
+        icon: 'tabler:ticket',
+      },
+      {
+        title: 'Training & Workshops',
+        description:
+          'Fellows participate in hands-on training sessions covering research cyberinfrastructure, HPC, AI/ML workflows, and the National Research Platform.',
+        icon: 'tabler:school',
+      },
+      {
+        title: 'Regional Networking',
+        description:
+          'Connect with research computing professionals, IT leaders, and peer institutions across the Great Plains region during two full days of programming.',
+        icon: 'tabler:network',
+      },
+    ]}
+  />
 
   <Content
     id="gpn-annual-meeting"
@@ -77,17 +105,17 @@ const metadata = {
       {
         title: 'Joint 2026 conference',
         description:
-          'The 2026 GPN Annual Meeting is being held jointly with ARE-ON in Rogers, Arkansas on June 22-24, 2026.',
+          'The 2026 GPN Annual Meeting is held jointly with ARE-ON in Rogers, Arkansas on June 22–24, 2026.',
       },
       {
         title: 'Program format',
         description:
-          'The program opens with a reception on June 22, followed by two full days of programming with keynotes, breakout sessions, and panel discussions.',
+          'The program opens with a reception on June 22, followed by two full days of keynotes, breakout sessions, and panel discussions.',
       },
       {
         title: 'Who attends',
         description:
-          'The conference brings together research cyberinfrastructure professionals, higher education IT leaders, and research and education networking specialists from across the region.',
+          'Research cyberinfrastructure professionals, higher education IT leaders, and research and education networking specialists from across the region.',
       },
       {
         title: 'Why fellows benefit',
@@ -156,7 +184,7 @@ const metadata = {
 
   <CallToAction
     title="Ready to Join the Fellowship?"
-    subtitle="Applications are open for the 2026 GP-STOR fellowship cohort. Apply now to attend the GPN Annual Meeting in Rogers, Arkansas."
+    subtitle="Applications are open for the 2026 GP-STOR fellowship cohort. Accepted fellows receive a $1,125 travel payment and free conference registration. Apply now to attend the GPN Annual Meeting in Rogers, Arkansas."
     actions={[
       {
         text: 'Apply for the Fellowship',
