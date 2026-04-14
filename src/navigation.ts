@@ -26,7 +26,7 @@ export const footerData = {
       title: 'Information',
       links: [
         { text: 'Getting Started', href: '/docs/overview' },
-        { text: 'Contact', href: '/contact' },
+        { text: 'Contact', href: '/docs/contact' },
     ],
     },
   ],
