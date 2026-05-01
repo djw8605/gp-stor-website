@@ -18,9 +18,9 @@ const metadata = {
 <Layout metadata={metadata}>
   <div class="pt-12">
     <Hero2
-      tagline="2026 Cohort — Applications Open"
+      tagline="2026 Cohort — Applications Closed"
       actions={[
-        { text: 'Apply for the Fellowship', href: 'https://forms.gle/yTbLi5CuPxEd7imy5', variant: 'primary' },
+        { text: 'View Fellows Information', href: '/fellows-2026', variant: 'primary' },
         { text: 'View Meeting Details', href: '#gpn-annual-meeting', variant: 'secondary' },
       ]}
       image={{
@@ -183,13 +183,18 @@ const metadata = {
   </Content>
 
   <CallToAction
-    title="Ready to Join the Fellowship?"
-    subtitle="Applications are open for the 2026 GP-STOR fellowship cohort. Accepted fellows receive a $1,125 travel payment and free conference registration. Apply now to attend the GPN Annual Meeting in Rogers, Arkansas."
+    title="Fellowship Applications Now Closed"
+    subtitle="Congratulations to our 2026 fellowship cohort. Accepted fellows will receive a $1,125 travel payment and free conference registration for the GPN Annual Meeting in Rogers, Arkansas. For information about the program, please contact us."
     actions={[
       {
-        text: 'Apply for the Fellowship',
-        href: 'https://forms.gle/yTbLi5CuPxEd7imy5',
+        text: 'View Fellows Information',
+        href: '/fellows-2026',
         variant: 'primary',
+      },
+      {
+        text: 'Contact Us',
+        href: '/docs/contact',
+        variant: 'secondary',
       },
     ]}
   >
