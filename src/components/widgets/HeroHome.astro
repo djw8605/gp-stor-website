@@ -26,8 +26,10 @@ export interface Hub {
 export interface Props {
   id?: string;
   image: ImageMetadata;
-  /** Focal point of the photograph, after it is mirrored. */
+  /** Focal point of the photograph, in its own (unmirrored) coordinates. */
   imagePosition?: string;
+  /** Flip the photograph horizontally, for images whose light falls on the copy side. */
+  mirror?: boolean;
   actions?: Array<CallToAction>;
   stats?: Array<Stat>;
   hubs?: Array<Hub>;
@@ -37,6 +39,7 @@ const {
   id,
   image,
   imagePosition = '50% 45%',
+  mirror = false,
   actions = [],
   stats = [],
   hubs = [],
@@ -78,7 +81,7 @@ const tails = hubs.length
     <Image
       src={image}
       alt=""
-      class="absolute inset-0 h-full w-full scale-x-[-1]"
+      class:list={['absolute inset-0 h-full w-full', { 'scale-x-[-1]': mirror }]}
       layout="cover"
       objectPosition={imagePosition}
       widths={[640, 1024, 1536]}
