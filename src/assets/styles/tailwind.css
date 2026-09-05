@@ -165,16 +165,158 @@ html, body {
 /* Data hub network drawn over the photograph. */
 /* Two shadows on each: a coloured glow, plus a dark one so the marks survive
    the bright part of the sky around the sun. */
-.hero-map__links {
+.hero-map__links,
+.hero-map__flow {
   filter: drop-shadow(0 0 6px rgb(96 165 250 / 60%)) drop-shadow(0 1px 2px rgb(4 10 22 / 85%));
+}
+
+/* The soft pool of light under each hub, swelling with the halo. */
+.hero-map__glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-map-glow 4.2s ease-in-out infinite;
+  animation-delay: var(--hub-delay, 0s);
 }
 
 .hero-map__halo {
   filter: blur(7px);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-map-breathe 4.2s ease-in-out infinite;
+  animation-delay: var(--hub-delay, 0s);
 }
 
 .hero-map__node {
   filter: drop-shadow(0 0 16px rgb(253 224 71)) drop-shadow(0 0 40px rgb(245 158 11 / 85%));
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-map-node 4.2s ease-in-out infinite;
+  animation-delay: var(--hub-delay, 0s);
+}
+
+/* A ring that leaves the hub each cycle, as if the site had just answered. */
+.hero-map__ping {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: hero-map-ping 4.2s cubic-bezier(0, 0.5, 0.4, 1) infinite;
+  animation-delay: var(--hub-delay, 0s);
+}
+
+/* The dotted overlay on each link drifts along the path, so the links read as
+   carrying traffic rather than just connecting two points. */
+.hero-map__dots {
+  animation: hero-map-drift 1.6s linear infinite;
+  animation-delay: var(--flow-delay, 0s);
+}
+
+/* A brighter packet that runs the whole link now and then. `pathLength` puts
+   every link on the same 0-100 scale, so the dash values below hold whatever
+   the real length of the path is. */
+.hero-map__packet {
+  opacity: 0;
+  animation: hero-map-packet 4.5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  animation-delay: var(--packet-delay, 0s);
+}
+
+@keyframes hero-map-drift {
+  to {
+    stroke-dashoffset: -26.1;
+  }
+}
+
+@keyframes hero-map-packet {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  46% {
+    opacity: 1;
+  }
+
+  54% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes hero-map-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    fill-opacity: 0.72;
+  }
+
+  50% {
+    transform: scale(1.16);
+    fill-opacity: 0.95;
+  }
+}
+
+@keyframes hero-map-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes hero-map-node {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.14);
+  }
+}
+
+@keyframes hero-map-ping {
+  0% {
+    transform: scale(0.65);
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 0.55;
+  }
+
+  70%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-map__dots,
+  .hero-map__packet,
+  .hero-map__glow,
+  .hero-map__halo,
+  .hero-map__node,
+  .hero-map__ping {
+    animation: none;
+  }
+
+  .hero-map__ping {
+    display: none;
+  }
 }
 
 .hero-map__place,
