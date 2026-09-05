@@ -1,6 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Hero2 from '~/components/widgets/Hero2.astro';
+import HeroHome from '~/components/widgets/HeroHome.astro';
 import Features from '~/components/widgets/Features.astro';
 import Content from '~/components/widgets/Content.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
@@ -8,10 +8,8 @@ import Steps from '~/components/widgets/Steps.astro';
 import StatusSteps from '~/components/widgets/StatusSteps.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import EventsLatestPosts from '~/components/widgets/EventsLatestPosts.astro';
-import AnimatedLogo from '~/assets/animated-logo.png';
 import CentralStates from '~/assets/central_states_map.svg';
 import HeroBackground from '~/assets/images/hero-plains-sunset.jpg';
-import Image from '~/components/common/Image.astro';
 
 const metadata = {
   title: 'Great Plains Scalable Tiered Object Repository',
@@ -21,59 +19,42 @@ const metadata = {
 
 <Layout metadata={metadata} id="front-page">
   <!-- Hero Widget ******************* -->
-  <Hero2
+  <HeroHome
     id="hero-sunset"
+    image={HeroBackground}
+    imagePosition="20% 52%"
     actions={[
-      { text: 'Overview', href: '/docs/overview', variant: 'primary' },
-      { text: 'Roadmap', href: '#roadmap', variant: 'secondary' },
+      { text: 'Get Started', href: '/docs/quickstart', variant: 'primary', icon: 'tabler:arrow-right' },
+      { text: 'View Documentation', href: '/docs/overview', variant: 'secondary', icon: 'tabler:arrow-right' },
     ]}
-    image={{
-      src: AnimatedLogo,
-      alt: 'Connecting to computers',
-      style: 'object-fit: contain'
-    }}
+    stats={[
+      { value: '14 PB', label: 'Distributed Object Storage', icon: 'tabler:database' },
+      { value: '384 TB', label: 'High-Speed SSD Tier', icon: 'tabler:gauge' },
+      { value: '3 Sites', label: 'Regional Resilience', icon: 'tabler:shield-check' },
+      { value: 'AI/ML', label: 'Research Workflows', icon: 'tabler:brain' },
+    ]}
+    hubs={[
+      { name: 'South Dakota', x: 150, y: 245, labelY: 40 },
+      { name: 'Nebraska', x: 452, y: 302, labelY: 108 },
+      { name: 'Missouri', x: 726, y: 372, labelY: 196 },
+    ]}
   >
     <Fragment slot="title">
-      Great Plains Scalable Tiered Object Repository
+      Research Storage<br />at Great Plains Scale
     </Fragment>
 
     <Fragment slot="subtitle">
-      Providing distributed, resilient storage infrastructure to accelerate research across the Great Plains region.
+      Providing distributed, resilient storage infrastructure for data-intensive research, AI/ML workflows, scientific
+      simulations, and collaborative discovery across the Great Plains region.
     </Fragment>
 
-    <Fragment slot="bg">
-      <Image
-        src={HeroBackground}
-        alt=""
-        class="absolute inset-0 w-full h-full"
-        layout="cover"
-        objectPosition="62% 45%"
-        widths={[640, 1024, 1536]}
-        sizes="100vw"
-        loading="eager"
-        decoding="sync"
-        fetchpriority="high"
-        width={1536}
-        height={1024}
-        aria-hidden="true"
-      />
-      <!-- Below `lg` the copy is centred across the full width, so the scrim has
-           to be even; from `lg` up it only occupies the left column and the
-           right half of the photograph can stay untouched. -->
-      <div class="absolute inset-0 bg-[#180e2c]/45 lg:hidden"></div>
-      <div
-        class="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#180e2c]/85 from-10% via-[#180e2c]/55 via-48% to-transparent"
-      >
-      </div>
-      <!-- Darker band behind the transparent header -->
-      <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#100a1f]/60 to-transparent"></div>
-      <!-- Fade the photo into the section that follows -->
-      <div
-        class="absolute inset-x-0 bottom-0 h-14 dark:h-28 bg-gradient-to-b from-transparent to-[var(--aw-color-bg-band)]"
-      >
-      </div>
+    <Fragment slot="footnote">
+      GP-STOR connects researchers and institutions across <span class="font-medium text-blue-400">Missouri</span>,
+      <span class="font-medium text-blue-400">Nebraska</span>, and
+      <span class="font-medium text-blue-400">South Dakota</span> to accelerate discovery through reliable, scalable, and
+      accessible data infrastructure.
     </Fragment>
-  </Hero2>
+  </HeroHome>
 
   <!-- Features Widget *************** -->
   <Features
