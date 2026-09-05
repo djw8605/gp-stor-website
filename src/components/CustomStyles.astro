@@ -20,24 +20,30 @@ import '@fontsource-variable/inter';
 ---
 
 <style is:inline>
+  /*
+   * Palette sampled from the Great Plains sunset hero photograph:
+   * ember orange from the horizon glow, dusk indigo from the upper sky,
+   * and warm golden light for the section bands.
+   */
   :root {
     --aw-font-sans: 'Inter Variable';
     --aw-font-serif: 'Inter Variable';
     --aw-font-heading: 'Inter Variable';
 
-    --aw-color-primary: rgb(34 139 34);
-    --aw-color-secondary: rgb(25 100 25);
-    --aw-color-accent: rgb(46 125 50);
+    --aw-color-primary: rgb(194 65 12);
+    --aw-color-secondary: rgb(146 44 10);
+    --aw-color-accent: rgb(72 61 139);
 
-    --aw-color-text-heading: rgb(0 0 0);
-    --aw-color-text-default: rgb(16 16 16);
-    --aw-color-text-muted: rgb(16 16 16 / 66%);
-    --aw-color-bg-page: rgb(255 255 255);
+    --aw-color-text-heading: rgb(28 22 34);
+    --aw-color-text-default: rgb(41 32 46);
+    --aw-color-text-muted: rgb(41 32 46 / 70%);
+    --aw-color-bg-page: rgb(255 253 250);
+    --aw-color-bg-band: rgb(253 240 226);
 
-    --aw-color-bg-page-dark: rgb(3 6 32);
+    --aw-color-bg-page-dark: rgb(21 19 44);
 
     ::selection {
-      background-color: lavender;
+      background-color: rgb(253 224 190);
     }
   }
 
@@ -46,17 +52,18 @@ import '@fontsource-variable/inter';
     --aw-font-serif: 'Inter Variable';
     --aw-font-heading: 'Inter Variable';
 
-    --aw-color-primary: rgb(34 139 34);
-    --aw-color-secondary: rgb(25 100 25);
-    --aw-color-accent: rgb(46 125 50);
+    --aw-color-primary: rgb(203 74 18);
+    --aw-color-secondary: rgb(160 50 12);
+    --aw-color-accent: rgb(139 128 214);
 
     --aw-color-text-heading: rgb(247, 248, 248);
-    --aw-color-text-default: rgb(229 236 246);
-    --aw-color-text-muted: rgb(229 236 246 / 66%);
-    --aw-color-bg-page: rgb(3 6 32);
+    --aw-color-text-default: rgb(233 230 244);
+    --aw-color-text-muted: rgb(233 230 244 / 70%);
+    --aw-color-bg-page: rgb(21 19 44);
+    --aw-color-bg-band: rgb(32 29 63);
 
     ::selection {
-      background-color: black;
+      background-color: rgb(146 44 10);
       color: snow;
     }
   }

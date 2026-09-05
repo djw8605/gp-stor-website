@@ -10,6 +10,8 @@ import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import EventsLatestPosts from '~/components/widgets/EventsLatestPosts.astro';
 import AnimatedLogo from '~/assets/animated-logo.png';
 import CentralStates from '~/assets/central_states_map.svg';
+import HeroBackground from '~/assets/images/hero-plains-sunset.jpg';
+import Image from '~/components/common/Image.astro';
 
 const metadata = {
   title: 'Great Plains Scalable Tiered Object Repository',
@@ -17,9 +19,10 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} id="front-page">
   <!-- Hero Widget ******************* -->
   <Hero2
+    id="hero-sunset"
     actions={[
       { text: 'Overview', href: '/docs/overview', variant: 'primary' },
       { text: 'Roadmap', href: '#roadmap', variant: 'secondary' },
@@ -36,6 +39,39 @@ const metadata = {
 
     <Fragment slot="subtitle">
       Providing distributed, resilient storage infrastructure to accelerate research across the Great Plains region.
+    </Fragment>
+
+    <Fragment slot="bg">
+      <Image
+        src={HeroBackground}
+        alt=""
+        class="absolute inset-0 w-full h-full"
+        layout="cover"
+        objectPosition="62% 45%"
+        widths={[640, 1024, 1536]}
+        sizes="100vw"
+        loading="eager"
+        decoding="sync"
+        fetchpriority="high"
+        width={1536}
+        height={1024}
+        aria-hidden="true"
+      />
+      <!-- Below `lg` the copy is centred across the full width, so the scrim has
+           to be even; from `lg` up it only occupies the left column and the
+           right half of the photograph can stay untouched. -->
+      <div class="absolute inset-0 bg-[#180e2c]/45 lg:hidden"></div>
+      <div
+        class="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#180e2c]/85 from-10% via-[#180e2c]/55 via-48% to-transparent"
+      >
+      </div>
+      <!-- Darker band behind the transparent header -->
+      <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#100a1f]/60 to-transparent"></div>
+      <!-- Fade the photo into the section that follows -->
+      <div
+        class="absolute inset-x-0 bottom-0 h-14 dark:h-28 bg-gradient-to-b from-transparent to-[var(--aw-color-bg-band)]"
+      >
+      </div>
     </Fragment>
   </Hero2>
 
@@ -69,7 +105,7 @@ const metadata = {
     ]}
     >
     <Fragment slot="bg">
-      <div class="absolute inset-0 bg-[#D7F0E1] dark:bg-slate-800"></div>
+      <div class="absolute inset-0 bg-band"></div>
     </Fragment>
     </Features>
 
@@ -122,7 +158,7 @@ const metadata = {
     </Fragment>
 
     <Fragment slot="bg">
-      <div class="absolute inset-0 bg-[#D7F0E1] dark:bg-slate-800"></div>
+      <div class="absolute inset-0 bg-band"></div>
     </Fragment>
   </Content>
 
@@ -208,7 +244,7 @@ const metadata = {
     </Fragment>
 
     <Fragment slot="bg">
-      <div class="absolute inset-0 bg-[#D7F0E1] dark:bg-slate-800"></div>
+      <div class="absolute inset-0 bg-band"></div>
     </Fragment>
   </Content>
 

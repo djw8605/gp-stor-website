@@ -19,6 +19,9 @@ html, body {
   .bg-light {
     background-color: var(--aw-color-bg-page);
   }
+  .bg-band {
+    background-color: var(--aw-color-bg-band);
+  }
   .text-page {
     color: var(--aw-color-text-page);
   }
@@ -29,7 +32,7 @@ html, body {
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center rounded-full border-gray-400 border bg-transparent font-medium text-center text-base text-page leading-snug transition py-3.5 px-6 md:px-8 ease-in duration-200 focus:ring-blue-500 focus:ring-offset-blue-200 focus:ring-2 focus:ring-offset-2 hover:bg-gray-100 hover:border-gray-600 dark:text-slate-300 dark:border-slate-500 dark:hover:bg-slate-800 dark:hover:border-slate-800 cursor-pointer;
+    @apply inline-flex items-center justify-center rounded-full border-gray-400 border bg-transparent font-medium text-center text-base text-page leading-snug transition py-3.5 px-6 md:px-8 ease-in duration-200 focus:ring-orange-500 focus:ring-offset-orange-200 focus:ring-2 focus:ring-offset-2 hover:bg-gray-100 hover:border-gray-600 dark:text-slate-300 dark:border-slate-500 dark:hover:bg-slate-800 dark:hover:border-slate-800 cursor-pointer;
   }
 
   .btn-primary {
@@ -67,12 +70,89 @@ html, body {
   padding: 0 5px;
 }
 
-@media (min-width: 768px) {
-  #front-page #header:not(.scroll) nav button,
-  #front-page #header:not(.scroll) nav>ul>li>a,
-  #front-page #header:not(.scroll) svg {
-    @apply text-white;
+/* ---------------------------------------------------------------------------
+   Front page hero
+   The home page renders a full-bleed sunset photograph behind the header and
+   the hero copy, so the header has to be inverted to light-on-dark while it
+   still sits over the image (i.e. before it gains the `.scroll` class, and
+   while the mobile menu is not `.expanded` into an opaque full-screen panel).
+   --------------------------------------------------------------------------- */
+
+#front-page #header:not(.scroll):not(.expanded) nav button,
+#front-page #header:not(.scroll):not(.expanded) nav > ul > li > a,
+#front-page #header:not(.scroll):not(.expanded) svg {
+  @apply text-white;
+}
+
+#front-page #header:not(.scroll):not(.expanded) nav button:hover,
+#front-page #header:not(.scroll):not(.expanded) nav > ul > li > a:hover {
+  @apply text-amber-200;
+}
+
+/* The dark-mode (white) logo and hamburger are the readable ones over the photo. */
+#front-page #header:not(.scroll):not(.expanded) [data-logo-light] {
+  @apply hidden;
+}
+#front-page #header:not(.scroll):not(.expanded) [data-logo-dark] {
+  @apply block;
+}
+#front-page #header:not(.scroll):not(.expanded) [data-aw-toggle-menu] > span[aria-hidden] {
+  @apply bg-white;
+}
+
+/* Pull the hero up behind the transparent header at every width (the widget
+   only does it from `md` up) in `rem`, so it keeps tracking the header height
+   when the layout bumps the root font size to 20px at `2xl`. */
+#hero-sunset {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 34rem;
+  margin-top: -4.75rem;
+}
+
+@media (max-width: 767px) {
+  /* Below `md` the widget collapses its own header spacer, so add it back. */
+  #hero-sunset > div:last-child {
+    padding-top: 4.75rem;
   }
+}
+
+@media (min-width: 1024px) {
+  #hero-sunset {
+    min-height: min(42rem, 88vh);
+  }
+}
+
+/* Lift the copy off the photograph without washing the photo out. */
+#hero-sunset h1,
+#hero-sunset h2 {
+  color: #fff;
+  text-shadow: 0 2px 18px rgb(20 12 30 / 65%), 0 1px 3px rgb(20 12 30 / 55%);
+}
+
+#hero-sunset p {
+  color: rgb(255 247 237 / 92%);
+  text-shadow: 0 1px 10px rgb(20 12 30 / 70%);
+}
+
+/* `btn-secondary` is a dark-on-light outline button; over the photo it needs
+   to become a light glass button instead. */
+#hero-sunset .btn-secondary {
+  @apply border-white/70 bg-white/10 text-white backdrop-blur-sm;
+  text-shadow: 0 1px 6px rgb(20 12 30 / 55%);
+}
+
+#hero-sunset .btn-secondary:hover {
+  @apply border-white bg-white/25 text-white;
+}
+
+#hero-sunset .btn-primary {
+  @apply border-transparent shadow-lg shadow-orange-950/40;
+}
+
+#hero-sunset figure img {
+  filter: drop-shadow(0 18px 40px rgb(20 12 30 / 55%));
 }
 
 .dropdown:focus .dropdown-menu,

@@ -41,7 +41,7 @@ const {
   <div class="pointer-events-none md:pt-[96px] pt-0"></div>
     {
       alert && (
-        <div class="relative bg-blue-50 dark:bg-slate-800 mx-auto w-full">
+        <div class="relative bg-band mx-auto w-full">
           <p class="max-w-6xl mx-auto px-4 sm:px-6 py-4 text-md text-center font-medium"
             set:html={alert} 
           />
@@ -57,7 +57,7 @@ const {
         {
           tagline && (
             <p
-              class:list={["text-base text-secondary dark:text-blue-200 font-bold tracking-wide uppercase intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade", {'text-white': whiteText}]}
+              class:list={["text-base text-secondary dark:text-orange-200 font-bold tracking-wide uppercase intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade", {'text-white': whiteText}]}
               set:html={tagline}
             />
           )
