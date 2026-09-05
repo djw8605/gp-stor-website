@@ -62,8 +62,8 @@ fig.add_trace(
         locationmode="USA-states",
         locations=states,
         z=[1] * len(states),
-        colorscale=[[0, "rgba(0,128,0,0.4)"], [1, "rgba(0,128,0,0.4)"]],
-        marker_line_color="darkgreen",
+        colorscale=[[0, "rgba(37,99,235,0.32)"], [1, "rgba(37,99,235,0.32)"]],
+        marker_line_color="rgb(29,78,216)",
         marker_line_width=2,
         showscale=False,
     )

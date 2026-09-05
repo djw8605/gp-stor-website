@@ -20,24 +20,31 @@ import '@fontsource-variable/inter';
 ---
 
 <style is:inline>
+  /*
+   * Deep navy ground with a blue accent, picked to sit under the Great Plains
+   * sunset hero photograph and to match the slate blue of the GP-STOR mark.
+   * `--aw-color-accent` is the warm amber of the horizon, used for the data
+   * hub markers drawn over the hero.
+   */
   :root {
     --aw-font-sans: 'Inter Variable';
     --aw-font-serif: 'Inter Variable';
     --aw-font-heading: 'Inter Variable';
 
-    --aw-color-primary: rgb(34 139 34);
-    --aw-color-secondary: rgb(25 100 25);
-    --aw-color-accent: rgb(46 125 50);
+    --aw-color-primary: rgb(37 99 235);
+    --aw-color-secondary: rgb(29 78 216);
+    --aw-color-accent: rgb(217 119 6);
 
-    --aw-color-text-heading: rgb(0 0 0);
-    --aw-color-text-default: rgb(16 16 16);
-    --aw-color-text-muted: rgb(16 16 16 / 66%);
+    --aw-color-text-heading: rgb(15 23 42);
+    --aw-color-text-default: rgb(28 41 61);
+    --aw-color-text-muted: rgb(28 41 61 / 70%);
     --aw-color-bg-page: rgb(255 255 255);
+    --aw-color-bg-band: rgb(238 243 251);
 
-    --aw-color-bg-page-dark: rgb(3 6 32);
+    --aw-color-bg-page-dark: rgb(10 22 40);
 
     ::selection {
-      background-color: lavender;
+      background-color: rgb(191 219 254);
     }
   }
 
@@ -46,17 +53,18 @@ import '@fontsource-variable/inter';
     --aw-font-serif: 'Inter Variable';
     --aw-font-heading: 'Inter Variable';
 
-    --aw-color-primary: rgb(34 139 34);
-    --aw-color-secondary: rgb(25 100 25);
-    --aw-color-accent: rgb(46 125 50);
+    --aw-color-primary: rgb(37 99 235);
+    --aw-color-secondary: rgb(29 78 216);
+    --aw-color-accent: rgb(251 191 36);
 
-    --aw-color-text-heading: rgb(247, 248, 248);
-    --aw-color-text-default: rgb(229 236 246);
-    --aw-color-text-muted: rgb(229 236 246 / 66%);
-    --aw-color-bg-page: rgb(3 6 32);
+    --aw-color-text-heading: rgb(247, 248, 250);
+    --aw-color-text-default: rgb(226 232 240);
+    --aw-color-text-muted: rgb(226 232 240 / 70%);
+    --aw-color-bg-page: rgb(10 22 40);
+    --aw-color-bg-band: rgb(16 31 53);
 
     ::selection {
-      background-color: black;
+      background-color: rgb(29 78 216);
       color: snow;
     }
   }

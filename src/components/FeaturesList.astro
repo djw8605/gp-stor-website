@@ -46,7 +46,7 @@ const { features, containerClass = "container py-10 mx-auto", featureTitle, feat
     )}
     <div class="grid grid-cols-1 gap-8 mt-4 xl:gap-16 md:grid-cols-2">
       {features.map((f) => {
-        const iconClass = f.iconClass ?? "inline-block p-3 text-green-500 bg-green-100 rounded-full dark:text-white dark:bg-blue-500";
+        const iconClass = f.iconClass ?? "inline-block p-3 text-primary bg-blue-100 rounded-full dark:text-white dark:bg-blue-900";
         const linkText = f.linkText ?? "read more";
         return (
           <div class="space-y-3 mt-0">

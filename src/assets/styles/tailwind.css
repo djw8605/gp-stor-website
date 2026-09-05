@@ -19,6 +19,9 @@ html, body {
   .bg-light {
     background-color: var(--aw-color-bg-page);
   }
+  .bg-band {
+    background-color: var(--aw-color-bg-band);
+  }
   .text-page {
     color: var(--aw-color-text-page);
   }
@@ -67,12 +70,132 @@ html, body {
   padding: 0 5px;
 }
 
-@media (min-width: 768px) {
-  #front-page #header:not(.scroll) nav button,
-  #front-page #header:not(.scroll) nav>ul>li>a,
-  #front-page #header:not(.scroll) svg {
-    @apply text-white;
+/* ---------------------------------------------------------------------------
+   Front page hero
+   The home page renders a full-bleed sunset photograph behind the header and
+   the hero copy, so the header has to be inverted to light-on-dark while it
+   still sits over the image (i.e. before it gains the `.scroll` class, and
+   while the mobile menu is not `.expanded` into an opaque full-screen panel).
+   --------------------------------------------------------------------------- */
+
+#front-page #header:not(.scroll):not(.expanded) nav button,
+#front-page #header:not(.scroll):not(.expanded) nav > ul > li > a,
+#front-page #header:not(.scroll):not(.expanded) svg {
+  @apply text-white;
+}
+
+#front-page #header:not(.scroll):not(.expanded) nav button:hover,
+#front-page #header:not(.scroll):not(.expanded) nav > ul > li > a:hover {
+  @apply text-amber-200;
+}
+
+/* The dark-mode (white) logo and hamburger are the readable ones over the photo. */
+#front-page #header:not(.scroll):not(.expanded) [data-logo-light] {
+  @apply hidden;
+}
+#front-page #header:not(.scroll):not(.expanded) [data-logo-dark] {
+  @apply block;
+}
+#front-page #header:not(.scroll):not(.expanded) [data-aw-toggle-menu] > span[aria-hidden] {
+  @apply bg-white;
+}
+
+/* The home page hero pulls itself up behind the header (see HeroHome.astro),
+   so everything below is light-on-dark regardless of the colour scheme. */
+
+#hero-sunset .hero-title {
+  @apply font-heading text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.25rem] xl:text-[4rem];
+  text-shadow: 0 2px 20px rgb(4 10 22 / 55%);
+}
+
+#hero-sunset .hero-subtitle {
+  @apply mt-6 max-w-lg text-lg leading-relaxed text-slate-200 sm:text-xl;
+  text-shadow: 0 1px 10px rgb(4 10 22 / 65%);
+}
+
+/* The shared button is a pill with a light-background outline variant; over the
+   photograph it becomes a squared solid blue and a light glass button. */
+#hero-sunset .btn {
+  @apply rounded-md px-6 py-3 text-base;
+}
+
+#hero-sunset .btn-secondary {
+  @apply border-white/35 bg-white/5 text-white backdrop-blur-sm;
+  text-shadow: 0 1px 6px rgb(4 10 22 / 55%);
+}
+
+#hero-sunset .btn-secondary:hover {
+  @apply border-white/70 bg-white/15 text-white;
+}
+
+#hero-sunset .btn-primary {
+  @apply border-transparent shadow-lg shadow-blue-950/40;
+}
+
+/* Separators inside the stats panel: rows on phones, a 2x2 grid on tablets,
+   a single row of four from `lg` up. */
+#hero-stats > * {
+  border-top: 1px solid rgb(255 255 255 / 12%);
+}
+
+#hero-stats > *:first-child {
+  border-top: 0;
+}
+
+@media (min-width: 640px) {
+  #hero-stats > *:nth-child(-n + 2) {
+    border-top: 0;
   }
+
+  #hero-stats > *:nth-child(even) {
+    border-left: 1px solid rgb(255 255 255 / 12%);
+  }
+}
+
+@media (min-width: 1024px) {
+  #hero-stats > * {
+    border-top: 0;
+  }
+
+  #hero-stats > * + * {
+    border-left: 1px solid rgb(255 255 255 / 12%);
+  }
+}
+
+/* Data hub network drawn over the photograph. */
+/* Two shadows on each: a coloured glow, plus a dark one so the marks survive
+   the bright part of the sky around the sun. */
+.hero-map__links {
+  filter: drop-shadow(0 0 6px rgb(96 165 250 / 60%)) drop-shadow(0 1px 2px rgb(4 10 22 / 85%));
+}
+
+.hero-map__halo {
+  filter: blur(7px);
+}
+
+.hero-map__node {
+  filter: drop-shadow(0 0 16px rgb(253 224 71)) drop-shadow(0 0 40px rgb(245 158 11 / 85%));
+}
+
+.hero-map__place,
+.hero-map__role {
+  font-family: var(--aw-font-heading, ui-sans-serif), ui-sans-serif, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  paint-order: stroke fill;
+  stroke: rgb(4 10 22 / 55%);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.hero-map__place {
+  fill: #ffffff;
+}
+
+.hero-map__role {
+  fill: #fde68a;
+  font-weight: 500;
 }
 
 .dropdown:focus .dropdown-menu,
