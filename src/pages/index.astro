@@ -59,28 +59,28 @@ const metadata = {
   <!-- Features Widget *************** -->
   <Features
     id="features"
-    tagline="Features"
-    title="Explore the features of the GP-STOR platform"
-    subtitle="GP-STOR provides distributed, resilient storage infrastructure designed to accelerate research across the Great Plains region."
+    tagline="Platform"
+    title="One storage service across three campuses"
+    subtitle="A tier for the data you keep and a tier for the data you are working on right now, reachable from the compute you already use."
     items={[
       {
         title: 'Tiered, Distributed Storage',
-        description: '14 PB of redundant Ceph object storage plus 384 TB of high-speed solid-state storage designed for AI/ML streaming, simulation output, and instrument data.',
+        description: '14 PB of redundant Ceph object storage for data at rest, plus 384 TB of solid-state storage for AI/ML streaming, simulation output, and instrument data.',
         icon: 'tabler:server',
       },
       {
         title: 'Three-Site Resilience',
-        description: 'Storage resources distributed across the University of Missouri, University of Nebraska, and University of South Dakota for availability and redundancy.',
+        description: 'Capacity is split across the University of Missouri, the University of Nebraska, and the University of South Dakota, so one site going offline does not take your data with it.',
         icon: 'tabler:shield-check',
       },
       {
-        title: 'Researcher-Friendly Access',
-        description: 'Mounts for OSG and the National Research Platform and a web-based UI.',
+        title: 'Access From Existing Workflows',
+        description: 'Mounts for the OSG and the National Research Platform, Globus transfers, OSDF origins, and a web UI, so jobs and transfers run through the tools already in use.',
         icon: 'tabler:cloud',
       },
       {
         title: 'Training and Workforce Development',
-        description: 'Virtual office hours, video walkthroughs, and step-by-step guides cultivate an engineering and facilitation workforce across the region.',
+        description: 'Virtual office hours, video walkthroughs, and step-by-step guides, building an engineering and facilitation workforce across the region.',
         icon: 'tabler:school',
       },
     ]}
@@ -93,7 +93,7 @@ const metadata = {
   <!-- Events Widget ******************* -->
   <EventsLatestPosts
     title="Latest Events"
-    information="Stay updated with the latest workshops, trainings, and community events."
+    information="Workshops, trainings, and community events across the region."
   >
     <Fragment slot="bg">
       <div class="absolute inset-0 dark:bg-transparent"></div>
@@ -102,29 +102,29 @@ const metadata = {
 
   <!-- Content Widget 1: What GP-STOR Provides *** -->
   <Content
-    title="What GP-STOR Provides"
-    subtitle="Discover the powerful storage infrastructure designed for modern research workflows"
+    title="Getting Data In and Out"
+    subtitle="Four ways onto the same storage, each matching how research data already moves"
     isReversed={false}
     items={[
       {
-        title: 'Massive Capacity',
+        title: 'OSG and NRP Mounts',
         description:
-          '14 petabytes of redundant, distributed Ceph object storage provides the scale needed for large-scale research datasets, simulations, and archives.',
+          'Mount GP-STOR directly in high-throughput computing jobs on the Open Science Grid and the National Research Platform.',
       },
       {
-        title: 'High-Speed Access',
+        title: 'OSDF Origin Nodes',
         description:
-          '384 TB of high-speed solid-state storage optimized for streaming data into AI/ML algorithms and out of simulations and instruments in real-time.',
+          'Publish datasets to the Open Science Data Federation and have them served out to jobs wherever those jobs land.',
       },
       {
-        title: 'Regional Resilience',
+        title: 'Globus Transfers',
         description:
-          'Three-site distribution across the University of Missouri, University of Nebraska, and University of South Dakota ensures data availability and redundancy.',
+          'Managed, high-performance transfers for moving large collections between GP-STOR, campus storage, and collaborators elsewhere.',
       },
       {
-        title: 'Flexible Access',
+        title: 'Nextcloud Web UI',
         description:
-          'Researcher-friendly access through web-based UI, mounts for OSG and NRP, OSDF Origin nodes, and Globus endpoints.',
+          'Browse, upload, and share through a web interface, for the work that does not belong on a command line.',
       },
     ]}
     image={{
@@ -134,7 +134,7 @@ const metadata = {
   >
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
-        Infrastructure Built for <br /><span class="text-2xl">Research at Scale</span>
+        Reachable From <br /><span class="text-2xl">the Tools You Already Run</span>
       </h3>
     </Fragment>
 
@@ -146,28 +146,28 @@ const metadata = {
   <!-- Content Widget 3: Research Use Cases *** -->
   <Content
     title="Research Use Cases"
-    subtitle="GP-STOR accelerates discovery across diverse scientific domains"
+    subtitle="The workloads the tiered design was built around"
     isReversed={false}
     items={[
       {
-        title: 'AI & Machine Learning',
+        title: 'AI and Machine Learning',
         description:
-          'The high-speed solid-state tier enables rapid data streaming into ML algorithms, supporting cutting-edge artificial intelligence research workflows.',
+          'The solid-state tier is built for streaming data straight into AI/ML algorithms, rather than staging it somewhere else first.',
       },
       {
         title: 'Scientific Simulations',
         description:
-          'Efficiently capture and store massive simulation outputs, enabling researchers to focus on analysis rather than data management challenges.',
+          'Land simulation output on the object tier as it is produced, then distribute the curated results with Globus.',
       },
       {
         title: 'Instrument Data Pipelines',
         description:
-          'Seamlessly integrate data from research instruments and sensors, with automated pipelines for processing and archival.',
+          'Stream instrument data to the high-speed tier for preprocessing and analysis, then keep it alongside everything else.',
       },
       {
-        title: 'Educational Integration',
+        title: 'Classroom and Coursework',
         description:
-          'Provide students with hands-on experience using modern cyberinfrastructure in classroom settings and research projects.',
+          'Give students hands-on time with the same cyberinfrastructure their field runs on, in coursework and in research projects.',
       },
     ]}
     image={{
@@ -177,7 +177,7 @@ const metadata = {
   >
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
-        Accelerate Discovery: <br /><span class="text-2xl">From Data to Insights</span>
+        From Instrument and Simulation <br /><span class="text-2xl">Through to Analysis</span>
       </h3>
     </Fragment>
 
@@ -189,28 +189,28 @@ const metadata = {
   <!-- Content Widget 4: Regional Impact *** -->
   <Content
     title="Regional Impact"
-    subtitle="Building research capacity across the Great Plains"
+    subtitle="Cyberinfrastructure for a region where it has been hard to build"
     isReversed={true}
     items={[
       {
-        title: 'Rural Infrastructure',
+        title: 'Rural Cyberinfrastructure',
         description:
-          'Addresses the unique challenges of deploying advanced cyberinfrastructure in rural regions where resources and awareness of HTC capabilities are emerging.',
+          'Deploying advanced infrastructure in rural regions, where awareness and literacy of high-throughput computing are still emerging.',
       },
       {
         title: 'Workforce Development',
         description:
-          'Cultivates an engineering and facilitation workforce capable of designing and implementing advanced research platforms across the region.',
+          'Building an engineering and facilitation workforce able to design and run an interstate research platform.',
       },
       {
-        title: 'Institutional Support',
+        title: 'Under-Resourced Institutions',
         description:
-          'Builds campus research capacity and innovation infrastructure at universities across the Great Plains, including PUIs and tribal colleges.',
+          'Focused on the campuses that have had the least access to infrastructure like this, including PUIs and tribal colleges.',
       },
       {
-        title: 'Economic Growth',
+        title: 'Regional Economy',
         description:
-          'Supports industrial sectors critical for regional economic development, including agriculture and advanced materials research.',
+          'Supporting the industrial sectors the region depends on, including agriculture and advanced materials.',
       },
     ]}
     image={{
@@ -220,7 +220,7 @@ const metadata = {
   >
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
-        Empowering the Great Plains: <br /><span class="text-2xl">Research Infrastructure for All</span>
+        Built for the Region, <br /><span class="text-2xl">Reproducible Nationwide</span>
       </h3>
     </Fragment>
 
@@ -233,7 +233,7 @@ const metadata = {
   <StatusSteps
     id="roadmap"
     title="GP-STOR Roadmap"
-    subtitle="Our development and deployment schedule from infrastructure acquisition through public access and community engagement."
+    subtitle="Where the project stands today, and what comes between here and open access."
     items={[
       {
         title: 'Q2 2026: Infrastructure acquisition',
@@ -285,9 +285,9 @@ const metadata = {
     actions={[
       {
         variant: 'primary',
-        text: 'Get Started',
+        text: 'Read the Overview',
         href: '/docs/overview',
-        icon: 'tabler:rocket',
+        icon: 'tabler:arrow-right',
       },
       {
         variant: 'secondary',
@@ -298,11 +298,12 @@ const metadata = {
     ]}
   >
     <Fragment slot="title">
-      Ready to accelerate your research?
+      Planning work that will need this?
     </Fragment>
 
     <Fragment slot="subtitle">
-      Join GP-STOR today and leverage distributed, resilient storage infrastructure across the Great Plains region.
+      GP-STOR is in the acquisition and deployment phase, with open access scheduled for 2027. Talk to your campus CI
+      lead now so your storage needs are known before beta onboarding begins.
     </Fragment>
   </CallToAction>
 </Layout>
