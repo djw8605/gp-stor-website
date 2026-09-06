@@ -166,6 +166,7 @@ import { UI } from 'astrowind:config';
   const Observer = {
     observer: null,
     delayBetweenAnimations: 100,
+    maxAnimationDelay: 400,
     animationCounter: 0,
 
     start() {
@@ -194,6 +195,13 @@ import { UI } from 'astrowind:config';
       });
 
       const callback = (entries) => {
+        // The stagger is meant to be relative *within* one batch of elements
+        // arriving together. `intersect-once` elements unobserve themselves
+        // before they can ever reach the reset in the else-branch below, so
+        // without this the counter climbs for the life of the page and the
+        // last section on a long page waits seconds to appear.
+        this.animationCounter = 0;
+
         entries.forEach((entry) => {
           requestAnimationFrame(() => {
             const target = entry.target;
@@ -217,7 +225,13 @@ import { UI } from 'astrowind:config';
                 target.removeAttribute('no-intersect');
                 target.setAttribute('data-animated', 'true');
 
-                const delay = this.animationCounter * this.delayBetweenAnimations;
+                // Capped: a fast scroll can drop a dozen elements into one
+                // batch, and past a few steps the cascade stops reading as a
+                // cascade and just looks like the page is slow to load.
+                const delay = Math.min(
+                  this.animationCounter * this.delayBetweenAnimations,
+                  this.maxAnimationDelay
+                );
                 this.animationCounter++;
 
                 target.style.transitionDelay = `${delay}ms`;

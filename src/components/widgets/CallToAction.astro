@@ -3,6 +3,7 @@ import WidgetWrapper from '../ui/WidgetWrapper.astro';
 import type { CallToAction, Widget } from '~/types';
 import Headline from '~/components/ui/Headline.astro';
 import Button from '~/components/ui/Button.astro';
+import { twMerge } from 'tailwind-merge';
 
 interface Props extends Widget {
   title?: string;
@@ -26,8 +27,13 @@ const {
 ---
 
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+  {/* `classes.panel` lets a caller that already supplies its own plate flatten
+      this one, rather than boxing the same content twice. */}
   <div
-    class="max-w-3xl mx-auto text-center p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600"
+    class={twMerge(
+      'max-w-3xl mx-auto text-center p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600',
+      classes?.panel as string
+    )}
   >
     <Headline
       title={title}
@@ -35,7 +41,7 @@ const {
       tagline={tagline}
       classes={{
         container: 'mb-0 md:mb-0',
-        title: 'text-4xl md:text-4xl font-bold tracking-tighter mb-4 font-heading',
+        title: 'text-3xl md:text-4xl font-bold tracking-tighter mb-4 font-heading',
         subtitle: 'text-xl text-muted dark:text-slate-400',
       }}
     />

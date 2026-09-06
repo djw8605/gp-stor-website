@@ -4,20 +4,54 @@ import HeroHome from '~/components/widgets/HeroHome.astro';
 import Features from '~/components/widgets/Features.astro';
 import Content from '~/components/widgets/Content.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
-import Steps from '~/components/widgets/Steps.astro';
 import StatusSteps from '~/components/widgets/StatusSteps.astro';
-import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import EventsLatestPosts from '~/components/widgets/EventsLatestPosts.astro';
-import CentralStates from '~/assets/central_states_map.svg';
+import InstitutionGrid from '~/components/InstitutionGrid.astro';
+import CentralStatesMap from '~/components/common/CentralStatesMap.astro';
 import HeroBackground from '~/assets/images/hero-plains-sunset.jpg';
 import PhotoBackdrop from '~/components/common/PhotoBackdrop.astro';
 import DataPathsDiagram from '~/components/common/DataPathsDiagram.astro';
 import pastureTrack from '~/assets/images/raychel-sanner-eJhUdqHChsY-unsplash.jpg';
+import stormField from '~/assets/images/raychel-sanner-nqu5L_xc6bc-unsplash.jpg';
 
 const metadata = {
-  title: 'Great Plains Scalable Tiered Object Repository',
+  // The short name leads: reviewers keep this open in a tab beside a dozen others.
+  title: 'GP-STOR | Great Plains Scalable Tiered Object Repository',
   ignoreTitleTemplate: true,
 };
+
+/* Same four partners as the People page, in the order the storage sites appear
+   west to east, with the consortium last. */
+const institutions = [
+  {
+    name: 'University of South Dakota',
+    role: 'Storage site',
+    logo: '/images/logos/usd.svg',
+    logoClass: 'max-h-12 lg:max-h-10',
+    href: 'https://www.usd.edu/',
+  },
+  {
+    name: 'University of Nebraska–Lincoln',
+    role: 'Storage site',
+    logo: '/images/logos/unl.svg',
+    logoClass: 'max-h-16 lg:max-h-14',
+    href: 'https://www.unl.edu/',
+  },
+  {
+    name: 'University of Missouri',
+    role: 'Storage site',
+    logo: '/images/logos/mizzou.svg',
+    logoClass: 'max-h-11 lg:max-h-9',
+    href: 'https://missouri.edu/',
+  },
+  {
+    name: 'Great Plains Network',
+    role: 'Regional consortium',
+    logo: '/images/logos/gpn.png',
+    logoClass: 'max-h-16 lg:max-h-14',
+    href: 'https://www.greatplains.net/',
+  },
+];
 ---
 
 <Layout metadata={metadata} id="front-page" bodyClass="header-over-photo">
@@ -28,15 +62,19 @@ const metadata = {
     imagePosition="20% 52%"
     mirror
     actions={[
-      { text: 'Get Started', href: '/docs/quickstart', variant: 'primary', icon: 'tabler:arrow-right' },
-      { text: 'View Documentation', href: '/docs/overview', variant: 'secondary', icon: 'tabler:arrow-right' },
+      { text: 'Read the Overview', href: '/docs/overview', variant: 'primary', icon: 'tabler:arrow-right' },
+      { text: 'See the Roadmap', href: '#roadmap', variant: 'secondary', icon: 'tabler:arrow-down' },
     ]}
     stats={[
       { value: '14 PB', label: 'Distributed Object Storage', icon: 'tabler:database' },
       { value: '384 TB', label: 'High-Speed SSD Tier', icon: 'tabler:gauge' },
       { value: '3 Sites', label: 'Regional Resilience', icon: 'tabler:shield-check' },
-      { value: 'AI/ML', label: 'Research Workflows', icon: 'tabler:brain' },
+      { value: '2027', label: 'Open Access Begins', icon: 'tabler:calendar-event' },
     ]}
+    statsNote={{
+      text: 'Capacity as designed. Hardware is in procurement now.',
+      link: { text: 'See the roadmap', href: '#roadmap' },
+    }}
     hubs={[
       { name: 'South Dakota', x: 150, y: 245, labelY: 40 },
       { name: 'Nebraska', x: 452, y: 302, labelY: 108 },
@@ -63,7 +101,6 @@ const metadata = {
   <!-- Features Widget *************** -->
   <Features
     id="features"
-    tagline="Platform"
     title="One storage service across three campuses"
     subtitle="A tier for the data you keep and a tier for the data you are working on right now, reachable from the compute you already use."
     items={[
@@ -83,8 +120,8 @@ const metadata = {
         icon: 'tabler:cloud',
       },
       {
-        title: 'Training and Workforce Development',
-        description: 'Virtual office hours, video walkthroughs, and step-by-step guides, building an engineering and facilitation workforce across the region.',
+        title: 'Training and Support',
+        description: 'Virtual office hours, video walkthroughs, and step-by-step guides, so a group new to this kind of storage is not left to work it out alone.',
         icon: 'tabler:school',
       },
     ]}
@@ -93,6 +130,36 @@ const metadata = {
       <div class="absolute inset-0 bg-band"></div>
     </Fragment>
     </Features>
+
+  <!-- Who is behind it *************** -->
+  {/* Who holds the hardware and who funds it, stated once, in the open. A
+      reviewer checking on the project should not have to reach the footer to
+      find the award number, and a researcher deciding whether this is real
+      should not have to reach the People page to find the institutions. */}
+  <section class="px-4 py-16 sm:px-6 md:py-20">
+    <div class="mx-auto max-w-6xl">
+      <div class="mx-auto mb-10 max-w-3xl text-center md:mb-12">
+        <h2 class="mb-4 font-heading text-3xl font-bold leading-tight tracking-tight md:text-4xl">
+          Built and operated by four partners
+        </h2>
+        <p class="text-lg text-muted dark:text-slate-400">
+          Three campuses hold the distributed storage. The Great Plains Network connects them to the wider region.
+        </p>
+      </div>
+
+      <InstitutionGrid institutions={institutions} />
+
+      <p class="mt-8 text-center text-sm text-muted dark:text-slate-400">
+        Supported by National Science Foundation award{' '}
+        <a
+          class="font-medium text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary dark:text-blue-400 dark:decoration-blue-400/40 dark:hover:decoration-blue-400"
+          href="https://www.nsf.gov/awardsearch/show-award?AWD_ID=2502799"
+          target="_blank"
+          rel="noopener noreferrer">OAC-2502799</a
+        >.
+      </p>
+    </div>
+  </section>
 
   <!-- Events Widget ******************* -->
   <EventsLatestPosts
@@ -109,6 +176,7 @@ const metadata = {
     title="Getting Data In and Out"
     subtitle="Four ways onto the same storage, each matching how research data already moves"
     isReversed={false}
+    callToAction={{ text: 'How each access method works', href: '/docs/access', icon: 'tabler:arrow-right' }}
     items={[
       {
         title: 'OSG and NRP Mounts',
@@ -152,6 +220,7 @@ const metadata = {
     title="Research Use Cases"
     subtitle="The workloads the tiered design was built around"
     isReversed={false}
+    callToAction={{ text: 'Who can use GP-STOR, and what it costs', href: '/docs/faq', icon: 'tabler:arrow-right' }}
     items={[
       {
         title: 'AI and Machine Learning',
@@ -175,8 +244,8 @@ const metadata = {
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      alt: 'Research Use Cases',
+      src: stormField,
+      alt: 'A storm front moving over a wheat field on the Great Plains',
     }}
   >
     <Fragment slot="content">
@@ -195,6 +264,7 @@ const metadata = {
     title="Regional Impact"
     subtitle="Cyberinfrastructure for a region where it has been hard to build"
     isReversed={true}
+    callToAction={{ text: 'The team and partner institutions', href: '/people', icon: 'tabler:arrow-right' }}
     items={[
       {
         title: 'Rural Cyberinfrastructure',
@@ -217,11 +287,11 @@ const metadata = {
           'Supporting the industrial sectors the region depends on, including agriculture and advanced materials.',
       },
     ]}
-    image={{
-      src: CentralStates,
-      alt: 'Central States Map',
-    }}
   >
+    <Fragment slot="image">
+      <CentralStatesMap />
+    </Fragment>
+
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
         Built for the Region, <br /><span class="text-2xl">Reproducible Nationwide</span>
@@ -290,17 +360,20 @@ const metadata = {
     classes={{
       container:
         'my-12 max-w-5xl rounded-2xl bg-[#0a1628]/70 px-6 py-12 backdrop-blur-[2px] md:my-16 md:px-10 md:py-16',
+      // The container above is already the plate; the widget's own boxed panel
+      // would put a second frame around the same words.
+      panel: 'p-0 rounded-none shadow-none dark:border-0 dark:shadow-none',
     }}
     actions={[
       {
         variant: 'primary',
-        text: 'Read the Overview',
-        href: '/docs/overview',
+        text: 'Find Your Campus Lead',
+        href: '/people',
         icon: 'tabler:arrow-right',
       },
       {
         variant: 'secondary',
-        text: 'Contact Us',
+        text: 'How to Get in Touch',
         href: '/docs/contact',
         icon: 'tabler:mail',
       },

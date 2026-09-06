@@ -41,8 +41,12 @@ export const footerData = {
   <!-- NSF Logo -->
   <div class="flex items-center">
     <img
-      src="/images/nsf-logo.png" 
-      alt="NSF Logo"
+      src="/images/nsf-logo.png"
+      alt=""
+      width="80"
+      height="80"
+      loading="lazy"
+      decoding="async"
       class="h-20 w-20 object-contain"
     />
   </div>

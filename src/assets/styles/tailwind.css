@@ -30,6 +30,33 @@ html, body {
   }
 }
 
+/* One keyboard-focus treatment for the whole site. The buttons carried a
+   `focus:ring-*` set that never survived the shadow utilities layered on top of
+   them, so tabbing fell back to the browser default. An outline sits outside the
+   box model, so nothing can compose it away, and `:focus-visible` keeps it off
+   mouse clicks. */
+:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.dark :focus-visible,
+#hero-sunset :focus-visible {
+  outline-color: #93c5fd;
+}
+
+/* Reachable by keyboard, out of the way otherwise. It has to clear the sticky
+   header, which the home page pulls the hero up behind. */
+.skip-link {
+  @apply sr-only;
+}
+
+.skip-link:focus-visible {
+  @apply not-sr-only fixed left-4 top-4 z-[60] rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-white no-underline shadow-lg;
+  outline-color: #ffffff;
+}
+
 @layer components {
   .btn {
     @apply inline-flex items-center justify-center rounded-full border-gray-400 border bg-transparent font-medium text-center text-base text-page leading-snug transition py-3.5 px-6 md:px-8 ease-in duration-200 focus:ring-blue-500 focus:ring-offset-blue-200 focus:ring-2 focus:ring-offset-2 hover:bg-gray-100 hover:border-gray-600 dark:text-slate-300 dark:border-slate-500 dark:hover:bg-slate-800 dark:hover:border-slate-800 cursor-pointer;
@@ -131,6 +158,125 @@ html, body {
 
 #hero-sunset .btn-primary {
   @apply border-transparent shadow-lg shadow-blue-950/40;
+}
+
+/* ---------------------------------------------------------------------------
+   The central-states map (CentralStatesMap.astro).
+
+   Same colour logic as the two network graphics: amber belongs to GP-STOR, so
+   the three campuses that hold storage are amber and the rest of the region
+   served sits behind them in neutral. Driven by the `.dark` class rather than
+   `prefers-color-scheme`, because this site's theme is a manual toggle and the
+   two disagree the moment a visitor uses it.
+   --------------------------------------------------------------------------- */
+.csm {
+  --csm-land: #e2e8f0;
+  --csm-land-stroke: #cbd5e1;
+  --csm-region: #94a3b8;
+  --csm-region-opacity: 0.22;
+  --csm-region-stroke: #94a3b8;
+  --csm-site: #f59e0b;
+  --csm-site-opacity: 0.5;
+  --csm-site-stroke: #b45309;
+  --csm-label: #64748b;
+  --csm-label-site: #7c2d12;
+
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.dark .csm {
+  /* Over navy the same amber goes muddy at low alpha, so the fill lifts, the
+     outline carries more of the identification, and the site labels move to the
+     pale end of the amber ramp. */
+  --csm-land: #1e293b;
+  --csm-land-stroke: #334155;
+  --csm-region: #94a3b8;
+  --csm-region-opacity: 0.14;
+  --csm-region-stroke: #64748b;
+  --csm-site: #fbbf24;
+  --csm-site-opacity: 0.26;
+  --csm-site-stroke: #f59e0b;
+  --csm-label: #94a3b8;
+  --csm-label-site: #fde68a;
+}
+
+.csm__land {
+  fill: var(--csm-land);
+  stroke: var(--csm-land-stroke);
+  stroke-width: 1;
+}
+
+.csm__region {
+  fill: var(--csm-region);
+  fill-opacity: var(--csm-region-opacity);
+  stroke: var(--csm-region-stroke);
+  stroke-width: 1.2;
+}
+
+.csm__site {
+  fill: var(--csm-site);
+  fill-opacity: var(--csm-site-opacity);
+  stroke: var(--csm-site-stroke);
+  stroke-width: 1.6;
+}
+
+.csm__label {
+  fill: var(--csm-label);
+  font-family: var(--aw-font-heading, ui-sans-serif), ui-sans-serif, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+.csm__label--site {
+  fill: var(--csm-label-site);
+  font-weight: 700;
+}
+
+/* The exit link at the foot of a Content section. Sized and weighted to read as
+   the section's next step rather than as body copy, with the arrow carrying the
+   only motion: it steps forward on hover and stays put for anyone who has asked
+   for less movement. */
+.content-cta a {
+  @apply inline-flex items-center gap-1 text-base font-semibold text-primary transition-colors dark:text-blue-400;
+}
+
+.content-cta a:hover {
+  @apply text-secondary dark:text-blue-300;
+}
+
+.content-cta a [data-icon],
+.content-cta a svg {
+  @apply ml-0.5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .content-cta a svg {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .content-cta a:hover svg {
+    transform: translateX(3px);
+  }
+}
+
+/* The qualifier strip on the stats panel. Amber is the colour this site already
+   reserves for GP-STOR itself (the hub markers in both network graphics), so the
+   note reads as the project speaking about its own status rather than as a
+   generic warning banner. The dot is a small steady mark, not a pulse. */
+#hero-sunset .hero-stats-note__dot {
+  @apply h-1.5 w-1.5 shrink-0 rounded-full bg-amber-300;
+  box-shadow: 0 0 0 3px rgb(251 191 36 / 18%);
+}
+
+#hero-sunset .hero-stats-note__link {
+  @apply rounded-sm font-medium text-amber-200 underline decoration-amber-200/40 underline-offset-4 transition-colors;
+}
+
+#hero-sunset .hero-stats-note__link:hover {
+  @apply text-amber-100 decoration-amber-100;
 }
 
 /* Separators inside the stats panel: rows on phones, a 2x2 grid on tablets,
@@ -327,8 +473,12 @@ html, body {
   font-weight: 600;
   letter-spacing: 1.4px;
   paint-order: stroke fill;
-  stroke: rgb(4 10 22 / 55%);
-  stroke-width: 3px;
+  /* Two of the three labels land on the brightest part of the sky. At 55% the
+     stroke was not dark enough to hold the amber sub-label against it, so it
+     runs near-opaque and slightly wider; over the navy side the difference is
+     invisible, and over the sun it is the whole reason the text reads. */
+  stroke: rgb(4 10 22 / 88%);
+  stroke-width: 3.5px;
   stroke-linejoin: round;
 }
 

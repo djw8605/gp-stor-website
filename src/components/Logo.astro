@@ -1,10 +1,43 @@
 ---
-import { SITE } from 'astrowind:config';
+import Image from '~/components/common/Image.astro';
+
 import lightLogo from '~/assets/logo.png';
 import darkLogo from '~/assets/logo-dark.png';
+
+/* Both marks are in the DOM so the theme toggle swaps them with no flash, which
+   means both are fetched on every view. Run through the image pipeline they
+   come down as small webp derivatives sized for the 48px the header actually
+   renders, instead of the full-resolution PNGs the raw `.src` import shipped.
+
+   The wordmark links to the home page and the site name sits beside it in the
+   header, so the mark itself is decorative; describing it would read the same
+   name out twice. */
+const RENDERED_WIDTH = 162;
 ---
 
 <span class="self-center ml-2 rtl:ml-0 rtl:mr-2">
-  <img src={lightLogo.src} alt="GP-STOR Logo" class="h-12 w-auto dark:hidden" data-logo-light />
-  <img src={darkLogo.src} alt="GP-STOR Logo" class="h-12 w-auto hidden dark:block" data-logo-dark />
+  <Image
+    src={lightLogo}
+    alt=""
+    class="h-12 w-auto dark:hidden"
+    widths={[RENDERED_WIDTH, RENDERED_WIDTH * 2, RENDERED_WIDTH * 3]}
+    sizes={`${RENDERED_WIDTH}px`}
+    width={RENDERED_WIDTH}
+    height={41}
+    loading="eager"
+    decoding="sync"
+    data-logo-light
+  />
+  <Image
+    src={darkLogo}
+    alt=""
+    class="h-12 w-auto hidden dark:block"
+    widths={[RENDERED_WIDTH, RENDERED_WIDTH * 2, RENDERED_WIDTH * 3]}
+    sizes={`${RENDERED_WIDTH}px`}
+    width={RENDERED_WIDTH}
+    height={48}
+    loading="eager"
+    decoding="sync"
+    data-logo-dark
+  />
 </span>

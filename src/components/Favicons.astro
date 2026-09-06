@@ -1,2 +1,7 @@
-<!-- Favicons will use default or public folder -->
-<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+{/* public/ ships an SVG mark, not an .ico, so the old /favicon.ico link 404'd on
+    every page. The .ico stays declared as a fallback for browsers that ask for
+    one by convention, but the SVG is what is actually there and is listed
+    first so modern browsers take it. */}
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="mask-icon" href="/favicon.svg" color="#2563eb" />

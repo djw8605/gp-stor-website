@@ -23,6 +23,12 @@ export interface Hub {
   labelY: number;
 }
 
+/** A qualifier on the figures below it, e.g. that the capacity is not yet built. */
+export interface StatsNote {
+  text: string;
+  link?: { text: string; href: string };
+}
+
 export interface Props {
   id?: string;
   image: ImageMetadata;
@@ -32,6 +38,7 @@ export interface Props {
   mirror?: boolean;
   actions?: Array<CallToAction>;
   stats?: Array<Stat>;
+  statsNote?: StatsNote;
   hubs?: Array<Hub>;
 }
 
@@ -42,6 +49,7 @@ const {
   mirror = false,
   actions = [],
   stats = [],
+  statsNote,
   hubs = [],
 } = Astro.props;
 
@@ -214,7 +222,21 @@ const paths = [...links, ...tails];
 
       {
         stats.length > 0 && (
-          <div class="mt-14 rounded-xl border border-white/15 bg-white/[0.07] backdrop-blur-md md:mt-20">
+          <div class="mt-14 overflow-hidden rounded-xl border border-white/15 bg-white/[0.07] backdrop-blur-md md:mt-20">
+            {/* The figures below describe the system as designed, not as running.
+                The qualifier belongs on the panel that carries them, where anyone
+                reading or screenshotting the numbers reads it too. */}
+            {statsNote && (
+              <p class="flex flex-wrap items-center gap-x-2.5 gap-y-1 border-b border-white/15 bg-amber-400/[0.07] px-6 py-3 text-sm leading-snug text-amber-100/90">
+                <span class="hero-stats-note__dot" aria-hidden="true" />
+                <span>{statsNote.text}</span>
+                {statsNote.link && (
+                  <a class="hero-stats-note__link" href={statsNote.link.href}>
+                    {statsNote.link.text}
+                  </a>
+                )}
+              </p>
+            )}
             <div id="hero-stats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
               {stats.map((stat) => (
                 <div class="flex items-center gap-4 px-6 py-6">
@@ -230,9 +252,11 @@ const paths = [...links, ...tails];
         )
       }
 
+      {/* Held to a readable measure rather than the panel's full width; at
+          max-w-4xl this ran past 100 characters a line. */}
       {
         Astro.slots.has('footnote') && (
-          <div class="mx-auto mt-7 flex max-w-4xl items-start gap-3">
+          <div class="mt-7 flex max-w-xl items-start gap-3">
             <Icon name="tabler:users-group" class="mt-0.5 h-6 w-6 shrink-0 text-blue-400" />
             <p class="text-sm leading-relaxed text-slate-300 sm:text-base">
               <slot name="footnote" />

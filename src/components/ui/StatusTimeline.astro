@@ -36,7 +36,7 @@ const getStatusClasses = (status: string | undefined) => {
       };
     case 'active':
       return {
-        icon: 'animate-pulse text-primary dark:text-blue-400 border-primary dark:border-blue-400',
+        icon: 'text-primary dark:text-blue-400 border-primary dark:border-blue-400',
         title: 'font-bold text-primary dark:text-blue-400',
         description: 'text-primary/80 dark:text-blue-300',
       };
@@ -125,23 +125,47 @@ const getStatusClasses = (status: string | undefined) => {
 }
 
 <style>
+  /* A slow outward pulse marking the step the project is on now. It reads as a
+     live signal rather than a throb because of three things: it runs at 3s
+     instead of 1.5s, it rides an ease-out so most of the cycle is the quiet
+     tail, and it is a ring travelling outward from the marker rather than
+     anything that touches the icon or the text. Nothing here changes the
+     opacity of content -- the old version paired this with `animate-pulse`,
+     which dimmed the milestone text to 50% on a loop, so the one line a reader
+     came to read was the one line that kept fading. */
   @keyframes ripple {
     0% {
-      box-shadow: 0 0 0 0 currentColor;
+      box-shadow: 0 0 0 0 var(--status-ripple);
     }
-    50% {
-      box-shadow: 0 0 0 8px transparent;
+    70% {
+      box-shadow: 0 0 0 11px var(--status-ripple-out);
     }
     100% {
-      box-shadow: 0 0 0 12px transparent;
+      box-shadow: 0 0 0 11px var(--status-ripple-out);
     }
   }
 
   .ripple-border {
-    animation: ripple 1.5s infinite;
+    --status-ripple: rgb(37 99 235 / 40%);
+    --status-ripple-out: rgb(37 99 235 / 0%);
+
+    animation: ripple 3s cubic-bezier(0.22, 1, 0.36, 1) infinite;
     border-radius: 9999px;
     display: inline-flex;
     color: inherit;
+  }
+
+  :global(.dark) .ripple-border {
+    --status-ripple: rgb(96 165 250 / 45%);
+    --status-ripple-out: rgb(96 165 250 / 0%);
+  }
+
+  /* Anyone who has asked for less movement still gets the state, because the
+     active step is carried by colour and weight independently of this. */
+  @media (prefers-reduced-motion: reduce) {
+    .ripple-border {
+      animation: none;
+    }
   }
 
   .ripple-border :global(svg) {

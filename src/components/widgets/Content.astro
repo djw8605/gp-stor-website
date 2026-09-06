@@ -53,7 +53,7 @@ if (image && typeof image !== 'string') {
     tagline={tagline}
     classes={{
       container: 'max-w-xl sm:mx-auto lg:max-w-2xl',
-      title: 'text-4xl md:text-5xl font-bold tracking-tighter mb-4 font-heading',
+      title: 'text-3xl md:text-4xl font-bold tracking-tighter mb-4 font-heading',
       subtitle: 'max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400',
     }}
   />
@@ -61,14 +61,6 @@ if (image && typeof image !== 'string') {
     <div class={`md:flex ${isReversed ? 'md:flex-row-reverse' : ''} md:gap-16`}>
       <div class="md:basis-1/2 self-center">
         {content && <div class="mb-12 text-lg dark:text-slate-400" set:html={content} />}
-
-        {
-          callToAction && (
-            <div class="mt-[-40px] mb-8 text-primary">
-              <Button variant="link" {...callToAction} />
-            </div>
-          )
-        }
 
         <ItemGrid
           items={items}
@@ -83,6 +75,17 @@ if (image && typeof image !== 'string') {
             action: 'text-lg font-medium leading-6 dark:text-white ml-2 rtl:ml-0 rtl:mr-2',
           }}
         />
+
+        {/* The way out of the section, after the reader has seen what is in it.
+            It used to sit above the list on a negative margin, which put the
+            exit before the content it was meant to follow. */}
+        {
+          callToAction && (
+            <div class="content-cta mt-8 border-t border-black/5 pt-6 dark:border-white/10">
+              <Button variant="link" {...callToAction} />
+            </div>
+          )
+        }
       </div>
       <div class="mt-10 self-center md:mt-0 md:basis-1/2">
         {
