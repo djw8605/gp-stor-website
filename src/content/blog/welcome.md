@@ -18,4 +18,4 @@ GP-STOR is designed to accelerate research by providing:
 
 ## Getting Involved
 
-We're currently in the infrastructure acquisition phase, with beta user access planned for Q3 2026. Stay tuned for updates!
+We're currently in the infrastructure acquisition phase, with beta user access planned for Q2 2027. Stay tuned for updates!

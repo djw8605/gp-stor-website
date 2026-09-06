@@ -1,6 +1,6 @@
 ---
 title: "Beta User Workshop"
-date: 2026-09-15
+date: 2026-12-15
 location: "Virtual"
 tags: ["workshop", "beta", "training"]
 description: "Join us for an interactive workshop to learn about GP-STOR and get started as a beta user"
@@ -26,4 +26,4 @@ This workshop is designed for researchers and system administrators who:
 
 ### Registration
 
-Registration details will be announced in Q2 2026. Stay tuned!
+Registration details will be announced in Q4 2026. Stay tuned!
