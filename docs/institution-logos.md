@@ -1,5 +1,7 @@
 # Institution logos
 
+Provenance for the mark files in `public/images/logos/`.
+
 Each mark is the institution's own **reversed (light-on-dark) variant**, taken from
 the institution's own site. They are shown on the navy plate in
 `src/components/InstitutionGrid.astro`, which is why the reversed variants are the
