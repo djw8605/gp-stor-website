@@ -78,7 +78,10 @@ const tails = hubs.length
 const paths = [...links, ...tails];
 ---
 
-<section class="relative -mt-[4.5rem] overflow-hidden not-prose" {...id ? { id } : {}}>
+{/* The pull-up is deliberately deeper than the sticky header (73px on mobile,
+    77px on desktop) so no strip of page background shows above the photograph;
+    the matching pt-24 below puts the copy back where it would have sat. */}
+<section class="relative -mt-24 overflow-hidden not-prose" {...id ? { id } : {}}>
   <div class="absolute inset-0" aria-hidden="true">
     <Image
       src={image}
@@ -190,7 +193,7 @@ const paths = [...links, ...tails];
     }
   </div>
 
-  <div class="relative mx-auto max-w-7xl px-4 pb-14 pt-[4.5rem] sm:px-6 md:pb-16">
+  <div class="relative mx-auto max-w-7xl px-4 pb-14 pt-24 sm:px-6 md:pb-16">
     <div class="pt-12 md:pt-20 lg:pt-24">
       <div class="max-w-2xl">
         {title && <h1 class="hero-title" set:html={title} />}

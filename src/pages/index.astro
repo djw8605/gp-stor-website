@@ -10,6 +10,9 @@ import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import EventsLatestPosts from '~/components/widgets/EventsLatestPosts.astro';
 import CentralStates from '~/assets/central_states_map.svg';
 import HeroBackground from '~/assets/images/hero-plains-sunset.jpg';
+import PhotoBackdrop from '~/components/common/PhotoBackdrop.astro';
+import DataPathsDiagram from '~/components/common/DataPathsDiagram.astro';
+import pastureTrack from '~/assets/images/raychel-sanner-eJhUdqHChsY-unsplash.jpg';
 
 const metadata = {
   title: 'Great Plains Scalable Tiered Object Repository',
@@ -17,7 +20,7 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata} id="front-page">
+<Layout metadata={metadata} id="front-page" bodyClass="header-over-photo">
   <!-- Hero Widget ******************* -->
   <HeroHome
     id="hero-sunset"
@@ -128,11 +131,11 @@ const metadata = {
           'Browse, upload, and share through a web interface, for the work that does not belong on a command line.',
       },
     ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      alt: 'Research data visualization',
-    }}
   >
+    <Fragment slot="image">
+      <DataPathsDiagram />
+    </Fragment>
+
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
         Reachable From <br /><span class="text-2xl">the Tools You Already Run</span>
@@ -283,6 +286,11 @@ const metadata = {
 
   <!-- CallToAction Widget *********** -->
   <CallToAction
+    isDark
+    classes={{
+      container:
+        'my-12 max-w-5xl rounded-2xl bg-[#0a1628]/70 px-6 py-12 backdrop-blur-[2px] md:my-16 md:px-10 md:py-16',
+    }}
     actions={[
       {
         variant: 'primary',
@@ -298,6 +306,10 @@ const metadata = {
       },
     ]}
   >
+    <Fragment slot="bg">
+      <PhotoBackdrop image={pastureTrack} position="50% 58%" scrim={60} />
+    </Fragment>
+
     <Fragment slot="title">
       Planning work that will need this?
     </Fragment>

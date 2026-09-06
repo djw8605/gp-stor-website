@@ -79,37 +79,25 @@ html, body {
    full-screen panel).
    --------------------------------------------------------------------------- */
 
-/* `#front-page` is carried alongside `.header-over-photo` only so the home page,
-   which still opts in through `id="front-page"`, keeps its inverted header.
-   Drop the `#front-page` halves once that page moves to the bodyClass hook. */
-
 .header-over-photo #header:not(.scroll):not(.expanded) nav button,
 .header-over-photo #header:not(.scroll):not(.expanded) nav > ul > li > a,
-.header-over-photo #header:not(.scroll):not(.expanded) svg,
-#front-page #header:not(.scroll):not(.expanded) nav button,
-#front-page #header:not(.scroll):not(.expanded) nav > ul > li > a,
-#front-page #header:not(.scroll):not(.expanded) svg {
+.header-over-photo #header:not(.scroll):not(.expanded) svg {
   @apply text-white;
 }
 
 .header-over-photo #header:not(.scroll):not(.expanded) nav button:hover,
-.header-over-photo #header:not(.scroll):not(.expanded) nav > ul > li > a:hover,
-#front-page #header:not(.scroll):not(.expanded) nav button:hover,
-#front-page #header:not(.scroll):not(.expanded) nav > ul > li > a:hover {
+.header-over-photo #header:not(.scroll):not(.expanded) nav > ul > li > a:hover {
   @apply text-amber-200;
 }
 
 /* The dark-mode (white) logo and hamburger are the readable ones over the photo. */
-.header-over-photo #header:not(.scroll):not(.expanded) [data-logo-light],
-#front-page #header:not(.scroll):not(.expanded) [data-logo-light] {
+.header-over-photo #header:not(.scroll):not(.expanded) [data-logo-light] {
   @apply hidden;
 }
-.header-over-photo #header:not(.scroll):not(.expanded) [data-logo-dark],
-#front-page #header:not(.scroll):not(.expanded) [data-logo-dark] {
+.header-over-photo #header:not(.scroll):not(.expanded) [data-logo-dark] {
   @apply block;
 }
-.header-over-photo #header:not(.scroll):not(.expanded) [data-aw-toggle-menu] > span[aria-hidden],
-#front-page #header:not(.scroll):not(.expanded) [data-aw-toggle-menu] > span[aria-hidden] {
+.header-over-photo #header:not(.scroll):not(.expanded) [data-aw-toggle-menu] > span[aria-hidden] {
   @apply bg-white;
 }
 
@@ -351,6 +339,312 @@ html, body {
 .hero-map__role {
   fill: #fde68a;
   font-weight: 500;
+}
+
+/* ---------------------------------------------------------------------------
+   The four access paths onto GP-STOR (DataPathsDiagram.astro).
+
+   Same visual system as the hero's data-hub network above, re-voiced for a flat
+   band background instead of a photograph. Two things change in the move:
+
+   - The hero's marks carry dark drop-shadows so they survive the bright part of
+     the sky. Nothing here sits on a photograph, so the shadows are dropped and
+     the glow is dialled back in light mode, where a bloom on a pale ground
+     reads as smudge rather than light.
+   - The hero's hub core is near-white because it is the brightest point against
+     navy. On the light band the brightest point against its surroundings is the
+     darkest one, so the core inverts to a deep amber rather than copying the
+     hero's hex.
+
+   The animations themselves are the hero's, reused by name, so both graphics
+   breathe on the same 4.2s cycle.
+   --------------------------------------------------------------------------- */
+.data-paths {
+  --dp-route: #2563eb;
+  --dp-route-opacity: 0.55;
+  --dp-drift: #3b82f6;
+  --dp-packet: #1d4ed8;
+  --dp-access: #2563eb;
+  --dp-hub-halo: #fbbf24;
+  --dp-hub-core: #b45309;
+  --dp-hub-ping: #d97706;
+  --dp-glow-inner: #fde68a;
+  --dp-glow-inner-opacity: 0.42;
+  --dp-glow-outer: #f59e0b;
+  --dp-glow-mid-opacity: 0.16;
+  --dp-name: #0f172a;
+  --dp-role: #64748b;
+  --dp-hub-name: #b45309;
+  --dp-hub-role: #d97706;
+  --dp-leader: #93c5fd;
+  --dp-leader-hub: #f59e0b;
+
+  height: auto;
+  width: 100%;
+}
+
+.dark .data-paths {
+  --dp-route: #60a5fa;
+  --dp-route-opacity: 0.7;
+  --dp-drift: #dbeafe;
+  --dp-packet: #ffffff;
+  --dp-access: #93c5fd;
+  --dp-hub-core: #fffdf5;
+  --dp-hub-ping: #fde68a;
+  --dp-glow-inner-opacity: 0.6;
+  --dp-glow-mid-opacity: 0.3;
+  --dp-name: #f1f5f9;
+  --dp-role: #94a3b8;
+  --dp-hub-name: #fde68a;
+  --dp-hub-role: #fcd34d;
+  --dp-leader: #60a5fa;
+  --dp-leader-hub: #fcd34d;
+}
+
+/* Gradient stops are styled rather than set as attributes so the custom
+   properties resolve reliably across browsers. */
+.data-paths__glow-inner {
+  stop-color: var(--dp-glow-inner);
+  stop-opacity: var(--dp-glow-inner-opacity);
+}
+
+.data-paths__glow-mid {
+  stop-color: var(--dp-glow-outer);
+  stop-opacity: var(--dp-glow-mid-opacity);
+}
+
+.data-paths__glow-outer {
+  stop-color: var(--dp-glow-outer);
+  stop-opacity: 0;
+}
+
+.data-paths__routes path {
+  stroke: var(--dp-route);
+  stroke-opacity: var(--dp-route-opacity);
+  stroke-width: 1.8;
+}
+
+/* A blue bloom, as in the hero, but only where there is a dark ground to bloom
+   against. In light mode the lines carry themselves on weight alone. */
+.dark .data-paths__routes,
+.dark .data-paths__flow {
+  filter: drop-shadow(0 0 5px rgb(96 165 250 / 45%));
+}
+
+/* Dots drifting along a route, so a line reads as carrying traffic rather than
+   just joining two points. The dash gap and the keyframe distance have to match
+   or the stream stutters once a cycle. */
+.data-paths__drift {
+  stroke: var(--dp-drift);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 0.1 26;
+  animation: hero-map-drift 1.6s linear infinite;
+  animation-delay: var(--dp-drift-delay, 0s);
+}
+
+.data-paths__drift--reverse {
+  animation-name: data-paths-drift-reverse;
+}
+
+/* Nextcloud is a person clicking through a browser, not a job stream. */
+.data-paths__drift--sparse {
+  stroke-dasharray: 0.1 34;
+  animation-name: data-paths-drift-sparse;
+  animation-duration: 2.8s;
+}
+
+/* A single bright mark running the length of a route. `pathLength` puts every
+   route on the same 0-100 scale, so these dash values hold whatever the real
+   length of the path is. */
+.data-paths__packet {
+  stroke: var(--dp-packet);
+  stroke-width: 3.8;
+  stroke-linecap: round;
+  stroke-dasharray: 4 96;
+  opacity: 0;
+  animation: hero-map-packet 4.5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  animation-delay: var(--dp-packet-delay, 0s);
+}
+
+/* Globus moves whole collections at once, so it gets weight instead of a trickle. */
+.data-paths__packet--bulk {
+  stroke-width: 5.6;
+  stroke-dasharray: 9 91;
+}
+
+.data-paths__packet--reverse {
+  animation-name: data-paths-packet-reverse;
+}
+
+/* Access methods and OSDF caches: quieter than the storage markers, and never
+   amber, so colour alone says which thing in the frame is GP-STOR. */
+.data-paths__access-ring {
+  fill: none;
+  stroke: var(--dp-access);
+  stroke-width: 1.6;
+}
+
+.data-paths__access-dot {
+  fill: var(--dp-access);
+}
+
+.data-paths__leader {
+  stroke: var(--dp-leader);
+  stroke-opacity: 0.7;
+  stroke-width: 1;
+}
+
+.data-paths__leader--hub {
+  stroke: var(--dp-leader-hub);
+  stroke-opacity: 0.55;
+}
+
+/* The storage itself, on the hero's four-layer treatment. */
+.data-paths__hub-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-map-glow 4.2s ease-in-out infinite;
+  animation-delay: var(--dp-hub-delay, 0s);
+}
+
+.data-paths__hub-halo {
+  fill: var(--dp-hub-halo);
+  fill-opacity: 0.8;
+  filter: blur(3px);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-map-breathe 4.2s ease-in-out infinite;
+  animation-delay: var(--dp-hub-delay, 0s);
+}
+
+.data-paths__hub-core {
+  fill: var(--dp-hub-core);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-map-node 4.2s ease-in-out infinite;
+  animation-delay: var(--dp-hub-delay, 0s);
+}
+
+/* A ring leaving each site once a cycle, as if it had just answered. */
+.data-paths__hub-ping {
+  fill: none;
+  stroke: var(--dp-hub-ping);
+  stroke-width: 1.4;
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: hero-map-ping 4.2s cubic-bezier(0, 0.5, 0.4, 1) infinite;
+  animation-delay: var(--dp-hub-delay, 0s);
+}
+
+@keyframes data-paths-drift-reverse {
+  to {
+    stroke-dashoffset: 26.1;
+  }
+}
+
+@keyframes data-paths-drift-sparse {
+  to {
+    stroke-dashoffset: -34.1;
+  }
+}
+
+@keyframes data-paths-packet-reverse {
+  0% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  46% {
+    opacity: 1;
+  }
+
+  54% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+.data-paths__name,
+.data-paths__role,
+.data-paths__hub-name,
+.data-paths__hub-role {
+  font-family: var(--aw-font-heading, ui-sans-serif), ui-sans-serif, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+}
+
+.data-paths__name {
+  fill: var(--dp-name);
+}
+
+.data-paths__hub-name {
+  fill: var(--dp-hub-name);
+}
+
+.data-paths__role,
+.data-paths__hub-role {
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 1.1px;
+}
+
+.data-paths__role {
+  fill: var(--dp-role);
+}
+
+.data-paths__hub-role {
+  fill: var(--dp-hub-role);
+}
+
+/* Below `md` the columns stack and the diagram takes the full width of a phone,
+   so the labels are set larger in viewBox units to hold their rendered size.
+   The role line is the wider of the two, and has to clear the left edge. */
+@media (max-width: 767px) {
+  .data-paths__name,
+  .data-paths__hub-name {
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+
+  .data-paths__role,
+  .data-paths__hub-role {
+    font-size: 14.5px;
+    letter-spacing: 0.85px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .data-paths__drift,
+  .data-paths__packet,
+  .data-paths__hub-glow,
+  .data-paths__hub-halo,
+  .data-paths__hub-core,
+  .data-paths__hub-ping {
+    animation: none;
+  }
+
+  .data-paths__hub-ping {
+    display: none;
+  }
+
+  /* Without motion the packets would never appear at all, so they rest
+     part-way along their route instead of sitting invisible. */
+  .data-paths__packet {
+    opacity: 1;
+    stroke-dashoffset: 50;
+  }
 }
 
 .dropdown:focus .dropdown-menu,

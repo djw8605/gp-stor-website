@@ -1,0 +1,173 @@
+---
+/**
+ * The four access paths onto GP-STOR, drawn in the same visual language as the
+ * hero's data-hub network (see HeroHome.astro): blue routes carrying drifting
+ * dots, amber markers for the storage itself, and the same 4.2s breathing cycle.
+ *
+ * Two things are encoded deliberately rather than decoratively:
+ *
+ *  - Amber is reserved for GP-STOR. Every access method, and every downstream
+ *    OSDF cache, is blue. Colour alone tells you which thing is the storage.
+ *  - The layout runs left to right because the section does: three methods you
+ *    reach in with, the storage in the middle, and OSDF serving data back out.
+ *    All inbound routes converge on one arrival point, because they are four
+ *    ways onto the same storage rather than four separate stores.
+ *
+ * The three centre markers sit at the real relative positions of the three
+ * sites, carried over from the hero's hub coordinates so the two graphics read
+ * as the same network seen twice.
+ */
+
+/** Access methods you reach in with, stacked down the left. */
+const inbound = [
+  { name: 'OSG / NRP', role: 'Compute mounts', y: 100 },
+  { name: 'Globus', role: 'Bulk transfers', y: 222 },
+  { name: 'Nextcloud', role: 'Web interface', y: 352 },
+];
+
+const marker = { x: 166 };
+
+/** Routes in from each access method, all meeting at the same junction. */
+const inboundPaths = [
+  'M 166 100 Q 210 126 234 220',
+  'M 166 222 Q 202 240 234 220',
+  'M 166 352 Q 208 318 234 220',
+];
+
+/** The junction, and the single stem carrying the merged traffic into the
+    cluster. Four ways in, one way onto the storage. */
+const stem = 'M 234 220 L 272 216';
+
+/** The three sites, at the relative positions they hold in the hero map. */
+const hubs = [
+  { x: 272, y: 216 },
+  { x: 352, y: 236 },
+  { x: 432, y: 256 },
+];
+
+/** Links between the sites: neighbours arc above, the long link sweeps below. */
+const clusterLinks = [
+  'M 272 216 Q 312 182 352 236',
+  'M 352 236 Q 392 202 432 256',
+  'M 272 216 Q 352 312 432 256',
+];
+
+/** OSDF fanning out of the cluster to caches wherever the jobs are. */
+const originPaths = [
+  'M 432 256 Q 490 214 506 132',
+  'M 432 256 Q 486 258 534 252',
+  'M 432 256 Q 480 294 494 330',
+];
+
+const caches = [
+  { x: 506, y: 132 },
+  { x: 534, y: 252 },
+  { x: 494, y: 330 },
+];
+---
+
+<svg class="data-paths" viewBox="0 48 560 358" fill="none" role="img" aria-labelledby="data-paths-title">
+  <title id="data-paths-title">
+    OSG and NRP mounts, Globus transfers, and the Nextcloud web interface all reach the same three-site GP-STOR
+    cluster, which serves data back out through OSDF origin nodes to caches near running jobs.
+  </title>
+
+  <defs>
+    <radialGradient id="data-paths-glow">
+      <stop class="data-paths__glow-inner" offset="0%" />
+      <stop class="data-paths__glow-mid" offset="30%" />
+      <stop class="data-paths__glow-outer" offset="100%" />
+    </radialGradient>
+  </defs>
+
+  {/* Static route lines, under everything that moves. */}
+  <g class="data-paths__routes">
+    {[...inboundPaths, stem, ...clusterLinks, ...originPaths].map((d) => <path d={d} />)}
+  </g>
+
+  {/* The moving marks. Each route moves the way that access method actually
+      behaves, so the four arms are deliberately not symmetrical. */}
+  <g class="data-paths__flow">
+    {/* OSG and NRP: jobs read and write continuously, so traffic runs both ways. */}
+    <path class="data-paths__drift" d={inboundPaths[0]} />
+    <path class="data-paths__drift data-paths__drift--reverse" d={inboundPaths[0]} />
+
+    {/* Globus: no steady trickle, just large collections now and then. */}
+    <path class="data-paths__packet data-paths__packet--bulk" d={inboundPaths[1]} pathLength="100" />
+    <path
+      class="data-paths__packet data-paths__packet--bulk data-paths__packet--reverse"
+      d={inboundPaths[1]}
+      pathLength="100"
+      style="--dp-packet-delay: 2.25s"
+    />
+
+    {/* Nextcloud: someone browsing, so slower and sparser than a job stream. */}
+    <path class="data-paths__drift data-paths__drift--sparse" d={inboundPaths[2]} />
+
+    {/* The merged stem, busiest line in the frame. */}
+    <path class="data-paths__drift" d={stem} />
+
+    {/* Between the sites. */}
+    {clusterLinks.map((d, i) => (
+      <path class="data-paths__drift" d={d} style={`--dp-drift-delay: ${(i * -0.5).toFixed(2)}s`} />
+    ))}
+
+    {/* OSDF: outbound only, to every cache at once. */}
+    {originPaths.map((d, i) => (
+      <>
+        <path class="data-paths__drift" d={d} style={`--dp-drift-delay: ${(i * -0.35).toFixed(2)}s`} />
+        <path
+          class="data-paths__packet"
+          d={d}
+          pathLength="100"
+          style={`--dp-packet-delay: ${(i * 0.6).toFixed(2)}s`}
+        />
+      </>
+    ))}
+  </g>
+
+  {/* Access methods. Ring plus dot, quieter than the storage markers. */}
+  {
+    inbound.map((item) => (
+      <g>
+        <text class="data-paths__name" x="150" y={item.y - 4} text-anchor="end">
+          {item.name.toUpperCase()}
+        </text>
+        <text class="data-paths__role" x="150" y={item.y + 14} text-anchor="end">
+          {item.role.toUpperCase()}
+        </text>
+        <circle class="data-paths__access-ring" cx={marker.x} cy={item.y} r="7" />
+        <circle class="data-paths__access-dot" cx={marker.x} cy={item.y} r="2.8" />
+      </g>
+    ))
+  }
+
+  {/* OSDF caches, smaller because there are many of them out there. */}
+  <g>
+    <text class="data-paths__name" x="540" y="80" text-anchor="end">OSDF</text>
+    <text class="data-paths__role" x="540" y="98" text-anchor="end">ORIGIN NODES</text>
+    <line class="data-paths__leader" x1="506" y1="110" x2="506" y2="122" />
+    {caches.map((cache) => (
+      <>
+        <circle class="data-paths__access-ring" cx={cache.x} cy={cache.y} r="4.5" />
+        <circle class="data-paths__access-dot" cx={cache.x} cy={cache.y} r="1.8" />
+      </>
+    ))}
+  </g>
+
+  {/* The storage itself: the only amber in the frame. */}
+  {
+    hubs.map((hub, i) => (
+      <g style={`--dp-hub-delay: ${(i * 1.3).toFixed(2)}s`}>
+        <circle class="data-paths__hub-glow" cx={hub.x} cy={hub.y} r="21" fill="url(#data-paths-glow)" />
+        <circle class="data-paths__hub-ping" cx={hub.x} cy={hub.y} r="8" />
+        <circle class="data-paths__hub-halo" cx={hub.x} cy={hub.y} r="8" />
+        <circle class="data-paths__hub-core" cx={hub.x} cy={hub.y} r="4" />
+      </g>
+    ))
+  }
+
+  <line class="data-paths__leader data-paths__leader--hub" x1="352" y1="292" x2="352" y2="308" />
+  <text class="data-paths__hub-name" x="352" y="324" text-anchor="middle">GP-STOR</text>
+  <text class="data-paths__hub-role" x="352" y="342" text-anchor="middle">3 SITES · 14 PB</text>
+</svg>
