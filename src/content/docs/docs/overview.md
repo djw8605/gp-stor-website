@@ -10,7 +10,7 @@ The Great Plains – Scalable Tiered Object Repository (GP‑STOR) expands flexi
 
 GP‑STOR enhances prior NSF investments and successful regional collaborations, building on:
 
-- Great Plains CyberTeam (GP‑CT; NSF [#1925681](https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1925681))
+- GPN CyberTeams (NSF [#1925681](https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1925681))
 - Great Plains Augmented Regional Gateway to the Open Science Grid (GP‑ARGO; NSF [#2018766](https://www.nsf.gov/awardsearch/show-award/?AWD_ID=2018766)))
 - Great Plains Extended Network of GPUs for Interactive Experimenters (GP‑ENGINE; NSF [#2322218](https://www.nsf.gov/awardsearch/show-award/?AWD_ID=2322218)))
 
@@ -39,13 +39,13 @@ GP‑STOR's tiered storage design enables researchers using AI, machine learning
   - Mounting for high‑throughput computing (HTC) jobs in the OSG and National Research Platform (NRP)
   - Web‑based UI via Nextcloud
 - **Three‑site configuration** ensures data availability and redundancy
-- **Builds on proven success** from GP‑ENGINE, GP‑CT, and GP‑ARGO to transform the intersection of HTC‑oriented campus CI with state and regional networks
+- **Builds on proven success** from GP‑ENGINE, GPN CyberTeams, and GP‑ARGO to transform the intersection of HTC‑oriented campus CI with state and regional networks
 - **Addresses unique challenges** of deploying advanced CI in rural regions where awareness and literacy of HTC resources are still emerging
 - **Advances CI in the Great Plains**, a region whose sparse population and geographic size are ideal for developing advanced computing, data, and networking in under‑resourced EPSCoR states
 
 ### Team qualifications
 
-The investigators are well qualified based on institutional partnerships of campus cyberinfrastructure experts. Co‑PIs and collaborators have participated in GP‑CT, GP‑ARGO, and GP‑ENGINE, as well as Campus Champions, the Campus Research Computing Consortium (CaRCC), and NRP. The team engages S&E faculty across the Great Plains, including faculty from predominantly undergraduate institutions (PUIs).
+The investigators are well qualified based on institutional partnerships of campus cyberinfrastructure experts. Co‑PIs and collaborators have participated in GPN CyberTeams, GP‑ARGO, and GP‑ENGINE, as well as Campus Champions, the Campus Research Computing Consortium (CaRCC), and NRP. The team engages S&E faculty across the Great Plains, including faculty from predominantly undergraduate institutions (PUIs).
 
 ## Broader Impacts
 
