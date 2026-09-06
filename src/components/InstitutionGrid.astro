@@ -1,0 +1,94 @@
+---
+/*
+ * A row of partner institutions, each shown as its own mark over a navy plate.
+ *
+ * The four partners publish wildly different marks -- a square scarlet "N", two
+ * wide horizontal signatures, and a wordmark -- and none of them publish a single
+ * file that survives both a light and a dark page. What they all do publish is a
+ * reversed (light-on-dark) variant, so every mark sits on the same navy plate in
+ * both colour schemes. That keeps one asset per institution, and the plate does
+ * the work of holding four unrelated brands together.
+ *
+ * Capping every logo at the same height would leave the square "N" reading far
+ * heavier than the wide signatures, so `logoClass` carries a per-mark optical
+ * height rather than one shared size.
+ */
+import { Icon } from 'astro-icon/components';
+
+export interface Institution {
+  name: string;
+  /** Short label for what the institution contributes, e.g. 'Storage site'. */
+  role: string;
+  /** Path to the reversed (light-on-dark) mark, under /images/logos/. */
+  logo: string;
+  /** Tailwind max-height tuning the mark's optical weight against its neighbours. */
+  logoClass: string;
+  href?: string;
+}
+
+export interface Props {
+  institutions: Institution[];
+  class?: string;
+}
+
+const { institutions = [], class: className = '' } = Astro.props;
+---
+
+<ul class={`grid gap-6 sm:grid-cols-2 lg:grid-cols-4 ${className}`} role="list">
+  {
+    institutions.map((inst) => {
+      const Tag = inst.href ? 'a' : 'div';
+      const linkAttrs = inst.href ? { href: inst.href, target: '_blank', rel: 'noopener noreferrer' } : {};
+
+      return (
+        <li class="h-full">
+          <Tag
+            {...linkAttrs}
+            class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-900/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-white/10 dark:bg-white/[0.07] dark:hover:border-blue-400/40 dark:hover:shadow-black/40"
+          >
+            {/* The plate. The radial wash keeps it from reading as a flat block and
+                picks up the blue the rest of the site uses. In dark mode the card
+                body sits close to the plate's own navy, so it takes a hairline to
+                stay legible as a separate surface. */}
+            <div class="relative flex h-32 items-center justify-center overflow-hidden border-b border-black/5 bg-[#0f2038] px-6 dark:border-white/10">
+              <div
+                class="pointer-events-none absolute inset-0 opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+                style="background: radial-gradient(120% 90% at 50% 0%, rgb(37 99 235 / 28%) 0%, transparent 62%);"
+                aria-hidden="true"
+              />
+              {/* Decorative: the institution's name is announced from the heading
+                  just below, so a described logo would read the card out twice. */}
+              <img
+                src={inst.logo}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                class={`relative w-auto max-w-[82%] object-contain transition-transform duration-200 group-hover:scale-[1.04] ${inst.logoClass}`}
+              />
+              {inst.href && (
+                <Icon
+                  name="tabler:arrow-up-right"
+                  class="absolute right-3 top-3 h-4 w-4 text-white/50 opacity-0 transition duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white group-hover:opacity-100 group-focus-visible:opacity-100"
+                />
+              )}
+            </div>
+
+            <div class="flex flex-1 flex-col p-5">
+              {/* Role sits above the name as an eyebrow: it keeps the one-line
+                  label out of a cramped bottom row, and lets the institution name
+                  be the last and strongest thing in the card. */}
+              <div class="flex items-center gap-2">
+                <span class="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-blue-600 dark:bg-blue-400" aria-hidden="true" />
+                <span class="whitespace-nowrap text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-blue-700 dark:text-blue-300">
+                  {inst.role}
+                </span>
+              </div>
+
+              <h3 class="mt-2 text-base font-semibold leading-snug text-gray-900 dark:text-white">{inst.name}</h3>
+            </div>
+          </Tag>
+        </li>
+      );
+    })
+  }
+</ul>

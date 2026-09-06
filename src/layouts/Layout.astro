@@ -20,9 +20,11 @@ import type { MetaData as MetaDataType } from '~/types';
 export interface Props {
   metadata?: MetaDataType;
   id?: string;
+  /** Extra class on <body>, for page-level styling hooks such as `header-over-photo`. */
+  bodyClass?: string;
 }
 
-const { metadata = {}, id } = Astro.props;
+const { metadata = {}, id, bodyClass } = Astro.props;
 const { language, textDirection } = I18N;
 ---
 
@@ -41,7 +43,7 @@ const { language, textDirection } = I18N;
     <ViewTransitions fallback="swap" />
   </head>
 
-  <body class="antialiased text-default bg-page tracking-tight" id={id}>
+  <body class:list={['antialiased text-default bg-page tracking-tight', bodyClass]} id={id}>
     <slot />
 
     <BasicScripts />

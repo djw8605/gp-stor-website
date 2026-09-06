@@ -2,12 +2,50 @@
 import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import PeopleGrid from '~/components/PeopleGrid.astro';
+import InstitutionGrid from '~/components/InstitutionGrid.astro';
 import Features2 from '~/components/widgets/Features2.astro';
+import PhotoBackdrop from '~/components/common/PhotoBackdrop.astro';
+import stormOverWheat from '~/assets/images/raychel-sanner-nqu5L_xc6bc-unsplash.jpg';
 
 const metadata = {
   title: 'Team & Partners',
   description: 'Meet the GP-STOR team and collaborating institutions',
 };
+
+/* Each logo is the institution's own reversed variant; see
+   public/images/logos/SOURCES.md. `logoClass` is optical, not literal -- the
+   square Nebraska "N" needs more height than the wide signatures to carry the
+   same visual weight beside them. */
+const institutions = [
+  {
+    name: 'University of Nebraska–Lincoln',
+    role: 'Storage site',
+    logo: '/images/logos/unl.svg',
+    logoClass: 'max-h-16 lg:max-h-14',
+    href: 'https://www.unl.edu/',
+  },
+  {
+    name: 'University of South Dakota',
+    role: 'Storage site',
+    logo: '/images/logos/usd.svg',
+    logoClass: 'max-h-12 lg:max-h-10',
+    href: 'https://www.usd.edu/',
+  },
+  {
+    name: 'University of Missouri',
+    role: 'Storage site',
+    logo: '/images/logos/mizzou.svg',
+    logoClass: 'max-h-11 lg:max-h-9',
+    href: 'https://missouri.edu/',
+  },
+  {
+    name: 'Great Plains Network',
+    role: 'Regional consortium',
+    logo: '/images/logos/gpn.png',
+    logoClass: 'max-h-16 lg:max-h-14',
+    href: 'https://www.greatplains.net/',
+  },
+];
 
 const people = [
   {
@@ -41,9 +79,13 @@ const people = [
 ];
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} bodyClass="header-over-photo">
   <!-- Hero Widget ******************* -->
-  <Hero>
+  <Hero whiteText>
+    <Fragment slot="bg">
+      <PhotoBackdrop image={stormOverWheat} position="50% 62%" scrim={68} headerFade eager />
+    </Fragment>
+
     <Fragment slot="title">
       Team & Partners
     </Fragment>
@@ -72,24 +114,11 @@ const people = [
           Collaborating Institutions
         </h2>
         <p class="text-xl text-muted dark:text-slate-400">
-          The GP-STOR project builds on successful regional collaborations and partnerships across the Great Plains Network
+          Three campuses hold the distributed storage, and the Great Plains Network connects them to the wider region.
         </p>
       </div>
-      
-      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
-        <div class="text-center p-6 bg-white dark:bg-slate-700 rounded-lg shadow-md">
-          <h3 class="text-lg font-semibold">University of Nebraska-Lincoln</h3>
-        </div>
-        <div class="text-center p-6 bg-white dark:bg-slate-700 rounded-lg shadow-md">
-          <h3 class="text-lg font-semibold">University of South Dakota</h3>
-        </div>
-        <div class="text-center p-6 bg-white dark:bg-slate-700 rounded-lg shadow-md">
-          <h3 class="text-lg font-semibold">University of Missouri</h3>
-        </div>
-        <div class="text-center p-6 bg-white dark:bg-slate-700 rounded-lg shadow-md">
-          <h3 class="text-lg font-semibold">Great Plains Network (GPN)</h3>
-        </div>
-      </div>
+
+      <InstitutionGrid institutions={institutions} class="max-w-6xl mx-auto" />
     </div>
   </section>
 

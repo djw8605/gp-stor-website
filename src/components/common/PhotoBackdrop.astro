@@ -1,0 +1,52 @@
+---
+import type { ImageMetadata } from 'astro';
+import Image from '~/components/common/Image.astro';
+
+/**
+ * A full-bleed photograph behind a section's content, under a navy scrim.
+ *
+ * The site runs in `system` colour mode, so a photograph on its own cannot be
+ * relied on for contrast: the scrim is what makes the copy above it legible in
+ * light mode as well as dark. `#0a1628` is the dark-mode page background
+ * (`--aw-color-bg-page-dark`), so a scrimmed band reads as part of the palette
+ * rather than as a stray dark rectangle.
+ */
+export interface Props {
+  image: ImageMetadata;
+  /** Focal point of the photograph. */
+  position?: string;
+  /** Strength of the navy scrim, as a percentage. */
+  scrim?: number;
+  /** Darken the top of the frame, for sections the transparent header overlaps. */
+  headerFade?: boolean;
+  /** Load eagerly, for a photograph that is above the fold. */
+  eager?: boolean;
+}
+
+const { image, position = '50% 50%', scrim = 70, headerFade = false, eager = false } = Astro.props;
+---
+
+<div class="absolute inset-0 overflow-hidden" aria-hidden="true">
+  <Image
+    src={image}
+    alt=""
+    class="absolute inset-0 h-full w-full"
+    layout="cover"
+    objectPosition={position}
+    widths={[640, 1024, 1536, 2048]}
+    sizes="100vw"
+    width={2048}
+    height={1536}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding={eager ? 'sync' : 'async'}
+    {...eager ? { fetchpriority: 'high' } : {}}
+  />
+
+  <div class="absolute inset-0" style={`background-color: rgb(10 22 40 / ${scrim}%)`}></div>
+
+  {
+    headerFade && (
+      <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#0a1628]/85 to-transparent" />
+    )
+  }
+</div>

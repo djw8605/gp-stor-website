@@ -71,31 +71,44 @@ html, body {
 }
 
 /* ---------------------------------------------------------------------------
-   Front page hero
-   The home page renders a full-bleed sunset photograph behind the header and
-   the hero copy, so the header has to be inverted to light-on-dark while it
-   still sits over the image (i.e. before it gains the `.scroll` class, and
-   while the mobile menu is not `.expanded` into an opaque full-screen panel).
+   Photographic page headers
+   Pages that open with a full-bleed photograph behind the header and the hero
+   copy set `bodyClass="header-over-photo"`, so the header can be inverted to
+   light-on-dark while it still sits over the image (i.e. before it gains the
+   `.scroll` class, and while the mobile menu is not `.expanded` into an opaque
+   full-screen panel).
    --------------------------------------------------------------------------- */
 
+/* `#front-page` is carried alongside `.header-over-photo` only so the home page,
+   which still opts in through `id="front-page"`, keeps its inverted header.
+   Drop the `#front-page` halves once that page moves to the bodyClass hook. */
+
+.header-over-photo #header:not(.scroll):not(.expanded) nav button,
+.header-over-photo #header:not(.scroll):not(.expanded) nav > ul > li > a,
+.header-over-photo #header:not(.scroll):not(.expanded) svg,
 #front-page #header:not(.scroll):not(.expanded) nav button,
 #front-page #header:not(.scroll):not(.expanded) nav > ul > li > a,
 #front-page #header:not(.scroll):not(.expanded) svg {
   @apply text-white;
 }
 
+.header-over-photo #header:not(.scroll):not(.expanded) nav button:hover,
+.header-over-photo #header:not(.scroll):not(.expanded) nav > ul > li > a:hover,
 #front-page #header:not(.scroll):not(.expanded) nav button:hover,
 #front-page #header:not(.scroll):not(.expanded) nav > ul > li > a:hover {
   @apply text-amber-200;
 }
 
 /* The dark-mode (white) logo and hamburger are the readable ones over the photo. */
+.header-over-photo #header:not(.scroll):not(.expanded) [data-logo-light],
 #front-page #header:not(.scroll):not(.expanded) [data-logo-light] {
   @apply hidden;
 }
+.header-over-photo #header:not(.scroll):not(.expanded) [data-logo-dark],
 #front-page #header:not(.scroll):not(.expanded) [data-logo-dark] {
   @apply block;
 }
+.header-over-photo #header:not(.scroll):not(.expanded) [data-aw-toggle-menu] > span[aria-hidden],
 #front-page #header:not(.scroll):not(.expanded) [data-aw-toggle-menu] > span[aria-hidden] {
   @apply bg-white;
 }
