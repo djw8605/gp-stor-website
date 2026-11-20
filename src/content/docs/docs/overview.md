@@ -16,8 +16,8 @@ GP‑STOR enhances prior NSF investments and successful regional collaborations,
 
 ## What GP‑STOR provides
 
-- **14 PB of redundant, distributed Ceph object storage**
-- **384 TB of high‑speed solid‑state storage** optimized for streaming data into AI/ML algorithms and out of simulations and instruments
+- **6.1 PB of redundant, distributed Ceph object storage**
+- **230 TB of high‑speed solid‑state storage** optimized for streaming data into AI/ML algorithms and out of simulations and instruments
 - **Three‑site distribution** for availability and resilience across the University of Missouri, University of Nebraska, and University of South Dakota
 - **Researcher‑friendly access**: A web-based UI, mounts for the NRP and OSG.
 

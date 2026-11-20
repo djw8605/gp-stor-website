@@ -12,7 +12,7 @@ We're excited to announce the GP-STOR project - a collaborative effort to provid
 
 GP-STOR is designed to accelerate research by providing:
 
-- **14 PB of redundant Ceph object storage** plus 384 TB of high-speed solid-state storage
+- **6.1 PB of redundant Ceph object storage** plus 230 TB of high-speed solid-state storage
 - **Three-site resilience** across University of Missouri, University of Nebraska, and University of South Dakota
 - **Multiple access methods** including mounts for OSG and NRP, OSDF Origin nodes, Globus endpoints, and Nextcloud
 
